@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Secure Scanner Mode v1.3</title>
+  <title>Secure Scanner</title>
 
   <script src="https://unpkg.com/html5-qrcode"></script>
 
@@ -274,7 +274,7 @@
 <body>
   <div class="container">
     <h1>Secure Scanner Mode</h1>
-    <div class="subtitle">Sistem Absensi QR Code v1.3</div>
+    <div class="subtitle">Sistem Absensi QR Code Karyawan</div>
     <span class="badge">External Scanner</span>
 
     <div id="loginBox" class="login-box">
@@ -340,7 +340,7 @@
     <input
       type="text"
       id="qrText"
-      placeholder="Contoh: USR003|token_absensi"
+      placeholder="Contoh: ID_Karyawan|token_absensi"
       autocomplete="off"
     >
 
@@ -353,19 +353,19 @@
     </div>
 
     <div class="note">
-      Format QR v1.3: <b>ID_Unik|Token</b>.  
+      Format QR : <b>ID_Unik|Token_Absensi</b>.  
       Validasi tetap dilakukan oleh Google Apps Script.
     </div>
 
   </div>
 
     <div class="footer">
-      Kemal Office Studio · Secure Scanner Mode v1.3
+      SPPG Kubu Raya · Secure Scanner
     </div>
   </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxBUgbsHuiMOPt-y6btsuNUiLWzSW3jlVrbD2CVlSUi_jYhiN6PF-TwYSIBSfe01bBo/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwwwPB55htZM5GwCHt9FrTTrdAHMktMnv_XA6F_HtYCdkVdga4VypJb5vMdRFi_dtxf/exec";
   
     let html5QrCode = null;
     let sedangProsesScan = false;
