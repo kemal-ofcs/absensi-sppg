@@ -1219,7 +1219,68 @@ button:disabled {
 
 }
 
+/* =========================
+   REALTIME CLOCK
+========================= */
 
+
+.scanner-clock {
+
+
+  margin-top:14px;
+
+
+  text-align:center;
+
+
+  font-size:14px;
+
+
+  font-weight:700;
+
+
+  color:#475569;
+
+
+  line-height:1.6;
+
+
+  padding:10px;
+
+
+
+  border-radius:14px;
+
+
+  background:#f8fafc;
+
+
+  border:1px solid #e2e8f0;
+
+
+}
+
+/* =========================
+   LOGOUT BUTTON
+========================= */
+
+
+.logout-btn {
+
+
+  margin-top:10px;
+
+
+  background:
+
+  linear-gradient(
+    135deg,
+    #ef4444,
+    #b91c1c
+  );
+
+
+}
 
 /* =========================
    MOBILE
@@ -1312,6 +1373,13 @@ Sistem Absensi QR Code Karyawan
 <span class="badge">
 🟢 External Scanner
 </span>
+
+
+<div id="scannerClock" class="scanner-clock">
+
+-
+
+</div>
 
 
 </div>
@@ -1418,8 +1486,17 @@ Scanner kamera hanya dapat digunakan setelah operator berhasil login.
 
 <div id="loginInfo" class="login-info">
 
-
 </div>
+
+
+<button
+id="btnLogoutOperator"
+class="danger logout-btn"
+onclick="logoutOperator()"
+style="display:none;"
+>
+🚪 Logout Operator
+</button>
 
 
 
@@ -1734,7 +1811,12 @@ let callbackCounter = 0;
 
 let operatorLogin = null;
 
+// ===============================
+// SESSION CONFIG
+// ===============================
 
+const SESSION_EXPIRE_MS =
+  8 * 60 * 60 * 1000; // 8 jam
 
 
 function tampilkanLoading(pesan) {
@@ -2267,7 +2349,10 @@ function loginOperator() {
     .display = "block";
 
 
-
+	document
+	.getElementById("btnLogoutOperator")
+	.style
+	.display = "block";
 
 
 
@@ -3551,10 +3636,625 @@ function hentikanKamera(){
 
 
 
+// ===============================
+// PART 3C-1
+// AUTO LOGIN OPERATOR
+// ===============================
+
+
+function cekLoginOperatorLokal(){
+
+
+  const data =
+    localStorage.getItem(
+      "scanner_operator_login"
+    );
+	
+	if(!cekExpirySession()){
+
+  return;
+
+}
+
+
+
+  if(!data){
+
+    return;
+
+  }
+
+
+
+  try {
+
+
+    const operator =
+      JSON.parse(data);
+
+
+
+    if(
+      !operator ||
+      !operator.username
+    ){
+
+      return;
+
+    }
 
 
 
 
+    operatorLogin = operator;
+
+
+
+    document
+    .getElementById("loginBox")
+    .style
+    .display = "none";
+
+
+
+
+    const loginInfo =
+      document
+      .getElementById("loginInfo");
+
+
+
+    loginInfo.style.display =
+      "block";
+
+
+
+    loginInfo.innerHTML =
+
+
+      "<b>👤 Operator Aktif</b><br>" +
+
+      escapeHtml(
+        operator.nama_operator
+      )
+
+      +
+
+      "<br><b>Role:</b> " +
+
+      escapeHtml(
+        operator.role
+      )
+
+      +
+
+      "<br><b>Status:</b> Aktif";
+
+
+
+
+
+    document
+    .getElementById("scannerArea")
+    .style
+    .display = "block";
+
+	document
+	.getElementById("btnLogoutOperator")
+	.style
+	.display = "block";
+
+
+
+    tampilkanHasilUtama(
+
+      "sukses",
+
+      "👋 Selamat Datang Kembali",
+
+      "Operator " +
+
+      operator.nama_operator +
+
+      " masih aktif."
+
+    );
+
+
+
+  }
+
+  catch(error){
+
+
+    localStorage.removeItem(
+      "scanner_operator_login"
+    );
+
+
+  }
+
+
+
+}
+
+// ===============================
+// PART 3C-2
+// REALTIME CLOCK
+// ===============================
+
+
+function updateScannerClock(){
+
+
+  const clock =
+    document.getElementById(
+      "scannerClock"
+    );
+
+
+
+  if(!clock){
+
+    return;
+
+  }
+
+
+
+
+  const sekarang =
+    new Date();
+
+
+
+
+  const tanggal =
+    sekarang.toLocaleDateString(
+      "id-ID",
+      {
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+      }
+    );
+
+
+
+  const waktu =
+    sekarang.toLocaleTimeString(
+      "id-ID"
+    );
+
+
+
+
+  clock.innerHTML =
+
+    tanggal +
+
+    "<br>" +
+
+    waktu;
+
+
+}
+
+// ===============================
+// PART 3C-3
+// LOGOUT OPERATOR
+// ===============================
+
+
+function logoutOperator(){
+
+
+
+  const konfirmasi =
+
+    confirm(
+      "Yakin ingin logout operator?"
+    );
+
+
+
+  if(!konfirmasi){
+
+    return;
+
+  }
+
+
+
+
+
+  localStorage.removeItem(
+    "scanner_operator_login"
+  );
+
+
+
+  operatorLogin = null;
+
+
+
+
+  document
+  .getElementById("loginBox")
+  .style
+  .display = "block";
+
+
+
+
+
+  document
+  .getElementById("loginInfo")
+  .style
+  .display = "none";
+
+
+
+
+
+  document
+  .getElementById("scannerArea")
+  .style
+  .display = "none";
+
+
+
+
+
+  document
+  .getElementById("btnLogoutOperator")
+  .style
+  .display = "none";
+
+
+
+
+
+  document
+  .getElementById("usernameOperator")
+  .value = "";
+
+
+
+  document
+  .getElementById("passwordOperator")
+  .value = "";
+
+
+
+
+
+
+  tampilkanHasilUtama(
+
+    "peringatan",
+
+    "🔒 Operator Logout",
+
+    "Silakan login operator baru."
+
+  );
+
+
+
+}
+
+// ===============================
+// PART 3C-4
+// CHECK SESSION EXPIRE
+// ===============================
+
+
+function cekExpirySession(){
+
+
+  const data =
+
+    localStorage.getItem(
+      "scanner_operator_login"
+    );
+
+
+
+  if(!data){
+
+    return false;
+
+  }
+
+
+
+
+  try {
+
+
+
+    const operator =
+      JSON.parse(data);
+
+
+
+    if(
+      !operator.login_time
+    ){
+
+      return false;
+
+    }
+
+
+
+
+
+    const waktuLogin =
+
+      new Date(
+        operator.login_time
+      )
+      .getTime();
+
+
+
+
+
+    const sekarang =
+
+      Date.now();
+
+
+
+
+
+    const selisih =
+
+      sekarang -
+      waktuLogin;
+
+
+
+
+
+    if(
+      selisih >= SESSION_EXPIRE_MS
+    ){
+
+
+
+      logoutOperator();
+
+
+
+      tampilkanHasilUtama(
+
+        "peringatan",
+
+        "⏰ Session Berakhir",
+
+        "Silakan login kembali."
+
+      );
+
+
+
+      return false;
+
+
+    }
+
+
+
+
+
+    return true;
+
+
+
+  }
+
+
+  catch(error){
+
+
+
+    localStorage.removeItem(
+      "scanner_operator_login"
+    );
+
+
+
+    return false;
+
+
+  }
+
+
+
+}
+
+// ===============================
+// PART 3C-5
+// AUTO LOGOUT TENGAH MALAM
+// ===============================
+
+
+function cekAutoLogoutTengahMalam(){
+
+
+  const data =
+
+    localStorage.getItem(
+      "scanner_operator_login"
+    );
+
+
+
+  if(!data){
+
+    return;
+
+  }
+
+
+
+
+  try {
+
+
+
+    const operator =
+      JSON.parse(data);
+
+
+
+
+
+    if(
+      !operator.login_time
+    ){
+
+      return;
+
+    }
+
+
+
+
+
+    const waktuLogin =
+
+      new Date(
+        operator.login_time
+      );
+
+
+
+
+
+    const sekarang =
+
+      new Date();
+
+
+
+
+
+
+    const tanggalLogin =
+
+      waktuLogin
+      .toDateString();
+
+
+
+
+
+    const tanggalSekarang =
+
+      sekarang
+      .toDateString();
+
+
+
+
+
+
+    if(
+      tanggalLogin !== tanggalSekarang
+    ){
+
+
+
+      localStorage.removeItem(
+        "scanner_operator_login"
+      );
+
+
+
+      operatorLogin = null;
+
+
+
+
+
+      document
+      .getElementById("loginBox")
+      .style
+      .display = "block";
+
+
+
+
+
+      document
+      .getElementById("loginInfo")
+      .style
+      .display = "none";
+
+
+
+
+
+      document
+      .getElementById("scannerArea")
+      .style
+      .display = "none";
+
+
+
+
+
+      document
+      .getElementById("btnLogoutOperator")
+      .style
+      .display = "none";
+
+
+
+
+
+
+
+      tampilkanHasilUtama(
+
+        "peringatan",
+
+        "🌙 Session Harian Berakhir",
+
+        "Silakan login kembali untuk hari ini."
+
+      );
+
+
+
+    }
+
+
+
+
+  }
+
+
+  catch(error){
+
+
+
+    localStorage.removeItem(
+      "scanner_operator_login"
+    );
+
+
+
+  }
+
+
+
+}
 
 function escapeHtml(text){
 
@@ -3590,6 +4290,51 @@ function escapeHtml(text){
 
 
 }
+
+document.addEventListener(
+"DOMContentLoaded",
+function(){
+
+
+  cekLoginOperatorLokal();
+
+
+
+  updateScannerClock();
+
+
+
+  setInterval(
+
+    updateScannerClock,
+
+    1000
+
+  );
+
+
+
+
+  setInterval(
+
+    cekExpirySession,
+
+    60000
+
+  );
+  
+  setInterval(
+
+  cekAutoLogoutTengahMalam,
+
+  60000
+
+);
+
+
+
+}
+);
 
 </script>
 
