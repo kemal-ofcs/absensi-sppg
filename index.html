@@ -1,849 +1,1609 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Secure Scanner</title>
+<meta charset="UTF-8">
 
-  <script src="https://unpkg.com/html5-qrcode"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
-      margin: 0;
-      padding: 20px;
-      color: #222;
-    }
+<title>
+Secure Scanner | Attendance System
+</title>
 
-    .container {
-      max-width: 560px;
-      margin: 0 auto;
-      background: #ffffff;
-      border-radius: 18px;
-      padding: 24px;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.08);
-    }
 
-    h1 {
-      text-align: center;
-      margin: 0 0 8px;
-      font-size: 24px;
-    }
+<script src="https://unpkg.com/html5-qrcode"></script>
 
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 22px;
-      font-size: 15px;
-    }
 
-    .badge {
-      display: block;
-      width: fit-content;
-      margin: 0 auto 20px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: #e8f5e9;
-      color: #1b5e20;
-      font-weight: bold;
-      font-size: 13px;
-    }
 
-    .section-title {
-      font-size: 17px;
-      font-weight: bold;
-      margin: 20px 0 10px;
-    }
+<style>
 
-    #reader {
-      width: 100%;
-      border: 1px solid #ddd;
-      border-radius: 14px;
-      overflow: hidden;
-      background: #f1f3f4;
-      margin-bottom: 12px;
-    }
 
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 12px;
-      padding: 13px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-bottom: 10px;
-      color: white;
-      background: #1a73e8;
-    }
+/* =========================
+   GLOBAL
+========================= */
 
-    button.secondary {
-      background: #5f6368;
-    }
 
-    button.danger {
-      background: #d93025;
-    }
+:root {
 
-    button:disabled {
-      background: #9bbcf3;
-      cursor: not-allowed;
-    }
+  --primary:#2563eb;
+  --primary-dark:#1d4ed8;
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
+  --success:#16a34a;
+  --danger:#dc2626;
+  --warning:#d97706;
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-      margin-bottom: 12px;
-    }
+  --dark:#0f172a;
 
-    .result {
-      margin-top: 20px;
-      padding: 16px;
-      border-radius: 14px;
-      background: #f1f3f4;
-      border: 1px solid #ddd;
-      min-height: 70px;
-      font-size: 15px;
-      line-height: 1.5;
-    }
+  --text:#334155;
 
-    .success {
-      background: #e8f5e9;
-      border-color: #c8e6c9;
-      color: #1b5e20;
-    }
+  --muted:#64748b;
 
-    .failed {
-      background: #ffebee;
-      border-color: #ffcdd2;
-      color: #b71c1c;
-    }
+  --card:#ffffff;
 
-    .warning {
-      background: #fff8e1;
-      border-color: #ffe082;
-      color: #795548;
-    }
+  --border:#e2e8f0;
 
-    .loading {
-      background: #eef6ff;
-      border-color: #cfe7ff;
-      color: #0d47a1;
-    }
+}
 
-    .divider {
-      height: 1px;
-      background: #e0e0e0;
-      margin: 24px 0;
-    }
 
-    .small {
-      font-size: 12px;
-      color: #777;
-      margin-top: -4px;
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
 
-    .note {
-      margin-top: 18px;
-      font-size: 13px;
-      color: #777;
-      line-height: 1.5;
-    }
+* {
 
-    .footer {
-      text-align: center;
-      margin-top: 18px;
-      color: #999;
-      font-size: 12px;
-    }
+  box-sizing:border-box;
 
-    .hasil-utama {
-      margin: 16px 0;
-      padding: 18px;
-      border-radius: 16px;
-      border: 2px solid #d1d5db;
-      background: #f9fafb;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-      text-align: center;
-    }
-    
-    .hasil-label {
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: #6b7280;
-      margin-bottom: 8px;
-    }
-    
-    .hasil-judul {
-      font-size: 24px;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-    
-    .hasil-detail {
-      font-size: 16px;
-      line-height: 1.5;
-    }
-    
-    .hasil-waktu {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #6b7280;
-    }
-    
-    .hasil-utama.sukses {
-      background: #ecfdf5;
-      border-color: #10b981;
-    }
-    
-    .hasil-utama.sukses .hasil-judul {
-      color: #047857;
-    }
-    
-    .hasil-utama.gagal {
-      background: #fef2f2;
-      border-color: #ef4444;
-    }
-    
-    .hasil-utama.gagal .hasil-judul {
-      color: #b91c1c;
-    }
-    
-    .hasil-utama.peringatan {
-      background: #fffbeb;
-      border-color: #f59e0b;
-    }
-    
-    .hasil-utama.peringatan .hasil-judul {
-      color: #b45309;
-    }
-    
-    .hasil-utama.proses {
-      background: #eff6ff;
-      border-color: #3b82f6;
-    }
-    
-    .hasil-utama.proses .hasil-judul {
-      color: #1d4ed8;
-    }
+}
 
-        .login-box {
-      margin-bottom: 22px;
-      padding: 18px;
-      border-radius: 16px;
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-    }
 
-    .login-info {
-      display: none;
-      margin-bottom: 18px;
-      padding: 14px;
-      border-radius: 14px;
-      background: #e8f5e9;
-      border: 1px solid #c8e6c9;
-      color: #1b5e20;
-      font-size: 14px;
-      line-height: 1.5;
-    }
 
-    .scanner-area {
-      display: none;
-    }
-  </style>
+body {
+
+
+  margin:0;
+
+
+  min-height:100vh;
+
+
+  padding:18px;
+
+
+  font-family:
+
+  "Inter",
+  "Segoe UI",
+  Arial,
+  sans-serif;
+
+
+
+  background:
+
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #1e40af,
+    #2563eb
+  );
+
+
+}
+
+
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+
+.container {
+
+
+  width:100%;
+
+
+  max-width:520px;
+
+
+  margin:auto;
+
+
+
+  background:
+
+  rgba(255,255,255,.96);
+
+
+
+  border-radius:30px;
+
+
+
+  padding:24px;
+
+
+
+  box-shadow:
+
+
+  0 30px 80px
+
+  rgba(0,0,0,.30);
+
+
+
+  animation:
+
+  muncul .4s ease;
+
+
+}
+
+
+
+@keyframes muncul {
+
+
+from {
+
+
+ opacity:0;
+
+
+ transform:translateY(20px);
+
+
+}
+
+
+to {
+
+
+ opacity:1;
+
+
+ transform:translateY(0);
+
+
+}
+
+
+}
+
+
+
+
+
+/* =========================
+   HEADER
+========================= */
+
+
+h1 {
+
+
+  margin:0;
+
+
+  text-align:center;
+
+
+  font-size:28px;
+
+
+  font-weight:900;
+
+
+  color:var(--dark);
+
+
+}
+
+
+
+.subtitle {
+
+
+  text-align:center;
+
+
+  margin-top:8px;
+
+
+  color:var(--muted);
+
+
+  font-size:14px;
+
+
+}
+
+
+
+
+
+.badge {
+
+
+  display:flex;
+
+
+  justify-content:center;
+
+
+  align-items:center;
+
+
+  gap:8px;
+
+
+
+  width:max-content;
+
+
+
+  margin:18px auto;
+
+
+
+  padding:8px 18px;
+
+
+
+  border-radius:999px;
+
+
+
+  background:#dcfce7;
+
+
+
+  color:#166534;
+
+
+
+  font-size:13px;
+
+
+
+  font-weight:800;
+
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   SECTION TITLE
+========================= */
+
+
+.section-title {
+
+
+  margin:
+
+  22px 0 12px;
+
+
+
+  font-size:16px;
+
+
+  font-weight:900;
+
+
+
+  color:var(--dark);
+
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+
+.login-box {
+
+
+  padding:20px;
+
+
+  border-radius:22px;
+
+
+
+  background:#f8fafc;
+
+
+
+  border:
+
+  1px solid var(--border);
+
+
+
+}
+
+
+
+.login-info {
+
+
+  display:none;
+
+
+
+  margin-bottom:18px;
+
+
+
+  padding:16px;
+
+
+
+  border-radius:18px;
+
+
+
+  background:#ecfdf5;
+
+
+
+  border:
+
+  1px solid #86efac;
+
+
+
+  color:#166534;
+
+
+
+  font-size:14px;
+
+
+
+  line-height:1.5;
+
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   FORM
+========================= */
+
+
+label {
+
+
+  display:block;
+
+
+  margin-bottom:7px;
+
+
+
+  font-size:14px;
+
+
+  font-weight:800;
+
+
+
+  color:var(--text);
+
+
+}
+
+
+
+
+input {
+
+
+  width:100%;
+
+
+
+  padding:14px 16px;
+
+
+
+  margin-bottom:14px;
+
+
+
+  border-radius:15px;
+
+
+
+  border:
+
+  1px solid #cbd5e1;
+
+
+
+  font-size:15px;
+
+
+
+  outline:none;
+
+
+
+  transition:.2s;
+
+
+
+}
+
+
+
+input:focus {
+
+
+ border-color:var(--primary);
+
+
+
+ box-shadow:
+
+
+ 0 0 0 4px
+
+ rgba(37,99,235,.15);
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   BUTTON
+========================= */
+
+
+button {
+
+
+ width:100%;
+
+
+
+ padding:15px;
+
+
+
+ border:none;
+
+
+
+ border-radius:16px;
+
+
+
+ font-size:15px;
+
+
+
+ font-weight:900;
+
+
+
+ cursor:pointer;
+
+
+
+ color:white;
+
+
+
+ background:
+
+
+
+ linear-gradient(
+
+ 135deg,
+
+ #2563eb,
+
+ #1d4ed8
+
+ );
+
+
+
+ box-shadow:
+
+
+ 0 10px 25px
+
+ rgba(37,99,235,.35);
+
+
+
+ transition:.2s;
+
+
+}
+
+
+
+
+button:hover {
+
+
+ transform:translateY(-2px);
+
+
+}
+
+
+
+
+button:disabled {
+
+
+ opacity:.6;
+
+
+ transform:none;
+
+
+}
+
+
+
+
+button.secondary {
+
+
+ background:
+
+
+ linear-gradient(
+
+ 135deg,
+
+ #64748b,
+
+ #475569
+
+ );
+
+
+}
+
+
+
+button.danger {
+
+
+ background:
+
+
+ linear-gradient(
+
+ 135deg,
+
+ #ef4444,
+
+ #b91c1c
+
+ );
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   STATUS UTAMA
+========================= */
+
+
+.hasil-utama {
+
+
+ margin:20px 0;
+
+
+
+ padding:24px;
+
+
+
+ border-radius:24px;
+
+
+
+ text-align:center;
+
+
+
+ background:#f8fafc;
+
+
+
+ border:
+
+ 2px solid var(--border);
+
+
+
+ transition:.3s;
+
+
+
+}
+
+
+
+.hasil-label {
+
+
+ font-size:12px;
+
+
+
+ letter-spacing:2px;
+
+
+
+ font-weight:900;
+
+
+
+ color:var(--muted);
+
+
+
+}
+
+
+
+.hasil-judul {
+
+
+ margin-top:10px;
+
+
+
+ font-size:25px;
+
+
+
+ font-weight:900;
+
+
+
+}
+
+
+
+.hasil-detail {
+
+
+ margin-top:10px;
+
+
+
+ font-size:15px;
+
+
+
+ line-height:1.6;
+
+
+
+}
+
+
+
+.hasil-waktu {
+
+
+ margin-top:12px;
+
+
+
+ color:var(--muted);
+
+
+
+ font-size:12px;
+
+
+
+}
+
+
+
+
+
+
+
+.hasil-utama.sukses {
+
+
+ background:#ecfdf5;
+
+
+
+ border-color:#22c55e;
+
+
+
+}
+
+
+
+.hasil-utama.sukses .hasil-judul {
+
+
+ color:#15803d;
+
+
+}
+
+
+
+
+
+.hasil-utama.gagal {
+
+
+ background:#fef2f2;
+
+
+
+ border-color:#ef4444;
+
+
+
+}
+
+
+
+.hasil-utama.gagal .hasil-judul {
+
+
+ color:#b91c1c;
+
+
+}
+
+
+
+
+
+.hasil-utama.peringatan {
+
+
+ background:#fffbeb;
+
+
+
+ border-color:#f59e0b;
+
+
+
+}
+
+
+
+
+.hasil-utama.proses {
+
+
+ background:#eff6ff;
+
+
+
+ border-color:#3b82f6;
+
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   SCANNER
+========================= */
+
+.scanner-area {
+
+  display:none;
+
+  animation:
+  muncul .4s ease;
+
+}
+
+
+#reader {
+
+
+ width:100%;
+
+
+
+ overflow:hidden;
+
+
+
+ border-radius:24px;
+
+
+
+ background:#020617;
+
+
+
+ border:
+
+ 4px solid var(--primary);
+
+
+
+ box-shadow:
+
+
+ 0 15px 40px
+
+ rgba(37,99,235,.35);
+
+
+
+}
+
+
+
+
+
+
+/* =========================
+   RESULT BOX
+========================= */
+
+
+.result {
+
+
+ margin-top:18px;
+
+
+
+ padding:18px;
+
+
+
+ border-radius:18px;
+
+
+
+ background:#f8fafc;
+
+
+
+ border:
+
+ 1px solid var(--border);
+
+
+
+ line-height:1.6;
+
+
+
+ font-size:14px;
+
+
+
+}
+
+
+
+.success {
+
+
+ background:#ecfdf5;
+
+
+
+ color:#166534;
+
+
+}
+
+
+
+.failed {
+
+
+ background:#fef2f2;
+
+
+
+ color:#991b1b;
+
+
+}
+
+
+
+.warning {
+
+
+ background:#fffbeb;
+
+
+
+ color:#92400e;
+
+
+}
+
+
+
+.loading {
+
+
+ background:#eff6ff;
+
+
+
+ color:#1d4ed8;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   OTHER
+========================= */
+
+
+.divider {
+
+
+ height:1px;
+
+
+
+ background:#e2e8f0;
+
+
+
+ margin:28px 0;
+
+
+
+}
+
+
+
+.small {
+
+
+ margin-top:10px;
+
+
+
+ font-size:12px;
+
+
+
+ line-height:1.5;
+
+
+
+ color:var(--muted);
+
+
+
+}
+
+
+
+.note {
+
+
+ margin-top:20px;
+
+
+
+ padding:14px;
+
+
+
+ border-radius:16px;
+
+
+
+ background:#f8fafc;
+
+
+
+ color:var(--muted);
+
+
+
+ font-size:13px;
+
+
+
+ line-height:1.5;
+
+
+
+}
+
+
+
+
+.footer {
+
+
+ text-align:center;
+
+
+
+ margin-top:25px;
+
+
+
+ color:#94a3b8;
+
+
+
+ font-size:12px;
+
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+
+@media(max-width:420px){
+
+
+body {
+
+
+ padding:10px;
+
+
+}
+
+
+.container {
+
+
+ padding:18px;
+
+
+ border-radius:24px;
+
+
+}
+
+
+h1 {
+
+
+ font-size:24px;
+
+
+}
+
+
+.hasil-judul {
+
+
+ font-size:21px;
+
+
+}
+
+
+}
+
+
+
+
+</style>
+
+
 </head>
 
+<!-- =========================
+     PART 2 START
+     BODY UI MODERN
+========================= -->
+
+
 <body>
-  <div class="container">
-    <h1>Secure Scanner Mode</h1>
-    <div class="subtitle">Sistem Absensi QR Code Karyawan</div>
-    <span class="badge">External Scanner</span>
 
-    <div id="loginBox" class="login-box">
-      <div class="section-title">Login Operator Scanner</div>
-    
-      <label for="usernameOperator">Username</label>
-      <input
-        type="text"
-        id="usernameOperator"
-        placeholder="Masukkan username operator"
-        autocomplete="username"
-      >
-    
-      <label for="passwordOperator">Password</label>
-      <input
-        type="password"
-        id="passwordOperator"
-        placeholder="Masukkan password"
-        autocomplete="current-password"
-      >
-    
-      <button id="btnLoginOperator" onclick="loginOperator()">
-        Login Operator
-      </button>
-    
-      <div class="small">
-        Kamera scanner hanya bisa dibuka setelah operator berhasil login.
-      </div>
-    </div>
-    
-    <div id="loginInfo" class="login-info"></div>
 
-    <div id="hasilUtama" class="hasil-utama netral">
-      <div class="hasil-label">STATUS SISTEM</div>
-      <div id="hasilJudul" class="hasil-judul">Silakan login operator</div>
-      <div id="hasilDetail" class="hasil-detail">Masukkan username dan password untuk membuka scanner.</div>
-      <div id="hasilWaktu" class="hasil-waktu">-</div>
-    </div>
-    
-    <div id="scannerArea" class="scanner-area">
-    
-    <div class="section-title">Scan QR dengan Kamera</div>
+<div class="container">
 
-    <div id="reader"></div>
 
-    <button id="btnStartCamera" onclick="mulaiKamera()">
-      Mulai Kamera
-    </button>
 
-    <button id="btnStopCamera" class="danger" onclick="hentikanKamera()" disabled>
-      Hentikan Kamera
-    </button>
+<!-- =========================
+     HEADER
+========================= -->
 
-    <div class="small">
-      Izinkan akses kamera saat browser meminta izin. Untuk HP, gunakan Chrome/Edge terbaru.
-    </div>
 
-    <div class="divider"></div>
+<div class="app-header">
 
-    <div class="section-title">Input Manual QR Text</div>
 
-    <label for="qrText">Input QR Text</label>
-    <input
-      type="text"
-      id="qrText"
-      placeholder="Contoh: ID_Karyawan|token_absensi"
-      autocomplete="off"
-    >
+<h1>
+📷 Secure Scanner
+</h1>
 
-    <button class="secondary" onclick="prosesScanManual()">
-      Proses Scan Manual
-    </button>
 
-    <div id="hasilScan" class="result">
-      Hasil scan akan muncul di sini.
-    </div>
+<div class="subtitle">
+Sistem Absensi QR Code Karyawan
+</div>
 
-    <div class="note">
-      Format QR : <b>ID_Unik|Token_Absensi</b>.  
-      Validasi tetap dilakukan oleh Google Apps Script.
-    </div>
 
-  </div>
+<span class="badge">
+🟢 External Scanner
+</span>
 
-    <div class="footer">
-      SPPG Kubu Raya · Secure Scanner
-    </div>
-  </div>
 
-  <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwwwPB55htZM5GwCHt9FrTTrdAHMktMnv_XA6F_HtYCdkVdga4VypJb5vMdRFi_dtxf/exec";
-  
-    let html5QrCode = null;
-    let sedangProsesScan = false;
-    let qrTerakhir = "";
-    let waktuScanTerakhir = 0;
-    let jedaScanMs = 3000;
-    let callbackCounter = 0;
-    let operatorLogin = null;
-  
-    function tampilkanLoading(pesan) {
-      const hasilBox = document.getElementById("hasilScan");
-      hasilBox.className = "result loading";
-      hasilBox.innerHTML = escapeHtml(pesan || "Sedang memproses...");
-    }
-  
-    function tampilkanError(pesan) {
-      const hasilBox = document.getElementById("hasilScan");
-      hasilBox.className = "result failed";
-      hasilBox.innerHTML = "<b>Error:</b><br>" + escapeHtml(String(pesan || ""));
-  
-      tampilkanHasilUtama(
-        "gagal",
-        "❌ Terjadi Error",
-        String(pesan || "Terjadi error.")
-      );
-    }
-  
-    function tampilkanHasil(hasil) {
-      const hasilBox = document.getElementById("hasilScan");
-  
-      const pesan = hasil && hasil.pesan ? String(hasil.pesan) : "Tidak ada pesan dari server.";
-      const status = hasil && hasil.status ? String(hasil.status) : "-";
-      const id = hasil && hasil.id ? String(hasil.id) : "-";
-      const sumber = hasil && hasil.sumber ? String(hasil.sumber) : "-";
-  
-      const pesanLower = pesan.toLowerCase();
-      const statusLower = status.toLowerCase();
-  
-      let classResult = "result warning";
-      let tipeUtama = "peringatan";
-      let judulUtama = "⚠️ Scan Diproses";
-  
-      if (
-        pesanLower.includes("berhasil") &&
-        !pesanLower.includes("ditolak") &&
-        !pesanLower.includes("gagal")
-      ) {
-        classResult = "result success";
-        tipeUtama = "sukses";
-        judulUtama = "✅ Scan Berhasil";
-      }
-  
-      if (
-        pesanLower.includes("ditolak") ||
-        pesanLower.includes("gagal") ||
-        pesanLower.includes("tidak valid") ||
-        pesanLower.includes("nonaktif") ||
-        statusLower === "gagal" ||
-        statusLower === "error"
-      ) {
-        classResult = "result failed";
-        tipeUtama = "gagal";
-        judulUtama = "❌ Scan Ditolak";
-      }
-  
-      if (
-        pesanLower.includes("belum dibuka") ||
-        pesanLower.includes("sudah ditutup") ||
-        pesanLower.includes("scan ketiga")
-      ) {
-        classResult = "result warning";
-        tipeUtama = "peringatan";
-        judulUtama = "⚠️ Scan Tidak Diterima";
-      }
-  
-      hasilBox.className = classResult;
-      hasilBox.innerHTML =
-        "<b>Status:</b> " + escapeHtml(status) + "<br>" +
-        "<b>ID:</b> " + escapeHtml(id) + "<br>" +
-        "<b>Sumber:</b> " + escapeHtml(sumber) + "<br>" +
-        "<b>Pesan:</b><br>" + escapeHtml(pesan);
-  
-      tampilkanHasilUtama(
-        tipeUtama,
-        judulUtama,
-        "ID: " + id + " | " + pesan
-      );
-    }
-  
-    function tampilkanHasilUtama(tipe, judul, detail) {
-      const box = document.getElementById("hasilUtama");
-      const hasilJudul = document.getElementById("hasilJudul");
-      const hasilDetail = document.getElementById("hasilDetail");
-      const hasilWaktu = document.getElementById("hasilWaktu");
-  
-      box.className = "hasil-utama " + tipe;
-      hasilJudul.textContent = judul;
-      hasilDetail.textContent = detail;
-      hasilWaktu.textContent = "Waktu: " + new Date().toLocaleString("id-ID");
-  
-      box.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
+</div>
 
-    function loginOperator() {
-      const username = document.getElementById("usernameOperator").value.trim();
-      const password = document.getElementById("passwordOperator").value.trim();
-      const btnLogin = document.getElementById("btnLoginOperator");
-    
-      if (!username || !password) {
-        tampilkanHasilUtama(
-          "gagal",
-          "❌ Login Gagal",
-          "Username dan password wajib diisi."
-        );
-        return;
-      }
-    
-      btnLogin.disabled = true;
-      btnLogin.innerText = "Memproses Login...";
-    
-      tampilkanHasilUtama(
-        "proses",
-        "🔐 Memproses Login",
-        "Sedang memeriksa data operator..."
-      );
-    
-      panggilApiLoginScanner(username, password)
-        .then(function(hasil) {
-          if (!hasil || hasil.sukses !== true) {
-            tampilkanHasilUtama(
-              "gagal",
-              "❌ Login Gagal",
-              hasil && hasil.pesan ? hasil.pesan : "Login gagal."
-            );
-    
-            btnLogin.disabled = false;
-            btnLogin.innerText = "Login Operator";
-            return;
-          }
-    
-          operatorLogin = hasil;
-    
-          localStorage.setItem("scanner_operator_login", JSON.stringify({
-            operator_id: hasil.operator_id,
-            username: hasil.username,
-            nama_operator: hasil.nama_operator,
-            role: hasil.role,
-            login_time: new Date().toISOString()
-          }));
-    
-          document.getElementById("loginBox").style.display = "none";
-    
-          const loginInfo = document.getElementById("loginInfo");
-          loginInfo.style.display = "block";
-          loginInfo.innerHTML =
-            "<b>Operator login:</b> " + escapeHtml(hasil.nama_operator) + "<br>" +
-            "<b>Role:</b> " + escapeHtml(hasil.role) + "<br>" +
-            "<b>Status:</b> Aktif";
-    
-          document.getElementById("scannerArea").style.display = "block";
-    
-          tampilkanHasilUtama(
-            "sukses",
-            "✅ Login Berhasil",
-            "Selamat datang, " + hasil.nama_operator + ". Scanner siap digunakan."
-          );
-        })
-        .catch(function(error) {
-          tampilkanHasilUtama(
-            "gagal",
-            "❌ Login Error",
-            error.message || String(error)
-          );
-    
-          btnLogin.disabled = false;
-          btnLogin.innerText = "Login Operator";
-        });
-    }
-  
-    function prosesScanManual() {
-      if (!operatorLogin) {
-        tampilkanHasilUtama(
-          "gagal",
-          "❌ Akses Ditolak",
-          "Silakan login operator terlebih dahulu sebelum scan manual."
-        );
-        return;
-      }
-    
-      const qrText = document.getElementById("qrText").value.trim();
-      prosesQrText(qrText, "manual");
-    }
-  
-    function prosesQrText(qrText, sumberInput) {
-      if (!operatorLogin) {
-        tampilkanHasilUtama(
-          "gagal",
-          "❌ Akses Ditolak",
-          "Silakan login operator terlebih dahulu sebelum melakukan scan."
-        );
-        return;
-      }
-    
-      qrText = String(qrText || "").trim();
-  
-      if (!qrText) {
-        tampilkanError("QR Text masih kosong.");
-        return;
-      }
-  
-      if (sedangProsesScan) {
-        tampilkanHasilUtama(
-          "peringatan",
-          "⚠️ Scanner Sedang Memproses",
-          "Tunggu beberapa detik sebelum scan berikutnya."
-        );
-        return;
-      }
-  
-      const sekarang = Date.now();
-  
-      if (
-        sumberInput === "kamera" &&
-        qrText === qrTerakhir &&
-        (sekarang - waktuScanTerakhir) < jedaScanMs
-      ) {
-        return;
-      }
-  
-      sedangProsesScan = true;
-      qrTerakhir = qrText;
-      waktuScanTerakhir = sekarang;
-  
-      document.getElementById("qrText").value = qrText;
-  
-      tampilkanLoading("QR terbaca. Sedang mengirim ke server...");
-  
-      tampilkanHasilUtama(
-        "proses",
-        "⏳ Memproses Scan",
-        "QR terbaca. Sedang mengirim data ke sistem..."
-      );
-  
-      panggilApiScanner(qrText)
-        .then(function(hasil) {
-          tampilkanHasil(hasil);
-        })
-        .catch(function(error) {
-          tampilkanError(error.message || error);
-        })
-        .finally(function() {
-          setTimeout(function() {
-            sedangProsesScan = false;
-          }, jedaScanMs);
-        });
-    }
-  
-    function panggilApiScanner(qrText) {
-      return new Promise(function(resolve, reject) {
-        if (!WEB_APP_URL || WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1) {
-          reject(new Error("WEB_APP_URL belum diisi."));
-          return;
-        }
-  
-        callbackCounter++;
-        const callbackName = "scannerCallback_" + Date.now() + "_" + callbackCounter;
-  
-        const script = document.createElement("script");
-        script.id = callbackName;
-  
-        const timeout = setTimeout(function() {
-          cleanup();
-          reject(new Error("Server terlalu lama merespons. Coba ulangi scan."));
-        }, 15000);
-  
-        function cleanup() {
-          clearTimeout(timeout);
-  
-          if (window[callbackName]) {
-            delete window[callbackName];
-          }
-  
-          if (script && script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
-        }
-  
-        window[callbackName] = function(hasil) {
-          cleanup();
-          resolve(hasil);
-        };
-  
-        const url =
-          WEB_APP_URL +
-          "?action=scanner_api" +
-          "&qr=" + encodeURIComponent(qrText) +
-          "&callback=" + encodeURIComponent(callbackName);
-  
-        script.src = url;
-  
-        script.onerror = function() {
-          cleanup();
-          reject(new Error("Gagal menghubungi Apps Script. Cek internet atau Web App URL."));
-        };
-  
-        document.body.appendChild(script);
-      });
-    }
 
-    function panggilApiLoginScanner(username, password) {
-      return new Promise(function(resolve, reject) {
-        if (!WEB_APP_URL || WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1) {
-          reject(new Error("WEB_APP_URL belum diisi."));
-          return;
-        }
-    
-        callbackCounter++;
-        const callbackName = "loginCallback_" + Date.now() + "_" + callbackCounter;
-    
-        const script = document.createElement("script");
-        script.id = callbackName;
-    
-        const timeout = setTimeout(function() {
-          cleanup();
-          reject(new Error("Server terlalu lama merespons saat login."));
-        }, 15000);
-    
-        function cleanup() {
-          clearTimeout(timeout);
-    
-          if (window[callbackName]) {
-            delete window[callbackName];
-          }
-    
-          if (script && script.parentNode) {
-            script.parentNode.removeChild(script);
-          }
-        }
-    
-        window[callbackName] = function(hasil) {
-          cleanup();
-          resolve(hasil);
-        };
-    
-        const url =
-          WEB_APP_URL +
-          "?action=login_scanner" +
-          "&username=" + encodeURIComponent(username) +
-          "&password=" + encodeURIComponent(password) +
-          "&callback=" + encodeURIComponent(callbackName);
-    
-        script.src = url;
-    
-        script.onerror = function() {
-          cleanup();
-          reject(new Error("Gagal menghubungi Apps Script saat login."));
-        };
-    
-        document.body.appendChild(script);
-      });
-    }
-  
-    function mulaiKamera() {
-      if (!operatorLogin) {
-        tampilkanHasilUtama(
-          "gagal",
-          "❌ Akses Ditolak",
-          "Silakan login operator terlebih dahulu sebelum membuka kamera."
-        );
-        return;
-      }
-    
-      const btnStart = document.getElementById("btnStartCamera");
-      const btnStop = document.getElementById("btnStopCamera");
-  
-      btnStart.disabled = true;
-      btnStart.innerText = "Membuka Kamera...";
-  
-      tampilkanLoading("Membuka kamera. Silakan izinkan akses kamera.");
-  
-      tampilkanHasilUtama(
-        "proses",
-        "📷 Membuka Kamera",
-        "Silakan izinkan akses kamera dari browser."
-      );
-  
-      html5QrCode = new Html5Qrcode("reader");
-  
-      const config = {
-        fps: 10,
-        qrbox: {
-          width: 250,
-          height: 250
-        }
-      };
-  
-      html5QrCode.start(
-        { facingMode: "environment" },
-        config,
-        function(decodedText) {
-          prosesQrText(decodedText, "kamera");
-        },
-        function(errorMessage) {
-          // Diabaikan agar layar tidak penuh error saat kamera mencari QR.
-        }
-      )
-      .then(function() {
-        btnStart.innerText = "Kamera Aktif";
-        btnStop.disabled = false;
-  
-        const hasilBox = document.getElementById("hasilScan");
-        hasilBox.className = "result warning";
-        hasilBox.innerHTML = "Kamera aktif. Arahkan kamera ke QR Code.";
-  
-        tampilkanHasilUtama(
-          "peringatan",
-          "📷 Kamera Aktif",
-          "Arahkan kamera ke QR Code."
-        );
-      })
-      .catch(function(error) {
-        btnStart.disabled = false;
-        btnStart.innerText = "Mulai Kamera";
-        btnStop.disabled = true;
-  
-        tampilkanError(
-          "Gagal membuka kamera. Detail: " +
-          (error && error.message ? error.message : error)
-        );
-      });
-    }
-  
-    function hentikanKamera() {
-      const btnStart = document.getElementById("btnStartCamera");
-      const btnStop = document.getElementById("btnStopCamera");
-  
-      if (!html5QrCode) {
-        return;
-      }
-  
-      html5QrCode.stop()
-        .then(function() {
-          html5QrCode.clear();
-          html5QrCode = null;
-  
-          btnStart.disabled = false;
-          btnStart.innerText = "Mulai Kamera";
-          btnStop.disabled = true;
-  
-          const hasilBox = document.getElementById("hasilScan");
-          hasilBox.className = "result warning";
-          hasilBox.innerHTML = "Kamera dihentikan.";
-  
-          tampilkanHasilUtama(
-            "peringatan",
-            "📷 Kamera Dihentikan",
-            "Scanner kamera sedang tidak aktif."
-          );
-        })
-        .catch(function(error) {
-          tampilkanError(
-            "Gagal menghentikan kamera: " +
-            (error && error.message ? error.message : error)
-          );
-        });
-    }
-  
-    function escapeHtml(text) {
-      return String(text)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-  </script>
+
+
+
+<!-- =========================
+     LOGIN OPERATOR
+========================= -->
+
+
+<div id="loginBox" class="login-box">
+
+
+<div class="section-title">
+
+🔐 Login Operator Scanner
+
+</div>
+
+
+
+<label for="usernameOperator">
+
+Username Operator
+
+</label>
+
+
+<input
+
+type="text"
+
+id="usernameOperator"
+
+placeholder="Masukkan username operator"
+
+autocomplete="username"
+
+/>
+
+
+
+
+
+<label for="passwordOperator">
+
+Password
+
+</label>
+
+
+<input
+
+type="password"
+
+id="passwordOperator"
+
+placeholder="Masukkan password operator"
+
+autocomplete="current-password"
+
+/>
+
+
+
+
+<button
+
+id="btnLoginOperator"
+
+onclick="loginOperator()"
+
+>
+
+Login Operator
+
+</button>
+
+
+
+<div class="small">
+
+Scanner kamera hanya dapat digunakan setelah operator berhasil login.
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- =========================
+     OPERATOR INFO
+========================= -->
+
+
+<div id="loginInfo" class="login-info">
+
+
+</div>
+
+
+
+
+
+
+
+<!-- =========================
+     HASIL UTAMA
+========================= -->
+
+
+<div id="hasilUtama" class="hasil-utama">
+
+
+<div class="hasil-label">
+
+STATUS SISTEM
+
+</div>
+
+
+
+<div
+
+id="hasilJudul"
+
+class="hasil-judul"
+
+>
+
+Silakan login operator
+
+</div>
+
+
+
+<div
+
+id="hasilDetail"
+
+class="hasil-detail"
+
+>
+
+Masukkan username dan password untuk membuka scanner.
+
+</div>
+
+
+
+
+<div
+
+id="hasilWaktu"
+
+class="hasil-waktu"
+
+>
+
+-
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- =========================
+     SCANNER AREA
+========================= -->
+
+
+<div id="scannerArea" class="scanner-area">
+
+
+
+
+
+<div class="section-title">
+
+📷 Scan QR dengan Kamera
+
+</div>
+
+
+
+
+<div id="reader">
+
+</div>
+
+
+
+
+
+<button
+
+id="btnStartCamera"
+
+onclick="mulaiKamera()"
+
+>
+
+▶ Mulai Kamera
+
+</button>
+
+
+
+
+
+<button
+
+id="btnStopCamera"
+
+class="danger"
+
+onclick="hentikanKamera()"
+
+disabled
+
+>
+
+■ Hentikan Kamera
+
+</button>
+
+
+
+
+
+
+<div class="small">
+
+Izinkan akses kamera saat browser meminta izin.
+Gunakan Chrome/Edge terbaru untuk hasil terbaik.
+
+</div>
+
+
+
+
+
+
+
+<div class="divider"></div>
+
+
+
+
+
+
+
+<!-- =========================
+     MANUAL INPUT
+========================= -->
+
+
+<div class="section-title">
+
+⌨️ Input Manual QR Text
+
+</div>
+
+
+
+
+<label for="qrText">
+
+QR Text
+
+</label>
+
+
+
+
+<input
+
+
+type="text"
+
+
+id="qrText"
+
+
+placeholder="Contoh: ID_Karyawan|token_absensi"
+
+
+autocomplete="off"
+
+
+/>
+
+
+
+
+
+<button
+
+class="secondary"
+
+onclick="prosesScanManual()"
+
+>
+
+Proses Scan Manual
+
+</button>
+
+
+
+
+
+
+
+<!-- =========================
+     DETAIL HASIL SCAN
+========================= -->
+
+
+<div id="hasilScan" class="result">
+
+
+Hasil scan akan muncul di sini.
+
+
+</div>
+
+
+
+
+
+
+
+<div class="note">
+
+
+<b>Format QR:</b>
+
+<br>
+
+
+ID_Unik | Token_Absensi
+
+
+<br><br>
+
+
+Validasi keamanan tetap dilakukan oleh Google Apps Script.
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+
+<div class="footer">
+
+SPPG Kubu Raya · Secure Scanner
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
 </body>
+
 </html>
