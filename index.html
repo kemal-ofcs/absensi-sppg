@@ -488,52 +488,33 @@ input:focus {
 
 button {
 
-
  width:100%;
-
-
 
  padding:15px;
 
-
-
  border:none;
-
-
 
  border-radius:16px;
 
-
-
  font-size:15px;
-
-
 
  font-weight:900;
 
-
-
  cursor:pointer;
-
-
 
  color:white;
 
-
-
  background:
+ linear-gradient(135deg, #2563eb, #1d4ed8);
 
+ box-shadow:
+ 0 10px 25px rgba(37,99,235,.35);
 
+ transition:.2s;
 
- linear-gradient(
+ margin-bottom:12px;
 
- 135deg,
-
- #2563eb,
-
- #1d4ed8
-
- );
+}
 
 
 
@@ -856,37 +837,20 @@ button.danger {
 
 #reader {
 
-
  width:100%;
-
-
 
  overflow:hidden;
 
-
-
  border-radius:24px;
-
-
 
  background:#020617;
 
-
-
- border:
-
- 4px solid var(--primary);
-
-
+ border:4px solid var(--primary);
 
  box-shadow:
+ 0 15px 40px rgba(37,99,235,.35);
 
-
- 0 15px 40px
-
- rgba(37,99,235,.35);
-
-
+ margin-bottom:16px;
 
 }
 
@@ -1103,7 +1067,157 @@ button.danger {
 
 
 
+/* =========================
+   SCANNER CARD IMPROVEMENT
+========================= */
 
+
+.scanner-area {
+
+  margin-top:20px;
+
+}
+
+
+
+#reader {
+
+
+  width:100%;
+
+
+  min-height:280px;
+
+
+  overflow:hidden;
+
+
+  border-radius:26px;
+
+
+  background:#020617;
+
+
+  border:4px solid #2563eb;
+
+
+  box-shadow:
+
+  0 15px 40px rgba(37,99,235,.35);
+
+
+  margin-bottom:20px;
+
+
+}
+
+
+
+/* GROUP BUTTON CAMERA */
+
+.camera-actions {
+
+
+  display:flex;
+
+
+  flex-direction:column;
+
+
+  gap:14px;
+
+
+  margin-bottom:18px;
+
+
+}
+
+
+
+.camera-actions button {
+
+
+  margin-bottom:0;
+
+
+}
+
+
+
+/* BUTTON CAMERA STATE */
+
+
+#btnStartCamera {
+
+
+  min-height:56px;
+
+
+}
+
+
+
+#btnStopCamera {
+
+
+  min-height:56px;
+
+
+}
+
+
+
+/* DISABLED BUTTON */
+
+button:disabled {
+
+
+  opacity:.45;
+
+
+  background:#94a3b8;
+
+
+  box-shadow:none;
+
+
+  cursor:not-allowed;
+
+
+}
+
+
+
+/* CAMERA INFO */
+
+.camera-info {
+
+
+  margin-top:8px;
+
+
+  padding:14px;
+
+
+  border-radius:16px;
+
+
+  background:#f8fafc;
+
+
+  border:1px solid #e2e8f0;
+
+
+  font-size:13px;
+
+
+  color:#64748b;
+
+
+  line-height:1.5;
+
+
+}
 
 
 
@@ -1401,6 +1515,30 @@ class="hasil-waktu"
 
 
 <div id="reader">
+</div>
+
+
+<div class="camera-actions">
+
+
+<button
+id="btnStartCamera"
+onclick="mulaiKamera()"
+>
+▶ Mulai Kamera
+</button>
+
+
+
+<button
+id="btnStopCamera"
+class="danger"
+onclick="hentikanKamera()"
+disabled
+>
+■ Hentikan Kamera
+</button>
+
 
 </div>
 
@@ -1408,46 +1546,17 @@ class="hasil-waktu"
 
 
 
-<button
 
-id="btnStartCamera"
+<div class="camera-info">
 
-onclick="mulaiKamera()"
+📷 Kamera Scanner
 
->
-
-▶ Mulai Kamera
-
-</button>
-
-
-
-
-
-<button
-
-id="btnStopCamera"
-
-class="danger"
-
-onclick="hentikanKamera()"
-
-disabled
-
->
-
-■ Hentikan Kamera
-
-</button>
-
-
-
-
-
-
-<div class="small">
+<br>
 
 Izinkan akses kamera saat browser meminta izin.
+
+<br>
+
 Gunakan Chrome/Edge terbaru untuk hasil terbaik.
 
 </div>
