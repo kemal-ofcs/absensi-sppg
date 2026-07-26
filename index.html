@@ -1600,8 +1600,936 @@ SPPG Kubu Raya · Secure Scanner
 
 </div>
 
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+<script>
+
+// ===============================
+// PART 3A-1
+// ORIGINAL SCANNER ENGINE
+// JANGAN UBAH LOGIC
+// ===============================
 
 
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwwwPB55htZM5GwCHt9FrTTrdAHMktMnv_XA6F_HtYCdkVdga4VypJb5vMdRFi_dtxf/exec";
+
+
+let html5QrCode = null;
+
+let sedangProsesScan = false;
+
+let qrTerakhir = "";
+
+let waktuScanTerakhir = 0;
+
+let jedaScanMs = 3000;
+
+let callbackCounter = 0;
+
+let operatorLogin = null;
+
+
+
+
+function tampilkanLoading(pesan) {
+
+  const hasilBox =
+    document.getElementById("hasilScan");
+
+
+  hasilBox.className =
+    "result loading";
+
+
+  hasilBox.innerHTML =
+    escapeHtml(
+      pesan || "Sedang memproses..."
+    );
+
+}
+
+
+
+
+
+function tampilkanError(pesan) {
+
+  const hasilBox =
+    document.getElementById("hasilScan");
+
+
+  hasilBox.className =
+    "result failed";
+
+
+  hasilBox.innerHTML =
+    "<b>Error:</b><br>" +
+    escapeHtml(
+      String(pesan || "")
+    );
+
+
+
+  tampilkanHasilUtama(
+    "gagal",
+    "❌ Terjadi Error",
+    String(
+      pesan ||
+      "Terjadi error."
+    )
+  );
+
+}
+
+
+
+
+
+function tampilkanHasil(hasil) {
+
+
+  const hasilBox =
+    document.getElementById("hasilScan");
+
+
+
+  const pesan =
+    hasil && hasil.pesan
+    ?
+    String(hasil.pesan)
+    :
+    "Tidak ada pesan dari server.";
+
+
+
+  const status =
+    hasil && hasil.status
+    ?
+    String(hasil.status)
+    :
+    "-";
+
+
+
+  const id =
+    hasil && hasil.id
+    ?
+    String(hasil.id)
+    :
+    "-";
+
+
+
+  const sumber =
+    hasil && hasil.sumber
+    ?
+    String(hasil.sumber)
+    :
+    "-";
+
+
+
+  const pesanLower =
+    pesan.toLowerCase();
+
+
+
+  const statusLower =
+    status.toLowerCase();
+
+
+
+
+  let classResult =
+    "result warning";
+
+
+  let tipeUtama =
+    "peringatan";
+
+
+  let judulUtama =
+    "⚠️ Scan Diproses";
+
+
+
+
+
+  if (
+    pesanLower.includes("berhasil") &&
+    !pesanLower.includes("ditolak") &&
+    !pesanLower.includes("gagal")
+  ) {
+
+
+    classResult =
+      "result success";
+
+
+    tipeUtama =
+      "sukses";
+
+
+    judulUtama =
+      "✅ Scan Berhasil";
+
+
+  }
+
+
+
+
+
+  if (
+    pesanLower.includes("ditolak") ||
+    pesanLower.includes("gagal") ||
+    pesanLower.includes("tidak valid") ||
+    pesanLower.includes("nonaktif") ||
+    statusLower === "gagal" ||
+    statusLower === "error"
+  ) {
+
+
+    classResult =
+      "result failed";
+
+
+    tipeUtama =
+      "gagal";
+
+
+    judulUtama =
+      "❌ Scan Ditolak";
+
+
+  }
+
+
+
+
+
+  if (
+    pesanLower.includes("belum dibuka") ||
+    pesanLower.includes("sudah ditutup") ||
+    pesanLower.includes("scan ketiga")
+  ) {
+
+
+    classResult =
+      "result warning";
+
+
+    tipeUtama =
+      "peringatan";
+
+
+    judulUtama =
+      "⚠️ Scan Tidak Diterima";
+
+
+  }
+
+
+
+
+
+  hasilBox.className =
+    classResult;
+
+
+
+  hasilBox.innerHTML =
+
+    "<b>Status:</b> " +
+    escapeHtml(status) +
+    "<br>" +
+
+    "<b>ID:</b> " +
+    escapeHtml(id) +
+    "<br>" +
+
+    "<b>Sumber:</b> " +
+    escapeHtml(sumber) +
+    "<br>" +
+
+    "<b>Pesan:</b><br>" +
+    escapeHtml(pesan);
+
+
+
+
+  tampilkanHasilUtama(
+
+    tipeUtama,
+
+    judulUtama,
+
+    "ID: " +
+    id +
+    " | " +
+    pesan
+
+  );
+
+
+}
+
+
+
+
+
+function tampilkanHasilUtama(
+  tipe,
+  judul,
+  detail
+) {
+
+
+  const box =
+    document.getElementById("hasilUtama");
+
+
+
+  const hasilJudul =
+    document.getElementById("hasilJudul");
+
+
+
+  const hasilDetail =
+    document.getElementById("hasilDetail");
+
+
+
+  const hasilWaktu =
+    document.getElementById("hasilWaktu");
+
+
+
+
+
+  box.className =
+    "hasil-utama " +
+    tipe;
+
+
+
+  hasilJudul.textContent =
+    judul;
+
+
+
+  hasilDetail.textContent =
+    detail;
+
+
+
+  hasilWaktu.textContent =
+    "Waktu: " +
+    new Date()
+    .toLocaleString("id-ID");
+
+
+
+  box.scrollIntoView({
+
+    behavior:"smooth",
+
+    block:"start"
+
+  });
+
+
+}
+
+// ===============================
+// PART 3A-2
+// LOGIN + PROSES SCAN
+// ORIGINAL LOGIC
+// ===============================
+
+
+
+function loginOperator() {
+
+
+  const username =
+    document
+    .getElementById("usernameOperator")
+    .value
+    .trim();
+
+
+
+  const password =
+    document
+    .getElementById("passwordOperator")
+    .value
+    .trim();
+
+
+
+  const btnLogin =
+    document
+    .getElementById("btnLoginOperator");
+
+
+
+
+  if (!username || !password) {
+
+
+    tampilkanHasilUtama(
+
+      "gagal",
+
+      "❌ Login Gagal",
+
+      "Username dan password wajib diisi."
+
+    );
+
+
+    return;
+
+  }
+
+
+
+
+
+  btnLogin.disabled = true;
+
+
+  btnLogin.innerText =
+    "Memproses Login...";
+
+
+
+
+  tampilkanHasilUtama(
+
+    "proses",
+
+    "🔐 Memproses Login",
+
+    "Sedang memeriksa data operator..."
+
+  );
+
+
+
+
+
+  panggilApiLoginScanner(
+    username,
+    password
+  )
+
+  .then(function(hasil) {
+
+
+
+    if (!hasil || hasil.sukses !== true) {
+
+
+
+      tampilkanHasilUtama(
+
+        "gagal",
+
+        "❌ Login Gagal",
+
+        hasil && hasil.pesan
+        ?
+        hasil.pesan
+        :
+        "Login gagal."
+
+      );
+
+
+
+      btnLogin.disabled = false;
+
+
+      btnLogin.innerText =
+        "Login Operator";
+
+
+
+      return;
+
+    }
+
+
+
+
+
+    operatorLogin = hasil;
+
+
+
+
+    localStorage.setItem(
+
+      "scanner_operator_login",
+
+      JSON.stringify({
+
+        operator_id:
+        hasil.operator_id,
+
+
+        username:
+        hasil.username,
+
+
+        nama_operator:
+        hasil.nama_operator,
+
+
+        role:
+        hasil.role,
+
+
+        login_time:
+        new Date()
+        .toISOString()
+
+      })
+
+    );
+
+
+
+
+
+
+    document
+    .getElementById("loginBox")
+    .style
+    .display = "none";
+
+
+
+
+
+
+
+    const loginInfo =
+      document
+      .getElementById("loginInfo");
+
+
+
+    loginInfo.style.display =
+      "block";
+
+
+
+
+    loginInfo.innerHTML =
+
+
+      "<b>👤 Operator Aktif</b><br>" +
+
+      escapeHtml(
+        hasil.nama_operator
+      )
+
+      +
+
+      "<br><b>Role:</b> " +
+
+      escapeHtml(
+        hasil.role
+      )
+
+      +
+
+      "<br><b>Status:</b> Aktif";
+
+
+
+
+
+
+
+    document
+    .getElementById("scannerArea")
+    .style
+    .display = "block";
+
+
+
+
+
+
+
+    tampilkanHasilUtama(
+
+
+      "sukses",
+
+
+      "✅ Login Berhasil",
+
+
+      "Selamat datang, " +
+
+      hasil.nama_operator +
+
+      ". Scanner siap digunakan."
+
+    );
+
+
+
+
+  })
+
+
+
+  .catch(function(error) {
+
+
+
+    tampilkanHasilUtama(
+
+      "gagal",
+
+      "❌ Login Error",
+
+      error.message ||
+      String(error)
+
+    );
+
+
+
+
+    btnLogin.disabled = false;
+
+
+
+    btnLogin.innerText =
+      "Login Operator";
+
+
+
+  });
+
+
+
+}
+
+
+
+
+
+
+
+
+function prosesScanManual() {
+
+
+
+  if (!operatorLogin) {
+
+
+    tampilkanHasilUtama(
+
+      "gagal",
+
+      "❌ Akses Ditolak",
+
+      "Silakan login operator terlebih dahulu sebelum scan manual."
+
+    );
+
+
+    return;
+
+  }
+
+
+
+
+
+
+  const qrText =
+
+    document
+    .getElementById("qrText")
+    .value
+    .trim();
+
+
+
+
+  prosesQrText(
+
+    qrText,
+
+    "manual"
+
+  );
+
+
+
+}
+
+
+
+
+
+
+
+
+function prosesQrText(
+  qrText,
+  sumberInput
+) {
+
+
+
+  if (!operatorLogin) {
+
+
+
+    tampilkanHasilUtama(
+
+      "gagal",
+
+      "❌ Akses Ditolak",
+
+      "Silakan login operator terlebih dahulu sebelum melakukan scan."
+
+    );
+
+
+
+    return;
+
+  }
+
+
+
+
+
+
+
+  qrText =
+    String(
+      qrText || ""
+    )
+    .trim();
+
+
+
+
+
+  if (!qrText) {
+
+
+    tampilkanError(
+
+      "QR Text masih kosong."
+
+    );
+
+
+    return;
+
+
+  }
+
+
+
+
+
+
+
+  if (sedangProsesScan) {
+
+
+    tampilkanHasilUtama(
+
+      "peringatan",
+
+      "⚠️ Scanner Sedang Memproses",
+
+      "Tunggu beberapa detik sebelum scan berikutnya."
+
+    );
+
+
+    return;
+
+
+  }
+
+
+
+
+
+
+
+  const sekarang =
+    Date.now();
+
+
+
+
+
+
+  if (
+
+
+    sumberInput === "kamera"
+
+    &&
+
+    qrText === qrTerakhir
+
+    &&
+
+    (
+      sekarang -
+      waktuScanTerakhir
+    )
+
+    <
+
+    jedaScanMs
+
+
+
+  ) {
+
+
+
+    return;
+
+
+  }
+
+
+
+
+
+
+
+
+  sedangProsesScan = true;
+
+
+
+  qrTerakhir =
+    qrText;
+
+
+
+  waktuScanTerakhir =
+    sekarang;
+
+
+
+
+
+
+  document
+
+  .getElementById("qrText")
+
+  .value = qrText;
+
+
+
+
+
+
+
+
+  tampilkanLoading(
+
+    "QR terbaca. Sedang mengirim ke server..."
+
+  );
+
+
+
+
+
+
+
+  tampilkanHasilUtama(
+
+    "proses",
+
+    "⏳ Memproses Scan",
+
+    "QR terbaca. Sedang mengirim data ke sistem..."
+
+  );
+
+
+
+
+
+
+
+  panggilApiScanner(qrText)
+
+
+
+  .then(function(hasil) {
+
+
+    tampilkanHasil(hasil);
+
+
+  })
+
+
+
+  .catch(function(error) {
+
+
+
+    tampilkanError(
+
+      error.message ||
+      error
+
+    );
+
+
+  })
+
+
+
+  .finally(function(){
+
+
+
+    setTimeout(function(){
+
+
+      sedangProsesScan = false;
+
+
+    }, jedaScanMs);
+
+
+
+  });
+
+
+
+}
+
+</Script>
 
 
 </body>
