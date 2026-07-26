@@ -2529,6 +2529,962 @@ function prosesQrText(
 
 }
 
+// ===============================
+// PART 3B
+// API + CAMERA + HELPER
+// ORIGINAL LOGIC
+// ===============================
+
+
+
+function panggilApiScanner(qrText) {
+
+
+  return new Promise(function(resolve, reject) {
+
+
+
+    if (
+      !WEB_APP_URL ||
+      WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1
+    ) {
+
+
+      reject(
+        new Error(
+          "WEB_APP_URL belum diisi."
+        )
+      );
+
+
+      return;
+
+    }
+
+
+
+
+
+    callbackCounter++;
+
+
+
+    const callbackName =
+
+      "scannerCallback_" +
+
+      Date.now() +
+
+      "_" +
+
+      callbackCounter;
+
+
+
+
+
+
+
+    const script =
+      document.createElement("script");
+
+
+
+    script.id =
+      callbackName;
+
+
+
+
+
+
+
+    const timeout =
+
+      setTimeout(function(){
+
+
+        cleanup();
+
+
+        reject(
+
+          new Error(
+            "Server terlalu lama merespons. Coba ulangi scan."
+          )
+
+        );
+
+
+      },15000);
+
+
+
+
+
+
+
+    function cleanup(){
+
+
+      clearTimeout(timeout);
+
+
+
+      if(window[callbackName]){
+
+
+        delete window[callbackName];
+
+
+      }
+
+
+
+
+
+      if(
+        script &&
+        script.parentNode
+      ){
+
+
+        script.parentNode.removeChild(script);
+
+
+      }
+
+
+
+    }
+
+
+
+
+
+
+
+    window[callbackName] = function(hasil){
+
+
+      cleanup();
+
+
+      resolve(hasil);
+
+
+    };
+
+
+
+
+
+
+
+    const url =
+
+
+      WEB_APP_URL +
+
+      "?action=scanner_api" +
+
+      "&qr=" +
+
+      encodeURIComponent(qrText) +
+
+      "&callback=" +
+
+      encodeURIComponent(callbackName);
+
+
+
+
+
+
+
+    script.src =
+      url;
+
+
+
+
+
+
+
+    script.onerror = function(){
+
+
+      cleanup();
+
+
+
+      reject(
+
+        new Error(
+          "Gagal menghubungi Apps Script. Cek internet atau Web App URL."
+        )
+
+      );
+
+
+    };
+
+
+
+
+
+
+
+    document.body.appendChild(script);
+
+
+
+  });
+
+
+}
+
+
+
+
+
+
+
+
+
+function panggilApiLoginScanner(
+  username,
+  password
+){
+
+
+
+  return new Promise(function(resolve,reject){
+
+
+
+
+
+
+    if (
+      !WEB_APP_URL ||
+      WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1
+    ) {
+
+
+      reject(
+
+        new Error(
+          "WEB_APP_URL belum diisi."
+        )
+
+      );
+
+
+      return;
+
+
+    }
+
+
+
+
+
+
+
+
+    callbackCounter++;
+
+
+
+
+
+
+
+    const callbackName =
+
+
+      "loginCallback_" +
+
+      Date.now() +
+
+      "_" +
+
+      callbackCounter;
+
+
+
+
+
+
+
+    const script =
+
+      document.createElement("script");
+
+
+
+
+
+    script.id =
+      callbackName;
+
+
+
+
+
+
+
+    const timeout =
+
+
+      setTimeout(function(){
+
+
+
+        cleanup();
+
+
+
+        reject(
+
+          new Error(
+            "Server terlalu lama merespons saat login."
+          )
+
+        );
+
+
+
+      },15000);
+
+
+
+
+
+
+
+
+    function cleanup(){
+
+
+
+      clearTimeout(timeout);
+
+
+
+
+
+      if(window[callbackName]){
+
+
+        delete window[callbackName];
+
+
+      }
+
+
+
+
+
+
+      if(
+        script &&
+        script.parentNode
+      ){
+
+
+        script.parentNode.removeChild(script);
+
+
+      }
+
+
+
+    }
+
+
+
+
+
+
+
+    window[callbackName] = function(hasil){
+
+
+      cleanup();
+
+
+      resolve(hasil);
+
+
+    };
+
+
+
+
+
+
+
+    const url =
+
+
+      WEB_APP_URL +
+
+      "?action=login_scanner" +
+
+      "&username=" +
+
+      encodeURIComponent(username) +
+
+      "&password=" +
+
+      encodeURIComponent(password) +
+
+      "&callback=" +
+
+      encodeURIComponent(callbackName);
+
+
+
+
+
+
+
+    script.src =
+      url;
+
+
+
+
+
+
+
+    script.onerror = function(){
+
+
+
+      cleanup();
+
+
+
+      reject(
+
+        new Error(
+          "Gagal menghubungi Apps Script saat login."
+        )
+
+      );
+
+
+
+    };
+
+
+
+
+
+
+
+    document.body.appendChild(script);
+
+
+
+
+  });
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function mulaiKamera(){
+
+
+
+  if(!operatorLogin){
+
+
+
+    tampilkanHasilUtama(
+
+      "gagal",
+
+      "❌ Akses Ditolak",
+
+      "Silakan login operator terlebih dahulu sebelum membuka kamera."
+
+    );
+
+
+
+    return;
+
+
+
+  }
+
+
+
+
+
+
+
+  const btnStart =
+
+    document.getElementById(
+      "btnStartCamera"
+    );
+
+
+
+
+  const btnStop =
+
+    document.getElementById(
+      "btnStopCamera"
+    );
+
+
+
+
+
+
+
+
+  btnStart.disabled = true;
+
+
+  btnStart.innerText =
+    "Membuka Kamera...";
+
+
+
+
+
+
+
+  tampilkanLoading(
+
+    "Membuka kamera. Silakan izinkan akses kamera."
+
+  );
+
+
+
+
+
+
+  tampilkanHasilUtama(
+
+    "proses",
+
+    "📷 Membuka Kamera",
+
+    "Silakan izinkan akses kamera dari browser."
+
+  );
+
+
+
+
+
+
+
+
+  html5QrCode =
+
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+
+
+
+
+
+
+  const config = {
+
+
+    fps:10,
+
+
+    qrbox:{
+
+
+      width:250,
+
+
+      height:250
+
+
+    }
+
+
+  };
+
+
+
+
+
+
+
+
+  html5QrCode.start(
+
+
+    {
+      facingMode:"environment"
+    },
+
+
+    config,
+
+
+
+    function(decodedText){
+
+
+      prosesQrText(
+        decodedText,
+        "kamera"
+      );
+
+
+    },
+
+
+
+    function(errorMessage){
+
+
+      // scanning berjalan
+
+      // error kecil diabaikan
+
+
+    }
+
+
+
+  )
+
+
+
+  .then(function(){
+
+
+
+    btnStart.innerText =
+      "Kamera Aktif";
+
+
+
+    btnStop.disabled =
+      false;
+
+
+
+
+
+
+
+
+    const hasilBox =
+
+      document.getElementById(
+        "hasilScan"
+      );
+
+
+
+
+    hasilBox.className =
+      "result warning";
+
+
+
+
+    hasilBox.innerHTML =
+
+      "Kamera aktif. Arahkan kamera ke QR Code.";
+
+
+
+
+
+
+
+    tampilkanHasilUtama(
+
+      "peringatan",
+
+      "📷 Kamera Aktif",
+
+      "Arahkan kamera ke QR Code."
+
+    );
+
+
+
+  })
+
+
+
+  .catch(function(error){
+
+
+
+
+
+    btnStart.disabled =
+      false;
+
+
+
+    btnStart.innerText =
+      "Mulai Kamera";
+
+
+
+    btnStop.disabled =
+      true;
+
+
+
+
+
+
+
+    tampilkanError(
+
+      "Gagal membuka kamera. Detail: " +
+
+      (
+        error &&
+        error.message
+        ?
+        error.message
+        :
+        error
+      )
+
+    );
+
+
+
+  });
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function hentikanKamera(){
+
+
+
+  const btnStart =
+
+    document.getElementById(
+      "btnStartCamera"
+    );
+
+
+
+  const btnStop =
+
+    document.getElementById(
+      "btnStopCamera"
+    );
+
+
+
+
+
+
+
+  if(!html5QrCode){
+
+
+    return;
+
+
+  }
+
+
+
+
+
+
+
+  html5QrCode.stop()
+
+
+
+  .then(function(){
+
+
+
+
+
+    html5QrCode.clear();
+
+
+
+    html5QrCode = null;
+
+
+
+
+
+
+    btnStart.disabled =
+      false;
+
+
+
+    btnStart.innerText =
+      "Mulai Kamera";
+
+
+
+    btnStop.disabled =
+      true;
+
+
+
+
+
+
+
+    const hasilBox =
+
+      document.getElementById(
+        "hasilScan"
+      );
+
+
+
+
+    hasilBox.className =
+      "result warning";
+
+
+
+    hasilBox.innerHTML =
+      "Kamera dihentikan.";
+
+
+
+
+
+
+
+
+    tampilkanHasilUtama(
+
+      "peringatan",
+
+      "📷 Kamera Dihentikan",
+
+      "Scanner kamera sedang tidak aktif."
+
+    );
+
+
+
+
+  })
+
+
+
+  .catch(function(error){
+
+
+
+    tampilkanError(
+
+      "Gagal menghentikan kamera: " +
+
+      (
+        error &&
+        error.message
+        ?
+        error.message
+        :
+        error
+      )
+
+    );
+
+
+
+  });
+
+
+
+}
+
+
+
+
+
+
+
+
+
+function escapeHtml(text){
+
+
+
+  return String(text)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+
+
+}
+
 </Script>
 
 
