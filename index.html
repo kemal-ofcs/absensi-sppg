@@ -1935,6 +1935,18 @@ let callbackCounter = 0;
 
 let operatorLogin = null;
 
+let audioContextScanner = null;
+
+// ===============================
+// 3D-3 COUNTER SCAN
+// ===============================
+
+let jumlahScanBerhasil = 0;
+
+let jumlahScanGagal = 0;
+
+let jumlahScanTotal = 0;
+
 // ===============================
 // SESSION CONFIG
 // ===============================
@@ -2152,8 +2164,17 @@ function tampilkanHasil(hasil) {
 
 
     judulUtama =
-      "⚠️ Scan Tidak Diterima";
+	"⚠️ Scan Tidak Diterima";
 
+
+	bunyiScan(
+	 "warning"
+	);
+
+
+	getarScan(
+	 "warning"
+	);
 
   }
 
@@ -3338,6 +3359,37 @@ function panggilApiLoginScanner(
 
 function mulaiKamera(){
 
+	if(
+	 !audioContextScanner
+	){
+
+	 audioContextScanner =
+	 new (
+	 window.AudioContext ||
+	 window.webkitAudioContext
+	 )();
+
+	}
+
+
+	if(
+	 audioContextScanner.state === "suspended"
+	){
+
+	 audioContextScanner.resume();
+
+	}
+
+	if(!audioContextScanner){
+
+	  audioContextScanner =
+		new (
+		  window.AudioContext ||
+		  window.webkitAudioContext
+		)();
+
+	}
+
 
 
   if(!operatorLogin){
@@ -4407,29 +4459,46 @@ function cekAutoLogoutTengahMalam(){
 // ===============================
 
 
-function bunyiScan(
-  tipe
-){
+function bunyiScan(tipe){
 
 
   try {
 
 
-    const audioContext =
-      new (
-        window.AudioContext ||
-        window.webkitAudioContext
-      )();
+    if(
+      !audioContextScanner ||
+      audioContextScanner.state === "closed"
+    ){
+
+      audioContextScanner =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
+
+    }
+
+
+
+    if(
+      audioContextScanner.state === "suspended"
+    ){
+
+      audioContextScanner.resume();
+
+    }
+
+
 
 
 
     const oscillator =
-      audioContext.createOscillator();
+      audioContextScanner.createOscillator();
 
 
 
     const gain =
-      audioContext.createGain();
+      audioContextScanner.createGain();
 
 
 
@@ -4438,8 +4507,9 @@ function bunyiScan(
     oscillator.connect(gain);
 
     gain.connect(
-      audioContext.destination
+      audioContextScanner.destination
     );
+
 
 
 
@@ -4448,57 +4518,71 @@ function bunyiScan(
     if(tipe === "sukses"){
 
 
-      oscillator.frequency.value =
-        900;
+	  oscillator.frequency.value =
+		1000;
 
 
-      gain.gain.value =
-        0.15;
+	  gain.gain.value =
+		0.5;
 
 
-
-    }
-    else {
-
-
-      oscillator.frequency.value =
-        250;
-
-
-      gain.gain.value =
-        0.2;
-
-
-    }
+	}
 
 
 
+	else if(tipe === "warning"){
 
 
-    oscillator.start();
+	  oscillator.frequency.value =
+		600;
+
+
+	  gain.gain.value =
+		0.5;
 
 
 
-    setTimeout(function(){
+	}
 
 
-      oscillator.stop();
+
+	else {
 
 
-      audioContext.close();
+	  oscillator.frequency.value =
+		300;
 
 
-    },150);
+	  gain.gain.value =
+		0.6;
+
+
+	}
+
+
+
+	oscillator.start();
+
+
+	setTimeout(function(){
+
+
+	  oscillator.stop();
+
+
+	},200);
+
 
 
 
   }
 
+
   catch(error){
 
 
     console.log(
-      "Audio tidak tersedia",
+      "Audio gagal:",
       error
     );
 
@@ -4522,31 +4606,42 @@ function getarScan(
   }
 
 
-
+	navigator.vibrate(0);
 
 
   if(tipe === "sukses"){
 
 
-    navigator.vibrate(
-      120
-    );
+	  navigator.vibrate(120);
 
 
-  }
-  else {
+	}
 
 
-    navigator.vibrate(
-      [
-        200,
-        100,
-        200
-      ]
-    );
+
+	else if(tipe === "warning"){
 
 
-  }
+	  navigator.vibrate(250);
+
+
+	}
+
+
+
+	else {
+
+
+	  navigator.vibrate(
+		[
+		  200,
+		  100,
+		  200
+		]
+	  );
+
+
+	}
 
 
 
