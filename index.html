@@ -1616,10 +1616,10 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
 	  <div class="card-icon">📤</div>
 	  <div class="card-title">Proses Import Offline</div>
 	</div>
-    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
-      <div class="card-icon">📂</div>
-      <div class="card-title">Arsip Import Offline</div>
-    </div>
+    <div class="admin-card" onclick="bukaModalAdmin('modalArsipImportOffline')">
+	  <div class="card-icon">📂</div>
+	  <div class="card-title">Arsip Import Offline</div>
+	</div>
   </div>
 
   <!-- KATEGORI 3: OTOMATISASI SISTEM -->
@@ -1840,6 +1840,47 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
   </div>
 </div>
 
+<!-- 5 Modal Arsip Import Offline -->
+
+<div id="modalArsipImportOffline" class="modal-overlay">
+
+  <div class="modal-content">
+
+    <div class="modal-header">
+
+      <div class="modal-title">
+        📂 Arsip Import Offline
+      </div>
+
+      <button 
+      class="btn-close-modal"
+      onclick="tutupModalAdmin('modalArsipImportOffline')">
+      ✕
+      </button>
+
+    </div>
+
+
+    <p class="small">
+      Sistem akan memindahkan data IMPORT_OFFLINE
+      dengan status <b>Sudah Diproses</b>
+      ke ARSIP_IMPORT_OFFLINE.
+    </p>
+
+
+    <button 
+    class="secondary"
+    onclick="kirimArsipImportOffline()">
+
+      📂 Proses Arsip
+
+    </button>
+
+
+  </div>
+
+</div>
+
 <!-- =========================
      FOOTER
 ========================= -->
@@ -1860,7 +1901,7 @@ SPPG Kubu Raya · Secure Scanner & Admin Hub
 
 <script>
 
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxs2Qtf5CHoVeoKc9CoJF2tviGzRRygW3e1EoKetxr0fsEyFHghCRUuD6wkpB30l3qX/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwRWxptHgmQfkpQbzaocnvikqCEjjk0aojCaMdDIlF52y8rYgZwv5lsPPPkjFxPbFfw/exec";
 
 
 let html5QrCode = null;
@@ -2851,6 +2892,87 @@ function kirimImportOffline() {
   };
 
   document.body.appendChild(script);
+}
+
+function kirimArsipImportOffline(){
+
+  if(!operatorLogin || operatorLogin.role !== "Admin"){
+    alert("Akses ditolak. Fitur khusus Admin.");
+    return;
+  }
+
+
+  callbackCounter++;
+
+  const callbackName =
+    "arsipImportOfflineCallback_" 
+    + Date.now()
+    + "_"
+    + callbackCounter;
+
+
+  const script =
+    document.createElement("script");
+
+
+  window[callbackName] =
+  function(hasil){
+
+    if(hasil && hasil.sukses){
+
+      tutupModalAdmin(
+        "modalArsipImportOffline"
+      );
+
+
+      tampilkanHasilUtama(
+        "sukses",
+        "✅ Arsip Berhasil",
+        hasil.pesan
+      );
+
+
+    }else{
+
+      tampilkanHasilUtama(
+        "gagal",
+        "❌ Arsip Gagal",
+        hasil.pesan || "Terjadi error"
+      );
+
+    }
+
+
+    delete window[callbackName];
+
+    script.remove();
+
+  };
+
+
+  script.src =
+    WEB_APP_URL
+    +
+    "?action=arsip_import_offline"
+    +
+    "&callback="
+    +
+    encodeURIComponent(callbackName);
+
+
+  script.onerror=function(){
+
+    alert(
+      "Gagal menghubungi server"
+    );
+
+    script.remove();
+
+  };
+
+
+  document.body.appendChild(script);
+
 }
 
 /* =========================
