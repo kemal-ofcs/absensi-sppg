@@ -9,7 +9,7 @@
 
 
 <title>
-Secure Scanner | Attendance System
+Secure Scanner & Admin Hub | Attendance System
 </title>
 
 
@@ -18,7 +18,7 @@ Secure Scanner | Attendance System
 
 
 /* =========================
-   GLOBAL
+   GLOBAL & VARS
 ========================= */
 
 
@@ -55,15 +55,11 @@ Secure Scanner | Attendance System
 
 body {
 
-
   margin:0;
-
 
   min-height:100vh;
 
-
   padding:18px;
-
 
   font-family:
 
@@ -71,8 +67,6 @@ body {
   "Segoe UI",
   Arial,
   sans-serif;
-
-
 
   background:
 
@@ -82,7 +76,6 @@ body {
     #1e40af,
     #2563eb
   );
-
 
 }
 
@@ -96,44 +89,29 @@ body {
 
 .container {
 
-
   width:100%;
 
-
-  max-width:520px;
-
+  max-width:540px;
 
   margin:auto;
-
-
 
   background:
 
   rgba(255,255,255,.96);
 
-
-
   border-radius:30px;
-
-
 
   padding:24px;
 
-
-
   box-shadow:
-
 
   0 30px 80px
 
   rgba(0,0,0,.30);
 
-
-
   animation:
 
   muncul .4s ease;
-
 
 }
 
@@ -141,30 +119,21 @@ body {
 
 @keyframes muncul {
 
-
 from {
-
 
  opacity:0;
 
-
  transform:translateY(20px);
 
-
 }
-
 
 to {
 
-
  opacity:1;
-
 
  transform:translateY(0);
 
-
 }
-
 
 }
 
@@ -179,21 +148,15 @@ to {
 
 h1 {
 
-
   margin:0;
-
 
   text-align:center;
 
-
-  font-size:28px;
-
+  font-size:26px;
 
   font-weight:900;
 
-
   color:var(--dark);
-
 
 }
 
@@ -201,18 +164,13 @@ h1 {
 
 .subtitle {
 
-
   text-align:center;
 
-
-  margin-top:8px;
-
+  margin-top:6px;
 
   color:var(--muted);
 
-
-  font-size:14px;
-
+  font-size:13px;
 
 }
 
@@ -222,51 +180,29 @@ h1 {
 
 .badge {
 
-
   display:flex;
-
 
   justify-content:center;
 
-
   align-items:center;
-
 
   gap:8px;
 
-
-
   width:max-content;
 
+  margin:14px auto;
 
-
-  margin:18px auto;
-
-
-
-  padding:8px 18px;
-
-
+  padding:6px 16px;
 
   border-radius:999px;
 
-
-
   background:#dcfce7;
-
-
 
   color:#166534;
 
-
-
-  font-size:13px;
-
-
+  font-size:12px;
 
   font-weight:800;
-
-
 
 }
 
@@ -277,29 +213,111 @@ h1 {
 
 
 /* =========================
-   SECTION TITLE
+   SECTION TITLE & CATEGORY
 ========================= */
 
 
 .section-title {
 
-
   margin:
 
-  22px 0 12px;
+  20px 0 10px;
 
-
-
-  font-size:16px;
-
+  font-size:15px;
 
   font-weight:900;
 
-
-
   color:var(--dark);
 
+}
 
+
+
+.category-title {
+
+  font-size:12px;
+
+  font-weight:800;
+
+  text-transform:uppercase;
+
+  letter-spacing:1px;
+
+  color:var(--muted);
+
+  margin:18px 0 10px;
+
+  display:flex;
+
+  align-items:center;
+
+  gap:6px;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   NAV TABS SWITCHER
+========================= */
+
+.nav-tabs {
+
+  display:none;
+
+  gap:8px;
+
+  margin-top:16px;
+
+  margin-bottom:20px;
+
+  background:#e2e8f0;
+
+  padding:5px;
+
+  border-radius:18px;
+
+}
+
+.tab-btn {
+
+  flex:1;
+
+  padding:12px;
+
+  border:none;
+
+  border-radius:14px;
+
+  font-size:13px;
+
+  font-weight:800;
+
+  cursor:pointer;
+
+  background:transparent;
+
+  color:var(--muted);
+
+  margin-bottom:0;
+
+  box-shadow:none;
+
+  transition:.2s;
+
+}
+
+.tab-btn.active {
+
+  background:white;
+
+  color:var(--primary);
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
 
 }
 
@@ -316,23 +334,15 @@ h1 {
 
 .login-box {
 
-
   padding:20px;
-
 
   border-radius:22px;
 
-
-
   background:#f8fafc;
-
-
 
   border:
 
   1px solid var(--border);
-
-
 
 }
 
@@ -340,44 +350,25 @@ h1 {
 
 .login-info {
 
-
   display:none;
 
+  margin-bottom:16px;
 
-
-  margin-bottom:18px;
-
-
-
-  padding:16px;
-
-
+  padding:14px;
 
   border-radius:18px;
 
-
-
   background:#ecfdf5;
-
-
 
   border:
 
   1px solid #86efac;
 
-
-
   color:#166534;
 
-
-
-  font-size:14px;
-
-
+  font-size:13px;
 
   line-height:1.5;
-
-
 
 }
 
@@ -388,90 +379,62 @@ h1 {
 
 
 /* =========================
-   FORM
+   FORM & INPUTS
 ========================= */
 
 
 label {
 
-
   display:block;
 
+  margin-bottom:6px;
 
-  margin-bottom:7px;
-
-
-
-  font-size:14px;
-
+  font-size:13px;
 
   font-weight:800;
 
-
-
   color:var(--text);
-
 
 }
 
 
 
 
-input {
-
+input, select {
 
   width:100%;
 
+  padding:13px 15px;
 
+  margin-bottom:12px;
 
-  padding:14px 16px;
-
-
-
-  margin-bottom:14px;
-
-
-
-  border-radius:15px;
-
-
+  border-radius:14px;
 
   border:
 
   1px solid #cbd5e1;
 
-
-
-  font-size:15px;
-
-
+  font-size:14px;
 
   outline:none;
 
-
-
   transition:.2s;
 
-
+  background:white;
 
 }
 
 
 
-input:focus {
-
+input:focus, select:focus {
 
  border-color:var(--primary);
 
-
-
  box-shadow:
-
 
  0 0 0 4px
 
  rgba(37,99,235,.15);
-
 
 }
 
@@ -482,7 +445,7 @@ input:focus {
 
 
 /* =========================
-   BUTTON
+   BUTTONS
 ========================= */
 
 
@@ -490,13 +453,13 @@ button {
 
  width:100%;
 
- padding:15px;
+ padding:14px;
 
  border:none;
 
  border-radius:16px;
 
- font-size:15px;
+ font-size:14px;
 
  font-weight:900;
 
@@ -518,28 +481,9 @@ button {
 
 
 
- box-shadow:
-
-
- 0 10px 25px
-
- rgba(37,99,235,.35);
-
-
-
- transition:.2s;
-
-
-}
-
-
-
-
 button:hover {
 
-
  transform:translateY(-2px);
-
 
 }
 
@@ -548,12 +492,9 @@ button:hover {
 
 button:disabled {
 
-
  opacity:.6;
 
-
  transform:none;
-
 
 }
 
@@ -562,9 +503,7 @@ button:disabled {
 
 button.secondary {
 
-
  background:
-
 
  linear-gradient(
 
@@ -576,16 +515,13 @@ button.secondary {
 
  );
 
-
 }
 
 
 
 button.danger {
 
-
  background:
-
 
  linear-gradient(
 
@@ -597,8 +533,213 @@ button.danger {
 
  );
 
+}
+
+
+
+
+
+
+
+/* =========================
+   ADMIN DASHBOARD GRID
+========================= */
+
+.grid-dashboard {
+
+  display:grid;
+
+  grid-template-columns:repeat(2, 1fr);
+
+  gap:12px;
+
+  margin-top:10px;
 
 }
+
+.admin-card {
+
+  background:#f8fafc;
+
+  border:1px solid var(--border);
+
+  padding:16px 12px;
+
+  border-radius:20px;
+
+  text-align:center;
+
+  cursor:pointer;
+
+  transition:all .2s ease;
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  justify-content:center;
+
+  gap:8px;
+
+}
+
+.admin-card:hover {
+
+  background:#eff6ff;
+
+  border-color:#93c5fd;
+
+  transform:translateY(-3px);
+
+  box-shadow:0 10px 20px rgba(37,99,235,0.1);
+
+}
+
+.admin-card .card-icon {
+
+  font-size:26px;
+
+}
+
+.admin-card .card-title {
+
+  font-size:12px;
+
+  font-weight:800;
+
+  color:var(--dark);
+
+  line-height:1.3;
+
+}
+
+.admin-card.disabled {
+
+  opacity:0.5;
+
+  cursor:not-allowed;
+
+  background:#f1f5f9;
+
+}
+
+.admin-card.disabled:hover {
+
+  transform:none;
+
+  border-color:var(--border);
+
+  box-shadow:none;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   MODAL DRAWER / POPUP (FIXED)
+========================= */
+
+.modal-overlay {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(15, 23, 42, 0.6);
+  backdrop-filter:blur(4px);
+  z-index:999;
+  align-items:flex-end;
+  justify-content:center;
+  animation:fadeIn .2s ease;
+}
+
+.modal-content {
+  background:white;
+  width:100%;
+  max-width:520px;
+  border-radius:28px 28px 0 0;
+  padding:20px 18px 24px 18px; /* Padding dipresisikan */
+  max-height:85vh;
+  overflow-y:auto;
+  box-shadow:0 -10px 40px rgba(0,0,0,0.2);
+  animation:slideUp .3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing:border-box; /* Mencegah overflow komponen */
+}
+
+.modal-content input,
+.modal-content select {
+  width:100%;
+  box-sizing:border-box; /* Memastikan input tidak keluar batas modal */
+  margin-left:0;
+  margin-right:0;
+}
+
+.modal-header {
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:18px;
+
+}
+
+.modal-title {
+
+  font-size:17px;
+
+  font-weight:900;
+
+  color:var(--dark);
+
+}
+
+.btn-close-modal {
+
+  background:#f1f5f9;
+
+  color:var(--muted);
+
+  width:34px;
+
+  height:34px;
+
+  border-radius:50%;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:16px;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  border:none;
+
+  margin-bottom:0;
+
+  box-shadow:none;
+
+  padding:0;
+
+}
+
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+@keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
 
 
 
@@ -613,36 +754,21 @@ button.danger {
 
 .hasil-utama {
 
+ margin:18px 0;
 
- margin:20px 0;
+ padding:20px;
 
-
-
- padding:24px;
-
-
-
- border-radius:24px;
-
-
+ border-radius:22px;
 
  text-align:center;
 
-
-
  background:#f8fafc;
-
-
 
  border:
 
  2px solid var(--border);
 
-
-
  transition:.3s;
-
-
 
 }
 
@@ -650,22 +776,13 @@ button.danger {
 
 .hasil-label {
 
-
- font-size:12px;
-
-
+ font-size:11px;
 
  letter-spacing:2px;
 
-
-
  font-weight:900;
 
-
-
  color:var(--muted);
-
-
 
 }
 
@@ -673,18 +790,11 @@ button.danger {
 
 .hasil-judul {
 
+ margin-top:8px;
 
- margin-top:10px;
-
-
-
- font-size:25px;
-
-
+ font-size:22px;
 
  font-weight:900;
-
-
 
 }
 
@@ -692,18 +802,11 @@ button.danger {
 
 .hasil-detail {
 
+ margin-top:8px;
 
- margin-top:10px;
+ font-size:14px;
 
-
-
- font-size:15px;
-
-
-
- line-height:1.6;
-
-
+ line-height:1.5;
 
 }
 
@@ -711,18 +814,11 @@ button.danger {
 
 .hasil-waktu {
 
-
- margin-top:12px;
-
-
+ margin-top:10px;
 
  color:var(--muted);
 
-
-
- font-size:12px;
-
-
+ font-size:11px;
 
 }
 
@@ -732,88 +828,21 @@ button.danger {
 
 
 
-.hasil-utama.sukses {
+.hasil-utama.sukses { background:#ecfdf5; border-color:#22c55e; }
 
-
- background:#ecfdf5;
-
-
-
- border-color:#22c55e;
+.hasil-utama.sukses .hasil-judul { color:#15803d; }
 
 
 
-}
+.hasil-utama.gagal { background:#fef2f2; border-color:#ef4444; }
+
+.hasil-utama.gagal .hasil-judul { color:#b91c1c; }
 
 
 
-.hasil-utama.sukses .hasil-judul {
+.hasil-utama.peringatan { background:#fffbeb; border-color:#f59e0b; }
 
-
- color:#15803d;
-
-
-}
-
-
-
-
-
-.hasil-utama.gagal {
-
-
- background:#fef2f2;
-
-
-
- border-color:#ef4444;
-
-
-
-}
-
-
-
-.hasil-utama.gagal .hasil-judul {
-
-
- color:#b91c1c;
-
-
-}
-
-
-
-
-
-.hasil-utama.peringatan {
-
-
- background:#fffbeb;
-
-
-
- border-color:#f59e0b;
-
-
-
-}
-
-
-
-
-.hasil-utama.proses {
-
-
- background:#eff6ff;
-
-
-
- border-color:#3b82f6;
-
-
-
-}
+.hasil-utama.proses { background:#eff6ff; border-color:#3b82f6; }
 
 
 
@@ -822,7 +851,7 @@ button.danger {
 
 
 /* =========================
-   SCANNER
+   SCANNER & READER
 ========================= */
 
 .scanner-area {
@@ -830,305 +859,47 @@ button.danger {
   display:none;
 
   animation:
+
   muncul .4s ease;
 
+  margin-top:16px;
+
 }
 
 
 #reader {
-
- width:100%;
-
- overflow:hidden;
-
- border-radius:24px;
-
- background:#020617;
-
- border:4px solid var(--primary);
-
- box-shadow:
- 0 15px 40px rgba(37,99,235,.35);
-
- margin-bottom:16px;
-
-}
-
-
-
-
-
-
-/* =========================
-   RESULT BOX
-========================= */
-
-
-.result {
-
-
- margin-top:18px;
-
-
-
- padding:18px;
-
-
-
- border-radius:18px;
-
-
-
- background:#f8fafc;
-
-
-
- border:
-
- 1px solid var(--border);
-
-
-
- line-height:1.6;
-
-
-
- font-size:14px;
-
-
-
-}
-
-
-
-.success {
-
-
- background:#ecfdf5;
-
-
-
- color:#166534;
-
-
-}
-
-
-
-.failed {
-
-
- background:#fef2f2;
-
-
-
- color:#991b1b;
-
-
-}
-
-
-
-.warning {
-
-
- background:#fffbeb;
-
-
-
- color:#92400e;
-
-
-}
-
-
-
-.loading {
-
-
- background:#eff6ff;
-
-
-
- color:#1d4ed8;
-
-
-}
-
-
-
-
-
-
-
-/* =========================
-   OTHER
-========================= */
-
-
-.divider {
-
-
- height:1px;
-
-
-
- background:#e2e8f0;
-
-
-
- margin:28px 0;
-
-
-
-}
-
-
-
-.small {
-
-
- margin-top:10px;
-
-
-
- font-size:12px;
-
-
-
- line-height:1.5;
-
-
-
- color:var(--muted);
-
-
-
-}
-
-
-
-.note {
-
-
- margin-top:20px;
-
-
-
- padding:14px;
-
-
-
- border-radius:16px;
-
-
-
- background:#f8fafc;
-
-
-
- color:var(--muted);
-
-
-
- font-size:13px;
-
-
-
- line-height:1.5;
-
-
-
-}
-
-
-
-
-.footer {
-
-
- text-align:center;
-
-
-
- margin-top:25px;
-
-
-
- color:#94a3b8;
-
-
-
- font-size:12px;
-
-
-
-}
-
-
-
-/* =========================
-   SCANNER CARD IMPROVEMENT
-========================= */
-
-
-.scanner-area {
-
-  margin-top:20px;
-
-}
-
-
-
-#reader {
-
 
   width:100%;
 
-
-  min-height:280px;
-
+  min-height:260px;
 
   overflow:hidden;
 
-
-  border-radius:26px;
-
+  border-radius:24px;
 
   background:#020617;
 
-
-  border:4px solid #2563eb;
-
+  border:4px solid var(--primary);
 
   box-shadow:
 
   0 15px 40px rgba(37,99,235,.35);
 
-
-  margin-bottom:20px;
-
+  margin-bottom:16px;
 
 }
 
 
 
-/* GROUP BUTTON CAMERA */
-
 .camera-actions {
-
 
   display:flex;
 
-
   flex-direction:column;
 
+  gap:12px;
 
-  gap:14px;
-
-
-  margin-bottom:18px;
-
+  margin-bottom:16px;
 
 }
 
@@ -1136,171 +907,155 @@ button.danger {
 
 .camera-actions button {
 
-
   margin-bottom:0;
 
-
 }
 
 
 
-/* BUTTON CAMERA STATE */
+#btnStartCamera, #btnStopCamera {
 
-
-#btnStartCamera {
-
-
-  min-height:56px;
-
+  min-height:52px;
 
 }
 
 
-
-#btnStopCamera {
-
-
-  min-height:56px;
-
-
-}
-
-
-
-/* DISABLED BUTTON */
-
-button:disabled {
-
-
-  opacity:.45;
-
-
-  background:#94a3b8;
-
-
-  box-shadow:none;
-
-
-  cursor:not-allowed;
-
-
-}
-
-
-
-/* CAMERA INFO */
 
 .camera-info {
 
-
   margin-top:8px;
 
-
-  padding:14px;
-
+  padding:12px;
 
   border-radius:16px;
 
-
   background:#f8fafc;
-
 
   border:1px solid #e2e8f0;
 
-
-  font-size:13px;
-
+  font-size:12px;
 
   color:#64748b;
 
-
   line-height:1.5;
-
 
 }
 
-/* =========================
-   REALTIME CLOCK
-========================= */
 
 
 .scanner-clock {
 
-
-  margin-top:14px;
-
+  margin-top:12px;
 
   text-align:center;
 
-
-  font-size:14px;
-
+  font-size:13px;
 
   font-weight:700;
 
-
   color:#475569;
 
+  line-height:1.5;
 
-  line-height:1.6;
-
-
-  padding:10px;
-
-
+  padding:8px;
 
   border-radius:14px;
 
-
   background:#f8fafc;
-
 
   border:1px solid #e2e8f0;
 
-
 }
-
-/* =========================
-   LOGOUT BUTTON
-========================= */
-
 
 .logout-btn {
 
-
   margin-top:10px;
-
 
   background:
 
   linear-gradient(
-    135deg,
-    #ef4444,
-    #b91c1c
-  );
 
+    135deg,
+
+    #ef4444,
+
+    #b91c1c
+
+  );
 
 }
 
+
+
+
+
+
+
 /* =========================
-   3D-1 QR SCAN ANIMATION
+   RESULT BOX & OTHER
+========================= */
+
+
+.result {
+
+ margin-top:16px;
+
+ padding:16px;
+
+ border-radius:18px;
+
+ background:#f8fafc;
+
+ border:
+
+ 1px solid var(--border);
+
+ line-height:1.6;
+
+ font-size:13px;
+
+}
+
+
+
+.success { background:#ecfdf5; color:#166534; }
+
+.failed { background:#fef2f2; color:#991b1b; }
+
+.warning { background:#fffbeb; color:#92400e; }
+
+.loading { background:#eff6ff; color:#1d4ed8; }
+
+
+
+.divider { height:1px; background:#e2e8f0; margin:24px 0; }
+
+.small { margin-top:8px; font-size:12px; line-height:1.5; color:var(--muted); }
+
+.note { margin-top:18px; padding:12px; border-radius:16px; background:#f8fafc; color:var(--muted); font-size:12px; line-height:1.5; }
+
+.footer { text-align:center; margin-top:20px; color:#94a3b8; font-size:12px; }
+
+
+
+
+
+
+
+/* =========================
+   3D QR SCAN ANIMATION
 ========================= */
 
 
 .reader-wrapper {
 
-
   position:relative;
-
 
   width:100%;
 
-
   overflow:hidden;
 
-
-  border-radius:26px;
-
+  border-radius:24px;
 
 }
 
@@ -1308,155 +1063,63 @@ button:disabled {
 
 .scan-line {
 
-
   position:absolute;
-
 
   left:10%;
 
-
   right:10%;
-
 
   height:3px;
 
-
   background:#22c55e;
 
-
-  box-shadow:
-
-
-  0 0 12px #22c55e;
-
-
+  box-shadow:0 0 12px #22c55e;
 
   top:15%;
 
-
   opacity:.8;
 
+  display:none;
 
-
-  animation:
-
-  scanMove 2.5s infinite ease-in-out;
-
+  animation: scanMove 2.5s infinite ease-in-out;
 
 }
+
+.reader-wrapper.active .scan-line { display:block; }
 
 
 
 @keyframes scanMove {
 
+0% { top:15%; }
 
-0% {
+50% { top:80%; }
 
-
- top:15%;
-
-
-}
-
-
-
-50% {
-
-
- top:80%;
-
+100% { top:15%; }
 
 }
 
 
-
-100% {
-
-
- top:15%;
-
-
-}
-
-
-}
-
-/* =========================
-   MOBILE
-========================= */
 
 
 @media(max-width:420px){
 
+ body { padding:8px; }
 
-body {
+ .container { padding:16px; border-radius:22px; }
 
+ h1 { font-size:22px; }
 
- padding:10px;
+ .hasil-judul { font-size:19px; }
 
-
-}
-
-
-.container {
-
-
- padding:18px;
-
-
- border-radius:24px;
-
-
-}
-
-
-h1 {
-
-
- font-size:24px;
-
-
-}
-
-
-.hasil-judul {
-
-
- font-size:21px;
-
-
-}
-
-
-}
-
-.scan-line {
-
-
-display:none;
-
-
-}
-
-
-.reader-wrapper.active .scan-line {
-
-
-display:block;
-
+ .grid-dashboard { grid-template-columns:repeat(2, 1fr); gap:10px; }
 
 }
 
 
 </style>
 
-
 </head>
-
-<!-- =========================
-     PART 2 START
-     BODY UI MODERN
-========================= -->
 
 
 <body>
@@ -1579,7 +1242,7 @@ Login Operator
 
 <div class="small">
 
-Scanner kamera hanya dapat digunakan setelah operator berhasil login.
+Scanner kamera & fitur admin hanya dapat digunakan setelah login.
 
 </div>
 
@@ -1588,6 +1251,16 @@ Scanner kamera hanya dapat digunakan setelah operator berhasil login.
 </div>
 
 
+
+
+
+<!-- =========================
+     NAV TABS SWITCHER (MUNCUL SETELAH LOGIN)
+========================= -->
+<div id="navTabs" class="nav-tabs">
+  <button id="tabScanner" class="tab-btn active" onclick="gantiTab('scanner')">📷 Scanner Mode</button>
+  <button id="tabAdmin" class="tab-btn" onclick="gantiTab('admin')" style="display:none;">⚡ Admin Hub</button>
+</div>
 
 
 
@@ -1604,12 +1277,19 @@ Scanner kamera hanya dapat digunakan setelah operator berhasil login.
 
 
 <button
+
 id="btnLogoutOperator"
+
 class="danger logout-btn"
+
 onclick="logoutOperator()"
+
 style="display:none;"
+
 >
+
 🚪 Logout Operator
+
 </button>
 
 
@@ -1686,7 +1366,7 @@ class="hasil-waktu"
 
 
 <!-- =========================
-     SCANNER AREA
+     SCANNER AREA (TAB 1)
 ========================= -->
 
 
@@ -1723,21 +1403,33 @@ class="hasil-waktu"
 
 
 <button
+
 id="btnStartCamera"
+
 onclick="mulaiKamera()"
+
 >
+
 ▶ Mulai Kamera
+
 </button>
 
 
 
 <button
+
 id="btnStopCamera"
+
 class="danger"
+
 onclick="hentikanKamera()"
+
 disabled
+
 >
+
 ■ Hentikan Kamera
+
 </button>
 
 
@@ -1889,7 +1581,264 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
 
 
 
+<!-- =========================
+     ADMIN DASHBOARD AREA (TAB 2)
+========================= -->
+<div id="adminDashboardArea" class="scanner-area">
 
+  <div class="section-title">⚡ Panel Kontrol Admin</div>
+
+  <!-- KATEGORI 1: OPERASIONAL ABSENSI -->
+  <div class="category-title">📌 Operasional Absensi</div>
+  <div class="grid-dashboard">
+    <div class="admin-card" onclick="bukaModalAdmin('modalKoreksi')">
+      <div class="card-icon">✏️</div>
+      <div class="card-title">Koreksi Absensi</div>
+    </div>
+    <div class="admin-card" onclick="bukaModalAdmin('modalPenugasanBackup')">
+      <div class="card-icon">📋</div>
+      <div class="card-title">Penugasan Baris Backup</div>
+    </div>
+    <div class="admin-card" onclick="bukaModalAdmin('modalPembatalanBackup')">
+      <div class="card-icon">❌</div>
+      <div class="card-title">Pembatalan Baris Backup</div>
+    </div>
+    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+      <div class="card-icon">🔍</div>
+      <div class="card-title">Audit Kualitas Absensi</div>
+    </div>
+  </div>
+
+  <!-- KATEGORI 2: IMPORT & DATA OFFLINE -->
+  <div class="category-title">📥 Import & Data Offline</div>
+  <div class="grid-dashboard">
+    <div class="admin-card" onclick="bukaModalAdmin('modalImportOffline')">
+	  <div class="card-icon">📤</div>
+	  <div class="card-title">Proses Import Offline</div>
+	</div>
+    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+      <div class="card-icon">📂</div>
+      <div class="card-title">Arsip Import Offline</div>
+    </div>
+  </div>
+
+  <!-- KATEGORI 3: OTOMATISASI SISTEM -->
+  <div class="category-title">⚙️ Otomatisasi & Sistem</div>
+  <div class="grid-dashboard">
+    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+      <div class="card-icon">🔑</div>
+      <div class="card-title">Generate Token</div>
+    </div>
+    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+      <div class="card-icon">⏰</div>
+      <div class="card-title">Trigger Auto Alfa</div>
+    </div>
+    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+      <div class="card-icon">🔄</div>
+      <div class="card-title">Refresh Dashboard</div>
+    </div>
+  </div>
+
+  <!-- KATEGORI 4: KARTU & QR TOOLS -->
+  <div class="category-title">📇 Kartu & QR Tools</div>
+  <div class="grid-dashboard">
+    <div class="admin-card" onclick="bukaModalAdmin('modalIdCardById')">
+      <div class="card-icon">🆔</div>
+      <div class="card-title">Generate ID Card (By ID)</div>
+    </div>
+    <div class="admin-card" onclick="bukaModalAdmin('modalIdCardMassal')">
+      <div class="card-icon">📇</div>
+      <div class="card-title">Generate ID Card (Massal)</div>
+    </div>
+    <div class="admin-card" onclick="bukaModalAdmin('modalExportQr')">
+      <div class="card-icon">🖼️</div>
+      <div class="card-title">Export QR Code PNG</div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+<!-- =========================
+     MODALS FOR ADMIN FEATURES
+========================= -->
+
+<!-- MODAL 1: KOREKSI ADMIN -->
+<div id="modalKoreksi" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">✏️ Form Koreksi Absensi</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalKoreksi')">✕</button>
+    </div>
+
+    <label for="adminTanggal">Tanggal Absensi</label>
+    <input type="date" id="adminTanggal" />
+
+    <label for="adminIdKaryawan">ID Karyawan</label>
+    <input type="text" id="adminIdKaryawan" placeholder="Contoh: K001" autocomplete="off" />
+
+    <label for="adminJenisKoreksi">Jenis Koreksi</label>
+    <select id="adminJenisKoreksi">
+      <option value="Lupa Absen Masuk">Lupa Absen Masuk</option>
+      <option value="Lupa Absen Pulang">Lupa Absen Pulang</option>
+      <option value="Terlambat">Terlambat</option>
+      <option value="Sakit">Sakit</option>
+      <option value="Izin">Izin</option>
+      <option value="Alfa">Alfa</option>
+    </select>
+
+    <label for="adminJamKoreksi">Jam Koreksi (Format HH:MM, opsional jika Sakit/Izin/Alfa)</label>
+    <input type="text" id="adminJamKoreksi" placeholder="Contoh: 08:30" autocomplete="off" />
+
+    <label for="adminKeterangan">Keterangan / Alasan</label>
+    <input type="text" id="adminKeterangan" placeholder="Alasan koreksi data..." autocomplete="off" />
+
+    <!-- Tombol Modal Koreksi Admin -->
+	<button id="btnProsesKoreksi" class="secondary" onclick="kirimKoreksiAdmin()">
+	  Kirim & Proses Koreksi
+	</button>
+  </div>
+</div>
+
+<!-- MODAL 2: PENUGASAN BACKUP -->
+<div id="modalPenugasanBackup" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">📋 Form Penugasan Backup</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalPenugasanBackup')">✕</button>
+    </div>
+
+    <label for="backupTanggal">Tanggal Tugas</label>
+    <input type="date" id="backupTanggal" />
+
+    <label for="backupIdAsal">ID / Kode Karyawan Asal</label>
+    <input type="text" id="backupIdAsal" placeholder="Contoh: USR001" autocomplete="off" />
+
+    <label for="backupIdPengganti">ID / Kode Karyawan Pengganti</label>
+    <input type="text" id="backupIdPengganti" placeholder="Contoh: USR002" autocomplete="off" />
+
+    <label for="backupShift">Kode Shift Backup</label>
+    <input type="text" id="backupShift" placeholder="Contoh: 1, 2, S1, dll." autocomplete="off" />
+
+    <label for="backupAlasan">Alasan Backup</label>
+    <input type="text" id="backupAlasan" placeholder="Alasan penugasan backup..." autocomplete="off" />
+
+	<!-- Tombol Modal Penugasan Backup -->
+	<button id="btnProsesBackup" class="secondary" onclick="kirimPenugasanBackup()">
+	  Kirim & Aktifkan Backup
+	</button>
+  </div>
+</div>
+
+<!-- MODAL 3: PEMBATALAN BACKUP -->
+<div id="modalPembatalanBackup" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">❌ Form Pembatalan Backup</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalPembatalanBackup')">✕</button>
+    </div>
+
+    <label for="batalIdBackup">ID Backup (Kode BKP-xxxx)</label>
+    <input type="text" id="batalIdBackup" placeholder="Contoh: BKP-20260730-214636-A1B2" autocomplete="off" />
+
+	<!-- Tombol Modal Pembatalan Backup -->
+	<button id="btnProsesBatalBackup" class="danger" onclick="kirimPembatalanBackup()">
+	  Proses Pembatalan Backup
+	</button>
+  </div>
+</div>
+
+<!-- MODAL 4: IMPORT OFFLINE -->
+<div id="modalImportOffline" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">📤 Form Import Absensi Offline</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalImportOffline')">✕</button>
+    </div>
+
+    <label for="importTanggal">Tanggal Kerja</label>
+    <input type="date" id="importTanggal" />
+
+    <label for="importIdKaryawan">ID / Kode Karyawan</label>
+    <input type="text" id="importIdKaryawan" placeholder="Contoh: USR001" autocomplete="off" />
+
+    <label for="importJamMasuk">Jam Masuk (Format HH:MM, misal 07:30)</label>
+    <input type="text" id="importJamMasuk" placeholder="Contoh: 07:30" autocomplete="off" />
+
+    <label for="importJamPulang">Jam Pulang (Format HH:MM, misal 16:00)</label>
+    <input type="text" id="importJamPulang" placeholder="Contoh: 16:00" autocomplete="off" />
+
+    <label for="importStatusKehadiran">Status Kehadiran</label>
+    <select id="importStatusKehadiran">
+      <option value="Hadir">Hadir</option>
+      <option value="Sakit">Sakit</option>
+      <option value="Izin">Izin</option>
+      <option value="Alfa">Alfa</option>
+      <option value="Dispen">Dispen</option>
+    </select>
+
+    <label for="importKeterangan">Keterangan / Catatan</label>
+    <input type="text" id="importKeterangan" placeholder="Catatan import..." autocomplete="off" />
+
+    <button id="btnProsesImport" class="secondary" onclick="kirimImportOffline()">
+      Kirim & Proses Import
+    </button>
+  </div>
+</div>
+
+<!-- MODAL: ID CARD BY ID -->
+<div id="modalIdCardById" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">🆔 Generate ID Card (By ID)</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalIdCardById')">✕</button>
+    </div>
+
+    <label for="idCardInputDaftar">Daftar ID Karyawan (pisahkan dengan koma)</label>
+    <input type="text" id="idCardInputDaftar" placeholder="Contoh: USR001, USR003, USR005" autocomplete="off" />
+
+    <button id="btnProsesIdCardById" class="secondary" onclick="kirimIdCardById()">
+      Generate PDF ID Card
+    </button>
+  </div>
+</div>
+
+<!-- MODAL: ID CARD MASSAL -->
+<div id="modalIdCardMassal" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">📇 Generate ID Card (Massal)</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalIdCardMassal')">✕</button>
+    </div>
+
+    <p class="small">Fungsi ini akan membuat PDF ID Card secara otomatis untuk seluruh karyawan aktif yang belum memiliki ID Card.</p>
+
+    <button id="btnProsesIdCardMassal" class="secondary" onclick="kirimIdCardMassal()">
+      Proses Generate Massal
+    </button>
+  </div>
+</div>
+
+<!-- MODAL: EXPORT QR CODE PNG -->
+<div id="modalExportQr" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">🖼️ Export QR Code PNG ke Drive</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalExportQr')">✕</button>
+    </div>
+
+    <p class="small">Sistem akan membaca sheet <b>QR_CODE</b> dan menyimpan seluruh gambar PNG QR Code ke folder Google Drive secara otomatis.</p>
+
+    <button id="btnProsesExportQr" class="secondary" onclick="kirimExportQrPng()">
+      Proses Export PNG
+    </button>
+  </div>
+</div>
 
 <!-- =========================
      FOOTER
@@ -1898,7 +1847,7 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
 
 <div class="footer">
 
-SPPG Kubu Raya · Secure Scanner
+SPPG Kubu Raya · Secure Scanner & Admin Hub
 
 </div>
 
@@ -1911,2821 +1860,1194 @@ SPPG Kubu Raya · Secure Scanner
 
 <script>
 
-// ===============================
-// PART 3A-1
-// ORIGINAL SCANNER ENGINE
-// JANGAN UBAH LOGIC
-// ===============================
-
-
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxs2Qtf5CHoVeoKc9CoJF2tviGzRRygW3e1EoKetxr0fsEyFHghCRUuD6wkpB30l3qX/exec";
 
 
 let html5QrCode = null;
-
 let sedangProsesScan = false;
-
 let qrTerakhir = "";
-
 let waktuScanTerakhir = 0;
-
 let jedaScanMs = 3000;
-
 let callbackCounter = 0;
-
 let operatorLogin = null;
-
 let audioContextScanner = null;
 
-// ===============================
-// 3D-3 COUNTER SCAN
-// ===============================
-
-let jumlahScanBerhasil = 0;
-
-let jumlahScanGagal = 0;
-
-let jumlahScanTotal = 0;
-
-// ===============================
-// SESSION CONFIG
-// ===============================
-
-const SESSION_EXPIRE_MS =
-  8 * 60 * 60 * 1000; // 8 jam
+const SESSION_EXPIRE_MS = 8 * 60 * 60 * 1000;
 
 
-function tampilkanLoading(pesan) {
+/* =========================
+   SYSTEM TABS & MODALS
+========================= */
 
-  const hasilBox =
-    document.getElementById("hasilScan");
+function gantiTab(tabName) {
+  const tabScanner = document.getElementById("tabScanner");
+  const tabAdmin = document.getElementById("tabAdmin");
+  const scannerArea = document.getElementById("scannerArea");
+  const adminArea = document.getElementById("adminDashboardArea");
 
+  if (tabName === "scanner") {
+    tabScanner.classList.add("active");
+    tabAdmin.classList.remove("active");
+    scannerArea.style.display = "block";
+    adminArea.style.display = "none";
+  } else {
+    tabAdmin.classList.add("active");
+    tabScanner.classList.remove("active");
+    adminArea.style.display = "block";
+    scannerArea.style.display = "none";
+  }
+}
 
-  hasilBox.className =
-    "result loading";
+function bukaModalAdmin(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = "flex";
+  }
+}
 
-
-  hasilBox.innerHTML =
-    escapeHtml(
-      pesan || "Sedang memproses..."
-    );
-
+function tutupModalAdmin(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.style.display = "none";
+  }
 }
 
 
+/* =========================
+   UI HELPERS & NOTIFICATIONS
+========================= */
 
+function tampilkanLoading(pesan) {
+  const hasilBox = document.getElementById("hasilScan");
+  hasilBox.className = "result loading";
+  hasilBox.innerHTML = escapeHtml(pesan || "Sedang memproses...");
+}
 
 
 function tampilkanError(pesan) {
-
-  const hasilBox =
-    document.getElementById("hasilScan");
-
-
-  hasilBox.className =
-    "result failed";
-
-
-  hasilBox.innerHTML =
-    "<b>Error:</b><br>" +
-    escapeHtml(
-      String(pesan || "")
-    );
-
-
-
-  tampilkanHasilUtama(
-    "gagal",
-    "❌ Terjadi Error",
-    String(
-      pesan ||
-      "Terjadi error."
-    )
-  );
-
+  const hasilBox = document.getElementById("hasilScan");
+  hasilBox.className = "result failed";
+  hasilBox.innerHTML = "<b>Error:</b><br>" + escapeHtml(String(pesan || ""));
+  tampilkanHasilUtama("gagal", "❌ Terjadi Error", String(pesan || "Terjadi error."));
 }
-
-
-
 
 
 function tampilkanHasil(hasil) {
+  const hasilBox = document.getElementById("hasilScan");
+  const pesan = hasil && hasil.pesan ? String(hasil.pesan) : "Tidak ada pesan dari server.";
+  const status = hasil && hasil.status ? String(hasil.status) : "-";
+  const id = hasil && hasil.id ? String(hasil.id) : "-";
+  const sumber = hasil && hasil.sumber ? String(hasil.sumber) : "-";
 
+  const pesanLower = pesan.toLowerCase();
+  const statusLower = status.toLowerCase();
 
-  const hasilBox =
-    document.getElementById("hasilScan");
+  let classResult = "result warning";
+  let tipeUtama = "peringatan";
+  let judulUtama = "⚠️ Scan Diproses";
 
-
-
-  const pesan =
-    hasil && hasil.pesan
-    ?
-    String(hasil.pesan)
-    :
-    "Tidak ada pesan dari server.";
-
-
-
-  const status =
-    hasil && hasil.status
-    ?
-    String(hasil.status)
-    :
-    "-";
-
-
-
-  const id =
-    hasil && hasil.id
-    ?
-    String(hasil.id)
-    :
-    "-";
-
-
-
-  const sumber =
-    hasil && hasil.sumber
-    ?
-    String(hasil.sumber)
-    :
-    "-";
-
-
-
-  const pesanLower =
-    pesan.toLowerCase();
-
-
-
-  const statusLower =
-    status.toLowerCase();
-
-
-
-
-  let classResult =
-    "result warning";
-
-
-  let tipeUtama =
-    "peringatan";
-
-
-  let judulUtama =
-    "⚠️ Scan Diproses";
-
-
-
-
-
-  if (
-    pesanLower.includes("berhasil") &&
-    !pesanLower.includes("ditolak") &&
-    !pesanLower.includes("gagal")
-  ) {
-
-
-    classResult =
-      "result success";
-
-
-    tipeUtama =
-      "sukses";
-
-
-    judulUtama =
-      "✅ Scan Berhasil";
-	
-	bunyiScan(
-	 "sukses"
-	);
-
-
-	getarScan(
-	 "sukses"
-	);
-
+  if (pesanLower.includes("berhasil") && !pesanLower.includes("ditolak") && !pesanLower.includes("gagal")) {
+    classResult = "result success";
+    tipeUtama = "sukses";
+    judulUtama = "✅ Scan Berhasil";
+    bunyiScan("sukses");
+    getarScan("sukses");
   }
 
-
-
-
-
-  if (
-    pesanLower.includes("ditolak") ||
-    pesanLower.includes("gagal") ||
-    pesanLower.includes("tidak valid") ||
-    pesanLower.includes("nonaktif") ||
-    statusLower === "gagal" ||
-    statusLower === "error"
-  ) {
-
-
-    classResult =
-      "result failed";
-
-
-    tipeUtama =
-      "gagal";
-
-
-    judulUtama =
-      "❌ Scan Ditolak";
-
-	bunyiScan(
-	 "gagal"
-	);
-
-
-	getarScan(
-	 "gagal"
-	);
-
+  if (pesanLower.includes("ditolak") || pesanLower.includes("gagal") || pesanLower.includes("tidak valid") || pesanLower.includes("nonaktif") || statusLower === "gagal" || statusLower === "error") {
+    classResult = "result failed";
+    tipeUtama = "gagal";
+    judulUtama = "❌ Scan Ditolak";
+    bunyiScan("gagal");
+    getarScan("gagal");
   }
 
-
-
-
-
-  if (
-    pesanLower.includes("belum dibuka") ||
-    pesanLower.includes("sudah ditutup") ||
-    pesanLower.includes("scan ketiga")
-  ) {
-
-
-    classResult =
-      "result warning";
-
-
-    tipeUtama =
-      "peringatan";
-
-
-    judulUtama =
-	"⚠️ Scan Tidak Diterima";
-
-
-	bunyiScan(
-	 "warning"
-	);
-
-
-	getarScan(
-	 "warning"
-	);
-
+  if (pesanLower.includes("belum dibuka") || pesanLower.includes("sudah ditutup") || pesanLower.includes("scan ketiga")) {
+    classResult = "result warning";
+    tipeUtama = "peringatan";
+    judulUtama = "⚠️ Scan Tidak Diterima";
+    bunyiScan("warning");
+    getarScan("warning");
   }
 
-
-
-
-
-  hasilBox.className =
-    classResult;
-
-
-
+  hasilBox.className = classResult;
   hasilBox.innerHTML =
+    "<b>Status:</b> " + escapeHtml(status) + "<br>" +
+    "<b>ID:</b> " + escapeHtml(id) + "<br>" +
+    "<b>Sumber:</b> " + escapeHtml(sumber) + "<br>" +
+    "<b>Pesan:</b><br>" + escapeHtml(pesan);
 
-    "<b>Status:</b> " +
-    escapeHtml(status) +
-    "<br>" +
-
-    "<b>ID:</b> " +
-    escapeHtml(id) +
-    "<br>" +
-
-    "<b>Sumber:</b> " +
-    escapeHtml(sumber) +
-    "<br>" +
-
-    "<b>Pesan:</b><br>" +
-    escapeHtml(pesan);
-
-
-
-
-  tampilkanHasilUtama(
-
-    tipeUtama,
-
-    judulUtama,
-
-    "ID: " +
-    id +
-    " | " +
-    pesan
-
-  );
-
-
+  tampilkanHasilUtama(tipeUtama, judulUtama, "ID: " + id + " | " + pesan);
 }
 
 
+function tampilkanHasilUtama(tipe, judul, detail) {
+  const box = document.getElementById("hasilUtama");
+  const hasilJudul = document.getElementById("hasilJudul");
+  const hasilDetail = document.getElementById("hasilDetail");
+  const hasilWaktu = document.getElementById("hasilWaktu");
 
-
-
-function tampilkanHasilUtama(
-  tipe,
-  judul,
-  detail
-) {
-
-
-  const box =
-    document.getElementById("hasilUtama");
-
-
-
-  const hasilJudul =
-    document.getElementById("hasilJudul");
-
-
-
-  const hasilDetail =
-    document.getElementById("hasilDetail");
-
-
-
-  const hasilWaktu =
-    document.getElementById("hasilWaktu");
-
-
-
-
-
-  box.className =
-    "hasil-utama " +
-    tipe;
-
-
-
-  hasilJudul.textContent =
-    judul;
-
-
-
-  hasilDetail.textContent =
-    detail;
-
-
-
-  hasilWaktu.textContent =
-    "Waktu: " +
-    new Date()
-    .toLocaleString("id-ID");
-
-
+  box.className = "hasil-utama " + tipe;
+  hasilJudul.textContent = judul;
+  
+  // Ganti textContent menjadi innerHTML agar link HTML dapat dirender dengan benar
+  hasilDetail.innerHTML = detail; 
+  
+  hasilWaktu.textContent = "Waktu: " + new Date().toLocaleString("id-ID");
 
   box.scrollIntoView({
-
-    behavior:"smooth",
-
-    block:"start"
-
+    behavior: "smooth",
+    block: "start"
   });
-
-
 }
 
-// ===============================
-// PART 3A-2
-// LOGIN + PROSES SCAN
-// ORIGINAL LOGIC
-// ===============================
 
-
+/* =========================
+   LOGIN & AUTH
+========================= */
 
 function loginOperator() {
-
-
-  const username =
-    document
-    .getElementById("usernameOperator")
-    .value
-    .trim();
-
-
-
-  const password =
-    document
-    .getElementById("passwordOperator")
-    .value
-    .trim();
-
-
-
-  const btnLogin =
-    document
-    .getElementById("btnLoginOperator");
-
-
-
+  const username = document.getElementById("usernameOperator").value.trim();
+  const password = document.getElementById("passwordOperator").value.trim();
+  const btnLogin = document.getElementById("btnLoginOperator");
 
   if (!username || !password) {
-
-
-    tampilkanHasilUtama(
-
-      "gagal",
-
-      "❌ Login Gagal",
-
-      "Username dan password wajib diisi."
-
-    );
-
-
+    tampilkanHasilUtama("gagal", "❌ Login Gagal", "Username dan password wajib diisi.");
     return;
-
   }
 
-
-
-
-
   btnLogin.disabled = true;
+  btnLogin.innerText = "Memproses Login...";
 
+  tampilkanHasilUtama("proses", "🔐 Memproses Login", "Sedang memeriksa data operator...");
 
-  btnLogin.innerText =
-    "Memproses Login...";
-
-
-
-
-  tampilkanHasilUtama(
-
-    "proses",
-
-    "🔐 Memproses Login",
-
-    "Sedang memeriksa data operator..."
-
-  );
-
-
-
-
-
-  panggilApiLoginScanner(
-    username,
-    password
-  )
-
+  panggilApiLoginScanner(username, password)
   .then(function(hasil) {
-
-
-
     if (!hasil || hasil.sukses !== true) {
-
-
-
-      tampilkanHasilUtama(
-
-        "gagal",
-
-        "❌ Login Gagal",
-
-        hasil && hasil.pesan
-        ?
-        hasil.pesan
-        :
-        "Login gagal."
-
-      );
-
-
-
+      tampilkanHasilUtama("gagal", "❌ Login Gagal", hasil && hasil.pesan ? hasil.pesan : "Login gagal.");
       btnLogin.disabled = false;
-
-
-      btnLogin.innerText =
-        "Login Operator";
-
-
-
+      btnLogin.innerText = "Login Operator";
       return;
-
     }
-
-
-
-
 
     operatorLogin = hasil;
 
-
-
-
     localStorage.setItem(
-
       "scanner_operator_login",
-
       JSON.stringify({
-
-        operator_id:
-        hasil.operator_id,
-
-
-        username:
-        hasil.username,
-
-
-        nama_operator:
-        hasil.nama_operator,
-
-
-        role:
-        hasil.role,
-
-
-        login_time:
-        new Date()
-        .toISOString()
-
+        operator_id: hasil.operator_id,
+        username: hasil.username,
+        nama_operator: hasil.nama_operator,
+        role: hasil.role,
+        login_time: new Date().toISOString()
       })
-
     );
 
+    document.getElementById("loginBox").style.display = "none";
 
-
-
-
-
-    document
-    .getElementById("loginBox")
-    .style
-    .display = "none";
-
-
-
-
-
-
-
-    const loginInfo =
-      document
-      .getElementById("loginInfo");
-
-
-
-    loginInfo.style.display =
-      "block";
-
-
-
-
+    const loginInfo = document.getElementById("loginInfo");
+    loginInfo.style.display = "block";
     loginInfo.innerHTML =
-
-
       "<b>👤 Operator Aktif</b><br>" +
-
-      escapeHtml(
-        hasil.nama_operator
-      )
-
-      +
-
+      escapeHtml(hasil.nama_operator) +
       "<br><b>Role:</b> " +
-
-      escapeHtml(
-        hasil.role
-      )
-
-      +
-
+      escapeHtml(hasil.role) +
       "<br><b>Status:</b> Aktif";
 
+    // Buka akses tab navigasi
+    document.getElementById("navTabs").style.display = "flex";
 
+    if (hasil.role === "Admin") {
+      document.getElementById("tabAdmin").style.display = "block";
+    }
 
-
-
-
-
-    document
-    .getElementById("scannerArea")
-    .style
-    .display = "block";
-
-
-	document
-	.getElementById("btnLogoutOperator")
-	.style
-	.display = "block";
-
-
-
+    gantiTab('scanner');
+    document.getElementById("btnLogoutOperator").style.display = "block";
 
     tampilkanHasilUtama(
-
-
       "sukses",
-
-
       "✅ Login Berhasil",
-
-
-      "Selamat datang, " +
-
-      hasil.nama_operator +
-
-      ". Scanner siap digunakan."
-
+      "Selamat datang, " + hasil.nama_operator + ". Sistem siap digunakan."
     );
-
-
-
-
   })
-
-
-
   .catch(function(error) {
-
-
-
-    tampilkanHasilUtama(
-
-      "gagal",
-
-      "❌ Login Error",
-
-      error.message ||
-      String(error)
-
-    );
-
-
-
-
+    tampilkanHasilUtama("gagal", "❌ Login Error", error.message || String(error));
     btnLogin.disabled = false;
-
-
-
-    btnLogin.innerText =
-      "Login Operator";
-
-
-
+    btnLogin.innerText = "Login Operator";
   });
-
-
-
 }
 
 
-
-
-
-
-
+/* =========================
+   SCANNER OPERATIONS
+========================= */
 
 function prosesScanManual() {
-
-
-
   if (!operatorLogin) {
-
-
-    tampilkanHasilUtama(
-
-      "gagal",
-
-      "❌ Akses Ditolak",
-
-      "Silakan login operator terlebih dahulu sebelum scan manual."
-
-    );
-
-
+    tampilkanHasilUtama("gagal", "❌ Akses Ditolak", "Silakan login operator terlebih dahulu sebelum scan manual.");
     return;
-
   }
 
-
-
-
-
-
-  const qrText =
-
-    document
-    .getElementById("qrText")
-    .value
-    .trim();
-
-
-
-
-  prosesQrText(
-
-    qrText,
-
-    "manual"
-
-  );
-
-
-
+  const qrText = document.getElementById("qrText").value.trim();
+  prosesQrText(qrText, "manual");
 }
 
 
-
-
-
-
-
-
-function prosesQrText(
-  qrText,
-  sumberInput
-) {
-
-
-
+function prosesQrText(qrText, sumberInput) {
   if (!operatorLogin) {
-
-
-
-    tampilkanHasilUtama(
-
-      "gagal",
-
-      "❌ Akses Ditolak",
-
-      "Silakan login operator terlebih dahulu sebelum melakukan scan."
-
-    );
-
-
-
+    tampilkanHasilUtama("gagal", "❌ Akses Ditolak", "Silakan login operator terlebih dahulu sebelum melakukan scan.");
     return;
-
   }
 
-
-
-
-
-
-
-  qrText =
-    String(
-      qrText || ""
-    )
-    .trim();
-
-
-
-
+  qrText = String(qrText || "").trim();
 
   if (!qrText) {
-
-
-    tampilkanError(
-
-      "QR Text masih kosong."
-
-    );
-
-
+    tampilkanError("QR Text masih kosong.");
     return;
-
-
   }
-
-
-
-
-
-
 
   if (sedangProsesScan) {
-
-
-    tampilkanHasilUtama(
-
-      "peringatan",
-
-      "⚠️ Scanner Sedang Memproses",
-
-      "Tunggu beberapa detik sebelum scan berikutnya."
-
-    );
-
-
+    tampilkanHasilUtama("peringatan", "⚠️ Scanner Sedang Memproses", "Tunggu beberapa detik sebelum scan berikutnya.");
     return;
-
-
   }
 
+  const sekarang = Date.now();
 
-
-
-
-
-
-  const sekarang =
-    Date.now();
-
-
-
-
-
-
-  if (
-
-
-    sumberInput === "kamera"
-
-    &&
-
-    qrText === qrTerakhir
-
-    &&
-
-    (
-      sekarang -
-      waktuScanTerakhir
-    )
-
-    <
-
-    jedaScanMs
-
-
-
-  ) {
-
-
-
+  if (sumberInput === "kamera" && qrText === qrTerakhir && (sekarang - waktuScanTerakhir) < jedaScanMs) {
     return;
-
-
   }
-
-
-
-
-
-
-
 
   sedangProsesScan = true;
+  qrTerakhir = qrText;
+  waktuScanTerakhir = sekarang;
 
+  document.getElementById("qrText").value = qrText;
 
-
-  qrTerakhir =
-    qrText;
-
-
-
-  waktuScanTerakhir =
-    sekarang;
-
-
-
-
-
-
-  document
-
-  .getElementById("qrText")
-
-  .value = qrText;
-
-
-
-
-
-
-
-
-  tampilkanLoading(
-
-    "QR terbaca. Sedang mengirim ke server..."
-
-  );
-
-
-
-
-
-
-
-  tampilkanHasilUtama(
-
-    "proses",
-
-    "⏳ Memproses Scan",
-
-    "QR terbaca. Sedang mengirim data ke sistem..."
-
-  );
-
-
-
-
-
-
+  tampilkanLoading("QR terbaca. Sedang mengirim ke server...");
+  tampilkanHasilUtama("proses", "⏳ Memproses Scan", "QR terbaca. Sedang mengirim data ke sistem...");
 
   panggilApiScanner(qrText)
-
-
-
   .then(function(hasil) {
-
-
     tampilkanHasil(hasil);
-
-
   })
-
-
-
   .catch(function(error) {
-
-
-
-    tampilkanError(
-
-      error.message ||
-      error
-
-    );
-
-
+    tampilkanError(error.message || error);
   })
-
-
-
   .finally(function(){
-
-
-
     setTimeout(function(){
-
-
       sedangProsesScan = false;
-
-
     }, jedaScanMs);
-
-
-
   });
-
-
-
 }
-
-// ===============================
-// PART 3B
-// API + CAMERA + HELPER
-// ORIGINAL LOGIC
-// ===============================
-
 
 
 function panggilApiScanner(qrText) {
-
-
   return new Promise(function(resolve, reject) {
-
-
-
-    if (
-      !WEB_APP_URL ||
-      WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1
-    ) {
-
-
-      reject(
-        new Error(
-          "WEB_APP_URL belum diisi."
-        )
-      );
-
-
+    if (!WEB_APP_URL || WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1) {
+      reject(new Error("WEB_APP_URL belum diisi."));
       return;
-
     }
-
-
-
-
 
     callbackCounter++;
+    const callbackName = "scannerCallback_" + Date.now() + "_" + callbackCounter;
+    const script = document.createElement("script");
+    script.id = callbackName;
 
-
-
-    const callbackName =
-
-      "scannerCallback_" +
-
-      Date.now() +
-
-      "_" +
-
-      callbackCounter;
-
-
-
-
-
-
-
-    const script =
-      document.createElement("script");
-
-
-
-    script.id =
-      callbackName;
-
-
-
-
-
-
-
-    const timeout =
-
-      setTimeout(function(){
-
-
-        cleanup();
-
-
-        reject(
-
-          new Error(
-            "Server terlalu lama merespons. Coba ulangi scan."
-          )
-
-        );
-
-
-      },15000);
-
-
-
-
-
-
+    const timeout = setTimeout(function(){
+      cleanup();
+      reject(new Error("Server terlalu lama merespons. Coba ulangi scan."));
+    }, 15000);
 
     function cleanup(){
-
-
       clearTimeout(timeout);
-
-
-
-      if(window[callbackName]){
-
-
-        delete window[callbackName];
-
-
-      }
-
-
-
-
-
-      if(
-        script &&
-        script.parentNode
-      ){
-
-
-        script.parentNode.removeChild(script);
-
-
-      }
-
-
-
+      if(window[callbackName]) delete window[callbackName];
+      if(script && script.parentNode) script.parentNode.removeChild(script);
     }
 
-
-
-
-
-
-
     window[callbackName] = function(hasil){
-
-
       cleanup();
-
-
       resolve(hasil);
-
-
     };
 
-
-
-
-
-
-
-    const url =
-
-
-      WEB_APP_URL +
-
-      "?action=scanner_api" +
-
-      "&qr=" +
-
-      encodeURIComponent(qrText) +
-
-      "&callback=" +
-
-      encodeURIComponent(callbackName);
-
-
-
-
-
-
-
-    script.src =
-      url;
-
-
-
-
-
-
+    const url = WEB_APP_URL + "?action=scanner_api&qr=" + encodeURIComponent(qrText) + "&callback=" + encodeURIComponent(callbackName);
+    script.src = url;
 
     script.onerror = function(){
-
-
       cleanup();
-
-
-
-      reject(
-
-        new Error(
-          "Gagal menghubungi Apps Script. Cek internet atau Web App URL."
-        )
-
-      );
-
-
+      reject(new Error("Gagal menghubungi Apps Script. Cek internet atau Web App URL."));
     };
 
-
-
-
-
-
-
     document.body.appendChild(script);
-
-
-
   });
-
-
 }
 
 
-
-
-
-console.log("PART 3B TERBACA");
-
-
-
-function panggilApiLoginScanner(
-  username,
-  password
-){
-
-
-
-  return new Promise(function(resolve,reject){
-
-
-
-
-
-
-    if (
-      !WEB_APP_URL ||
-      WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1
-    ) {
-
-
-      reject(
-
-        new Error(
-          "WEB_APP_URL belum diisi."
-        )
-
-      );
-
-
+function panggilApiLoginScanner(username, password) {
+  return new Promise(function(resolve, reject) {
+    if (!WEB_APP_URL || WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1) {
+      reject(new Error("WEB_APP_URL belum diisi."));
       return;
-
-
     }
-
-
-
-
-
-
-
 
     callbackCounter++;
+    const callbackName = "loginCallback_" + Date.now() + "_" + callbackCounter;
+    const script = document.createElement("script");
+    script.id = callbackName;
 
-
-
-
-
-
-
-    const callbackName =
-
-
-      "loginCallback_" +
-
-      Date.now() +
-
-      "_" +
-
-      callbackCounter;
-
-
-
-
-
-
-
-    const script =
-
-      document.createElement("script");
-
-
-
-
-
-    script.id =
-      callbackName;
-
-
-
-
-
-
-
-    const timeout =
-
-
-      setTimeout(function(){
-
-
-
-        cleanup();
-
-
-
-        reject(
-
-          new Error(
-            "Server terlalu lama merespons saat login."
-          )
-
-        );
-
-
-
-      },15000);
-
-
-
-
-
-
-
+    const timeout = setTimeout(function(){
+      cleanup();
+      reject(new Error("Server terlalu lama merespons saat login."));
+    }, 15000);
 
     function cleanup(){
-
-
-
       clearTimeout(timeout);
-
-
-
-
-
-      if(window[callbackName]){
-
-
-        delete window[callbackName];
-
-
-      }
-
-
-
-
-
-
-      if(
-        script &&
-        script.parentNode
-      ){
-
-
-        script.parentNode.removeChild(script);
-
-
-      }
-
-
-
+      if(window[callbackName]) delete window[callbackName];
+      if(script && script.parentNode) script.parentNode.removeChild(script);
     }
 
-
-
-
-
-
-
     window[callbackName] = function(hasil){
-
-
       cleanup();
-
-
       resolve(hasil);
-
-
     };
 
-
-
-
-
-
-
-    const url =
-
-
-      WEB_APP_URL +
-
-      "?action=login_scanner" +
-
-      "&username=" +
-
-      encodeURIComponent(username) +
-
-      "&password=" +
-
-      encodeURIComponent(password) +
-
-      "&callback=" +
-
-      encodeURIComponent(callbackName);
-
-
-
-
-
-
-
-    script.src =
-      url;
-
-
-
-
-
-
+    const url = WEB_APP_URL + "?action=login_scanner&username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password) + "&callback=" + encodeURIComponent(callbackName);
+    script.src = url;
 
     script.onerror = function(){
-
-
-
       cleanup();
-
-
-
-      reject(
-
-        new Error(
-          "Gagal menghubungi Apps Script saat login."
-        )
-
-      );
-
-
-
+      reject(new Error("Gagal menghubungi Apps Script saat login."));
     };
 
-
-
-
-
-
-
     document.body.appendChild(script);
-
-
-
-
   });
-
-
-
 }
-
-
-
-
-
-
-
 
 
 function mulaiKamera(){
-
-	if(
-	 !audioContextScanner
-	){
-
-	 audioContextScanner =
-	 new (
-	 window.AudioContext ||
-	 window.webkitAudioContext
-	 )();
-
-	}
-
-
-	if(
-	 audioContextScanner.state === "suspended"
-	){
-
-	 audioContextScanner.resume();
-
-	}
-
-	if(!audioContextScanner){
-
-	  audioContextScanner =
-		new (
-		  window.AudioContext ||
-		  window.webkitAudioContext
-		)();
-
-	}
-
-
-
-  if(!operatorLogin){
-
-
-
-    tampilkanHasilUtama(
-
-      "gagal",
-
-      "❌ Akses Ditolak",
-
-      "Silakan login operator terlebih dahulu sebelum membuka kamera."
-
-    );
-
-
-
-    return;
-
-
-
+  if(!audioContextScanner){
+    audioContextScanner = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if(audioContextScanner.state === "suspended"){
+    audioContextScanner.resume();
   }
 
+  if(!operatorLogin){
+    tampilkanHasilUtama("gagal", "❌ Akses Ditolak", "Silakan login operator terlebih dahulu sebelum membuka kamera.");
+    return;
+  }
 
-
-
-
-
-
-  const btnStart =
-
-    document.getElementById(
-      "btnStartCamera"
-    );
-
-
-
-
-  const btnStop =
-
-    document.getElementById(
-      "btnStopCamera"
-    );
-
-
-
-
-
-
-
+  const btnStart = document.getElementById("btnStartCamera");
+  const btnStop = document.getElementById("btnStopCamera");
 
   btnStart.disabled = true;
+  btnStart.innerText = "Membuka Kamera...";
 
+  tampilkanLoading("Membuka kamera. Silakan izinkan akses kamera.");
+  tampilkanHasilUtama("proses", "📷 Membuka Kamera", "Silakan izinkan akses kamera dari browser.");
 
-  btnStart.innerText =
-    "Membuka Kamera...";
-
-
-
-
-
-
-
-  tampilkanLoading(
-
-    "Membuka kamera. Silakan izinkan akses kamera."
-
-  );
-
-
-
-
-
-
-  tampilkanHasilUtama(
-
-    "proses",
-
-    "📷 Membuka Kamera",
-
-    "Silakan izinkan akses kamera dari browser."
-
-  );
-
-
-
-
-
-
-
-
-  html5QrCode =
-
-    new Html5Qrcode(
-      "reader"
-    );
-
-
-
-
-
-
-
+  html5QrCode = new Html5Qrcode("reader");
 
   const config = {
-
-
-    fps:10,
-
-
-    qrbox:{
-
-
-      width:250,
-
-
-      height:250
-
-
-    }
-
-
+    fps: 10,
+    qrbox: { width: 250, height: 250 }
   };
 
-
-
-
-
-
-
-
   html5QrCode.start(
-
-
-    {
-      facingMode:"environment"
-    },
-
-
+    { facingMode: "environment" },
     config,
-
-
-
     function(decodedText){
-
-
-      prosesQrText(
-        decodedText,
-        "kamera"
-      );
-
-
+      prosesQrText(decodedText, "kamera");
     },
-
-
-
-    function(errorMessage){
-
-
-      // scanning berjalan
-
-      // error kecil diabaikan
-
-
-    }
-
-
-
+    function(errorMessage){}
   )
-
-
-
   .then(function(){
+    btnStart.innerText = "Kamera Aktif";
+    btnStop.disabled = false;
+    document.querySelector(".reader-wrapper").classList.add("active");
 
+    const hasilBox = document.getElementById("hasilScan");
+    hasilBox.className = "result warning";
+    hasilBox.innerHTML = "Kamera aktif. Arahkan kamera ke QR Code.";
 
-
-    btnStart.innerText =
-      "Kamera Aktif";
-
-
-
-    btnStop.disabled =
-      false;
-
-
-	document
-	.querySelector(".reader-wrapper")
-	.classList
-	.add("active");
-
-
-
-
-
-    const hasilBox =
-
-      document.getElementById(
-        "hasilScan"
-      );
-
-
-
-
-    hasilBox.className =
-      "result warning";
-
-
-
-
-    hasilBox.innerHTML =
-
-      "Kamera aktif. Arahkan kamera ke QR Code.";
-
-
-
-
-
-
-
-    tampilkanHasilUtama(
-
-      "peringatan",
-
-      "📷 Kamera Aktif",
-
-      "Arahkan kamera ke QR Code."
-
-    );
-
-
-
+    tampilkanHasilUtama("peringatan", "📷 Kamera Aktif", "Arahkan kamera ke QR Code.");
   })
-
-
-
   .catch(function(error){
-
-
-
-
-
-    btnStart.disabled =
-      false;
-
-
-
-    btnStart.innerText =
-      "Mulai Kamera";
-
-
-
-    btnStop.disabled =
-      true;
-
-
-
-
-
-
-
-    tampilkanError(
-
-      "Gagal membuka kamera. Detail: " +
-
-      (
-        error &&
-        error.message
-        ?
-        error.message
-        :
-        error
-      )
-
-    );
-
-
-
+    btnStart.disabled = false;
+    btnStart.innerText = "Mulai Kamera";
+    btnStop.disabled = true;
+    tampilkanError("Gagal membuka kamera. Detail: " + (error && error.message ? error.message : error));
   });
-
-
-
 }
-
-
-
-
-
-
-
 
 
 function hentikanKamera(){
+  const btnStart = document.getElementById("btnStartCamera");
+  const btnStop = document.getElementById("btnStopCamera");
 
-
-
-  const btnStart =
-
-    document.getElementById(
-      "btnStartCamera"
-    );
-
-
-
-  const btnStop =
-
-    document.getElementById(
-      "btnStopCamera"
-    );
-
-
-
-
-
-
-
-  if(!html5QrCode){
-
-
-    return;
-
-
-  }
-
-
-
-
-
-
+  if(!html5QrCode) return;
 
   html5QrCode.stop()
-
-
-
   .then(function(){
-
-
-
-
-
     html5QrCode.clear();
-
-
-
     html5QrCode = null;
 
+    btnStart.disabled = false;
+    btnStart.innerText = "Mulai Kamera";
+    btnStop.disabled = true;
+    document.querySelector(".reader-wrapper").classList.remove("active");
 
+    const hasilBox = document.getElementById("hasilScan");
+    hasilBox.className = "result warning";
+    hasilBox.innerHTML = "Kamera dihentikan.";
 
-
-
-
-    btnStart.disabled =
-      false;
-
-
-
-    btnStart.innerText =
-      "Mulai Kamera";
-
-
-
-    btnStop.disabled =
-      true;
-
-
-	document
-	.querySelector(".reader-wrapper")
-	.classList
-	.remove("active");
-
-
-
-
-    const hasilBox =
-
-      document.getElementById(
-        "hasilScan"
-      );
-
-
-
-
-    hasilBox.className =
-      "result warning";
-
-
-
-    hasilBox.innerHTML =
-      "Kamera dihentikan.";
-
-
-
-
-
-
-
-
-    tampilkanHasilUtama(
-
-      "peringatan",
-
-      "📷 Kamera Dihentikan",
-
-      "Scanner kamera sedang tidak aktif."
-
-    );
-
-
-
-
+    tampilkanHasilUtama("peringatan", "📷 Kamera Dihentikan", "Scanner kamera sedang tidak aktif.");
   })
-
-
-
   .catch(function(error){
-
-
-
-    tampilkanError(
-
-      "Gagal menghentikan kamera: " +
-
-      (
-        error &&
-        error.message
-        ?
-        error.message
-        :
-        error
-      )
-
-    );
-
-
-
+    tampilkanError("Gagal menghentikan kamera: " + (error && error.message ? error.message : error));
   });
-
-
-
 }
-
-
-
-
-// ===============================
-// PART 3C-1
-// AUTO LOGIN OPERATOR
-// ===============================
 
 
 function cekLoginOperatorLokal(){
-
-
-  const data =
-    localStorage.getItem(
-      "scanner_operator_login"
-    );
-	
-	if(!cekExpirySession()){
-
-  return;
-
-}
-
-
-
-  if(!data){
-
+  const data = localStorage.getItem("scanner_operator_login");
+  
+  if(!cekExpirySession()){
     return;
-
   }
 
-
+  if(!data){
+    return;
+  }
 
   try {
+    const operator = JSON.parse(data);
 
-
-    const operator =
-      JSON.parse(data);
-
-
-
-    if(
-      !operator ||
-      !operator.username
-    ){
-
+    if(!operator || !operator.username){
       return;
-
     }
-
-
-
 
     operatorLogin = operator;
 
+    document.getElementById("loginBox").style.display = "none";
 
-
-    document
-    .getElementById("loginBox")
-    .style
-    .display = "none";
-
-
-
-
-    const loginInfo =
-      document
-      .getElementById("loginInfo");
-
-
-
-    loginInfo.style.display =
-      "block";
-
-
-
+    const loginInfo = document.getElementById("loginInfo");
+    loginInfo.style.display = "block";
     loginInfo.innerHTML =
-
-
       "<b>👤 Operator Aktif</b><br>" +
-
-      escapeHtml(
-        operator.nama_operator
-      )
-
-      +
-
+      escapeHtml(operator.nama_operator) +
       "<br><b>Role:</b> " +
-
-      escapeHtml(
-        operator.role
-      )
-
-      +
-
+      escapeHtml(operator.role) +
       "<br><b>Status:</b> Aktif";
 
+    document.getElementById("navTabs").style.display = "flex";
 
+    if (operator.role === "Admin") {
+      document.getElementById("tabAdmin").style.display = "block";
+    }
 
-
-
-    document
-    .getElementById("scannerArea")
-    .style
-    .display = "block";
-
-	document
-	.getElementById("btnLogoutOperator")
-	.style
-	.display = "block";
-
-
+    gantiTab('scanner');
+    document.getElementById("btnLogoutOperator").style.display = "block";
 
     tampilkanHasilUtama(
-
       "sukses",
-
       "👋 Selamat Datang Kembali",
-
-      "Operator " +
-
-      operator.nama_operator +
-
-      " masih aktif."
-
+      "Operator " + operator.nama_operator + " masih aktif."
     );
-
-
-
   }
-
   catch(error){
-
-
-    localStorage.removeItem(
-      "scanner_operator_login"
-    );
-
-
+    localStorage.removeItem("scanner_operator_login");
   }
-
-
-
 }
-
-// ===============================
-// PART 3C-2
-// REALTIME CLOCK
-// ===============================
 
 
 function updateScannerClock(){
+  const clock = document.getElementById("scannerClock");
+  if(!clock) return;
 
+  const sekarang = new Date();
+  const tanggal = sekarang.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+  const waktu = sekarang.toLocaleTimeString("id-ID");
 
-  const clock =
-    document.getElementById(
-      "scannerClock"
-    );
-
-
-
-  if(!clock){
-
-    return;
-
-  }
-
-
-
-
-  const sekarang =
-    new Date();
-
-
-
-
-  const tanggal =
-    sekarang.toLocaleDateString(
-      "id-ID",
-      {
-        weekday:"long",
-        day:"numeric",
-        month:"long",
-        year:"numeric"
-      }
-    );
-
-
-
-  const waktu =
-    sekarang.toLocaleTimeString(
-      "id-ID"
-    );
-
-
-
-
-  clock.innerHTML =
-
-    tanggal +
-
-    "<br>" +
-
-    waktu;
-
-
+  clock.innerHTML = tanggal + "<br>" + waktu;
 }
-
-// ===============================
-// PART 3C-3
-// LOGOUT OPERATOR
-// ===============================
 
 
 function logoutOperator(){
+  const konfirmasi = confirm("Yakin ingin logout operator?");
+  if(!konfirmasi) return;
 
-
-
-  const konfirmasi =
-
-    confirm(
-      "Yakin ingin logout operator?"
-    );
-
-
-
-  if(!konfirmasi){
-
-    return;
-
-  }
-
-
-
-
-
-  localStorage.removeItem(
-    "scanner_operator_login"
-  );
-
-
-
+  localStorage.removeItem("scanner_operator_login");
   operatorLogin = null;
 
+  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("loginInfo").style.display = "none";
+  document.getElementById("navTabs").style.display = "none";
+  document.getElementById("scannerArea").style.display = "none";
+  document.getElementById("adminDashboardArea").style.display = "none";
+  document.getElementById("btnLogoutOperator").style.display = "none";
+  document.getElementById("usernameOperator").value = "";
+  document.getElementById("passwordOperator").value = "";
 
-
-
-  document
-  .getElementById("loginBox")
-  .style
-  .display = "block";
-
-
-
-
-
-  document
-  .getElementById("loginInfo")
-  .style
-  .display = "none";
-
-
-
-
-
-  document
-  .getElementById("scannerArea")
-  .style
-  .display = "none";
-
-
-
-
-
-  document
-  .getElementById("btnLogoutOperator")
-  .style
-  .display = "none";
-
-
-
-
-
-  document
-  .getElementById("usernameOperator")
-  .value = "";
-
-
-
-  document
-  .getElementById("passwordOperator")
-  .value = "";
-
-
-
-
-
-
-  tampilkanHasilUtama(
-
-    "peringatan",
-
-    "🔒 Operator Logout",
-
-    "Silakan login operator baru."
-
-  );
-
-
-
+  tampilkanHasilUtama("peringatan", "🔒 Operator Logout", "Silakan login operator baru.");
 }
-
-// ===============================
-// PART 3C-4
-// CHECK SESSION EXPIRE
-// ===============================
 
 
 function cekExpirySession(){
-
-
-  const data =
-
-    localStorage.getItem(
-      "scanner_operator_login"
-    );
-
-
-
-  if(!data){
-
-    return false;
-
-  }
-
-
-
+  const data = localStorage.getItem("scanner_operator_login");
+  if(!data) return false;
 
   try {
+    const operator = JSON.parse(data);
+    if(!operator.login_time) return false;
 
+    const waktuLogin = new Date(operator.login_time).getTime();
+    const sekarang = Date.now();
+    const selisih = sekarang - waktuLogin;
 
-
-    const operator =
-      JSON.parse(data);
-
-
-
-    if(
-      !operator.login_time
-    ){
-
-      return false;
-
-    }
-
-
-
-
-
-    const waktuLogin =
-
-      new Date(
-        operator.login_time
-      )
-      .getTime();
-
-
-
-
-
-    const sekarang =
-
-      Date.now();
-
-
-
-
-
-    const selisih =
-
-      sekarang -
-      waktuLogin;
-
-
-
-
-
-    if(
-      selisih >= SESSION_EXPIRE_MS
-    ){
-
-
-
+    if(selisih >= SESSION_EXPIRE_MS){
       logoutOperator();
-
-
-
-      tampilkanHasilUtama(
-
-        "peringatan",
-
-        "⏰ Session Berakhir",
-
-        "Silakan login kembali."
-
-      );
-
-
-
+      tampilkanHasilUtama("peringatan", "⏰ Session Berakhir", "Silakan login kembali.");
       return false;
-
-
     }
-
-
-
-
 
     return true;
-
-
-
   }
-
-
   catch(error){
-
-
-
-    localStorage.removeItem(
-      "scanner_operator_login"
-    );
-
-
-
+    localStorage.removeItem("scanner_operator_login");
     return false;
-
-
   }
-
-
-
 }
-
-// ===============================
-// PART 3C-5
-// AUTO LOGOUT TENGAH MALAM
-// ===============================
 
 
 function cekAutoLogoutTengahMalam(){
-
-
-  const data =
-
-    localStorage.getItem(
-      "scanner_operator_login"
-    );
-
-
-
-  if(!data){
-
-    return;
-
-  }
-
-
-
+  const data = localStorage.getItem("scanner_operator_login");
+  if(!data) return;
 
   try {
+    const operator = JSON.parse(data);
+    if(!operator.login_time) return;
 
+    const waktuLogin = new Date(operator.login_time);
+    const sekarang = new Date();
 
-
-    const operator =
-      JSON.parse(data);
-
-
-
-
-
-    if(
-      !operator.login_time
-    ){
-
-      return;
-
-    }
-
-
-
-
-
-    const waktuLogin =
-
-      new Date(
-        operator.login_time
-      );
-
-
-
-
-
-    const sekarang =
-
-      new Date();
-
-
-
-
-
-
-    const tanggalLogin =
-
-      waktuLogin
-      .toDateString();
-
-
-
-
-
-    const tanggalSekarang =
-
-      sekarang
-      .toDateString();
-
-
-
-
-
-
-    if(
-      tanggalLogin !== tanggalSekarang
-    ){
-
-
-
-      localStorage.removeItem(
-        "scanner_operator_login"
-      );
-
-
-
+    if(waktuLogin.toDateString() !== sekarang.toDateString()){
+      localStorage.removeItem("scanner_operator_login");
       operatorLogin = null;
 
+      document.getElementById("loginBox").style.display = "block";
+      document.getElementById("loginInfo").style.display = "none";
+      document.getElementById("navTabs").style.display = "none";
+      document.getElementById("scannerArea").style.display = "none";
+      document.getElementById("adminDashboardArea").style.display = "none";
+      document.getElementById("btnLogoutOperator").style.display = "none";
 
-
-
-
-      document
-      .getElementById("loginBox")
-      .style
-      .display = "block";
-
-
-
-
-
-      document
-      .getElementById("loginInfo")
-      .style
-      .display = "none";
-
-
-
-
-
-      document
-      .getElementById("scannerArea")
-      .style
-      .display = "none";
-
-
-
-
-
-      document
-      .getElementById("btnLogoutOperator")
-      .style
-      .display = "none";
-
-
-
-
-
-
-
-      tampilkanHasilUtama(
-
-        "peringatan",
-
-        "🌙 Session Harian Berakhir",
-
-        "Silakan login kembali untuk hari ini."
-
-      );
-
-
-
+      tampilkanHasilUtama("peringatan", "🌙 Session Harian Berakhir", "Silakan login kembali untuk hari ini.");
     }
-
-
-
-
   }
-
-
   catch(error){
-
-
-
-    localStorage.removeItem(
-      "scanner_operator_login"
-    );
-
-
-
+    localStorage.removeItem("scanner_operator_login");
   }
-
-
-
 }
-
-// ===============================
-// 3D-2 SOUND + VIBRATION FEEDBACK
-// ===============================
 
 
 function bunyiScan(tipe){
-
-
   try {
-
-
-    if(
-      !audioContextScanner ||
-      audioContextScanner.state === "closed"
-    ){
-
-      audioContextScanner =
-        new (
-          window.AudioContext ||
-          window.webkitAudioContext
-        )();
-
+    if(!audioContextScanner || audioContextScanner.state === "closed"){
+      audioContextScanner = new (window.AudioContext || window.webkitAudioContext)();
     }
-
-
-
-    if(
-      audioContextScanner.state === "suspended"
-    ){
-
+    if(audioContextScanner.state === "suspended"){
       audioContextScanner.resume();
-
     }
 
-
-
-
-
-    const oscillator =
-      audioContextScanner.createOscillator();
-
-
-
-    const gain =
-      audioContextScanner.createGain();
-
-
-
-
+    const oscillator = audioContextScanner.createOscillator();
+    const gain = audioContextScanner.createGain();
 
     oscillator.connect(gain);
-
-    gain.connect(
-      audioContextScanner.destination
-    );
-
-
-
-
-
+    gain.connect(audioContextScanner.destination);
 
     if(tipe === "sukses"){
+      oscillator.frequency.value = 1000;
+      gain.gain.value = 0.5;
+    } else if(tipe === "warning"){
+      oscillator.frequency.value = 600;
+      gain.gain.value = 0.5;
+    } else {
+      oscillator.frequency.value = 300;
+      gain.gain.value = 0.6;
+    }
 
-
-	  oscillator.frequency.value =
-		1000;
-
-
-	  gain.gain.value =
-		0.5;
-
-
-	}
-
-
-
-	else if(tipe === "warning"){
-
-
-	  oscillator.frequency.value =
-		600;
-
-
-	  gain.gain.value =
-		0.5;
-
-
-
-	}
-
-
-
-	else {
-
-
-	  oscillator.frequency.value =
-		300;
-
-
-	  gain.gain.value =
-		0.6;
-
-
-	}
-
-
-
-	oscillator.start();
-
-
-	setTimeout(function(){
-
-
-	  oscillator.stop();
-
-
-	},200);
-
-
-
-
+    oscillator.start();
+    setTimeout(function(){
+      oscillator.stop();
+    }, 200);
   }
-
-
   catch(error){
-
-
-    console.log(
-      "Audio gagal:",
-      error
-    );
-
-
+    console.log("Audio gagal:", error);
   }
-
-
 }
 
-function getarScan(
-  tipe
-){
 
-
-  if(
-    !navigator.vibrate
-  ){
-
-    return;
-
-  }
-
-
-	navigator.vibrate(0);
-
+function getarScan(tipe){
+  if(!navigator.vibrate) return;
+  navigator.vibrate(0);
 
   if(tipe === "sukses"){
+    navigator.vibrate(120);
+  } else if(tipe === "warning"){
+    navigator.vibrate(250);
+  } else {
+    navigator.vibrate([200, 100, 200]);
+  }
+}
 
 
-	  navigator.vibrate(120);
+/* =========================
+   STATUS LOCKS GLOBAL
+========================= */
+let isSubmittingKoreksi = false;
+let isSubmittingBackup = false;
+let isSubmittingBatalBackup = false;
 
+/* =========================
+   1. KIRIM KOREKSI ADMIN (ANTI KLIK 2X)
+========================= */
+function kirimKoreksiAdmin() {
+  if (isSubmittingKoreksi) return;
 
-	}
+  if (!operatorLogin || operatorLogin.role !== "Admin") {
+    alert("Akses ditolak. Fitur ini khusus untuk Admin.");
+    return;
+  }
 
+  const tanggal = document.getElementById("adminTanggal").value;
+  const id = document.getElementById("adminIdKaryawan").value.trim();
+  const jenisKoreksi = document.getElementById("adminJenisKoreksi").value;
+  const jamKoreksi = document.getElementById("adminJamKoreksi").value.trim();
+  const keterangan = document.getElementById("adminKeterangan").value.trim();
 
+  if (!tanggal || !id) {
+    alert("Tanggal dan ID Karyawan wajib diisi!");
+    return;
+  }
 
-	else if(tipe === "warning"){
+  // KUNCI TOMBOL
+  isSubmittingKoreksi = true;
+  const btn = document.getElementById("btnProsesKoreksi");
+  const textAwal = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "⏳ Memproses...";
 
+  tampilkanLoading("Mengirim data koreksi ke server...");
 
-	  navigator.vibrate(250);
+  callbackCounter++;
+  const callbackName = "adminCorrectionCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
 
+  const timeout = setTimeout(function() {
+    cleanup();
+    alert("Server terlalu lama merespons.");
+  }, 15000);
 
-	}
+  function cleanup() {
+    clearTimeout(timeout);
+    btn.disabled = false;
+    btn.innerText = textAwal;
+    isSubmittingKoreksi = false;
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
 
+  window[callbackName] = function(hasil) {
+    cleanup();
+    if (hasil && hasil.sukses) {
+      tutupModalAdmin('modalKoreksi');
+      tampilkanHasilUtama("sukses", "✅ Koreksi Berhasil", hasil.pesan);
+      alert(hasil.pesan);
+      document.getElementById("adminIdKaryawan").value = "";
+      document.getElementById("adminJamKoreksi").value = "";
+      document.getElementById("adminKeterangan").value = "";
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Koreksi Gagal", hasil.pesan || "Terjadi kesalahan.");
+      alert("Gagal: " + (hasil.pesan || "Kesalahan sistem."));
+    }
+  };
 
+  const url = WEB_APP_URL + 
+    "?action=admin_correction" +
+    "&tanggal=" + encodeURIComponent(tanggal) +
+    "&id=" + encodeURIComponent(id) +
+    "&jenis_koreksi=" + encodeURIComponent(jenisKoreksi) +
+    "&jam_koreksi=" + encodeURIComponent(jamKoreksi) +
+    "&keterangan=" + encodeURIComponent(keterangan) +
+    "&kode_operator=" + encodeURIComponent(operatorLogin.operator_id || "") +
+    "&callback=" + encodeURIComponent(callbackName);
 
-	else {
+  script.src = url;
+  script.onerror = function() {
+    cleanup();
+    alert("Gagal menghubungi server Apps Script.");
+  };
 
+  document.body.appendChild(script);
+}
 
-	  navigator.vibrate(
-		[
-		  200,
-		  100,
-		  200
-		]
-	  );
+/* =========================
+   2. KIRIM PENUGASAN BACKUP (ANTI KLIK 2X)
+========================= */
+function kirimPenugasanBackup() {
+  if (isSubmittingBackup) return;
 
+  if (!operatorLogin || operatorLogin.role !== "Admin") {
+    alert("Akses ditolak. Fitur ini khusus untuk Admin.");
+    return;
+  }
 
-	}
+  const tanggal = document.getElementById("backupTanggal").value;
+  const idAsal = document.getElementById("backupIdAsal").value.trim();
+  const idPengganti = document.getElementById("backupIdPengganti").value.trim();
+  const shiftBackup = document.getElementById("backupShift").value.trim();
+  const alasan = document.getElementById("backupAlasan").value.trim();
 
+  if (!tanggal || !idAsal || !idPengganti || !shiftBackup || !alasan) {
+    alert("Semua kolom form Penugasan Backup wajib diisi!");
+    return;
+  }
 
+  // KUNCI TOMBOL
+  isSubmittingBackup = true;
+  const btn = document.getElementById("btnProsesBackup");
+  const textAwal = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "⏳ Memproses...";
 
+  tampilkanLoading("Memproses penugasan backup...");
+
+  callbackCounter++;
+  const callbackName = "backupCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
+
+  const timeout = setTimeout(function() {
+    cleanup();
+    alert("Server terlalu lama merespons.");
+  }, 15000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    btn.disabled = false;
+    btn.innerText = textAwal;
+    isSubmittingBackup = false;
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function(hasil) {
+    cleanup();
+    if (hasil && hasil.sukses) {
+      tutupModalAdmin('modalPenugasanBackup');
+      tampilkanHasilUtama("sukses", "✅ Backup Berhasil", hasil.pesan);
+      alert(hasil.pesan);
+      document.getElementById("backupIdAsal").value = "";
+      document.getElementById("backupIdPengganti").value = "";
+      document.getElementById("backupShift").value = "";
+      document.getElementById("backupAlasan").value = "";
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Backup Gagal", hasil.pesan || "Terjadi kesalahan.");
+      alert("Gagal: " + (hasil.pesan || "Kesalahan sistem."));
+    }
+  };
+
+  const url = WEB_APP_URL + 
+    "?action=penugasan_backup" +
+    "&tanggal=" + encodeURIComponent(tanggal) +
+    "&id_asal=" + encodeURIComponent(idAsal) +
+    "&id_pengganti=" + encodeURIComponent(idPengganti) +
+    "&shift_backup=" + encodeURIComponent(shiftBackup) +
+    "&alasan=" + encodeURIComponent(alasan) +
+    "&kode_operator=" + encodeURIComponent(operatorLogin.operator_id || "") +
+    "&callback=" + encodeURIComponent(callbackName);
+
+  script.src = url;
+  script.onerror = function() {
+    cleanup();
+    alert("Gagal menghubungi server Apps Script.");
+  };
+
+  document.body.appendChild(script);
+}
+
+/* =========================
+   3. KIRIM PEMBATALAN BACKUP (ANTI KLIK 2X)
+========================= */
+function kirimPembatalanBackup() {
+  if (isSubmittingBatalBackup) return;
+
+  if (!operatorLogin || operatorLogin.role !== "Admin") {
+    alert("Akses ditolak. Fitur ini khusus untuk Admin.");
+    return;
+  }
+
+  const idBackup = document.getElementById("batalIdBackup").value.trim();
+
+  if (!idBackup) {
+    alert("ID Backup wajib diisi!");
+    return;
+  }
+
+  if (!confirm("Apakah Anda yakin ingin membatalkan penugasan backup " + idBackup + "?")) {
+    return;
+  }
+
+  // KUNCI TOMBOL
+  isSubmittingBatalBackup = true;
+  const btn = document.getElementById("btnProsesBatalBackup");
+  const textAwal = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "⏳ Memproses...";
+
+  tampilkanLoading("Memproses pembatalan backup...");
+
+  callbackCounter++;
+  const callbackName = "batalBackupCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
+
+  const timeout = setTimeout(function() {
+    cleanup();
+    alert("Server terlalu lama merespons.");
+  }, 15000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    btn.disabled = false;
+    btn.innerText = textAwal;
+    isSubmittingBatalBackup = false;
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function(hasil) {
+    cleanup();
+    if (hasil && hasil.sukses) {
+      tutupModalAdmin('modalPembatalanBackup');
+      tampilkanHasilUtama("sukses", "✅ Pembatalan Berhasil", hasil.pesan);
+      alert(hasil.pesan);
+      document.getElementById("batalIdBackup").value = "";
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Pembatalan Gagal", hasil.pesan || "Terjadi kesalahan.");
+      alert("Gagal: " + (hasil.pesan || "Kesalahan sistem."));
+    }
+  };
+
+  const url = WEB_APP_URL + 
+    "?action=batal_backup" +
+    "&id_backup=" + encodeURIComponent(idBackup) +
+    "&kode_operator=" + encodeURIComponent(operatorLogin.operator_id || "") +
+    "&callback=" + encodeURIComponent(callbackName);
+
+  script.src = url;
+  script.onerror = function() {
+    cleanup();
+    alert("Gagal menghubungi server Apps Script.");
+  };
+
+  document.body.appendChild(script);
+}
+
+/* =========================
+   KIRIM IMPORT OFFLINE (ANTI KLIK 2X)
+========================= */
+let isSubmittingImport = false;
+
+function kirimImportOffline() {
+  if (isSubmittingImport) return;
+
+  if (!operatorLogin || operatorLogin.role !== "Admin") {
+    alert("Akses ditolak. Fitur ini khusus untuk Admin.");
+    return;
+  }
+
+  const tanggal = document.getElementById("importTanggal").value;
+  const id = document.getElementById("importIdKaryawan").value.trim();
+  const jamMasuk = document.getElementById("importJamMasuk").value.trim();
+  const jamPulang = document.getElementById("importJamPulang").value.trim();
+  const statusKehadiran = document.getElementById("importStatusKehadiran").value;
+  const keterangan = document.getElementById("importKeterangan").value.trim();
+
+  if (!tanggal || !id) {
+    alert("Tanggal Kerja dan ID Karyawan wajib diisi!");
+    return;
+  }
+
+  if (!jamMasuk && !jamPulang && statusKehadiran === "Hadir") {
+    alert("Jam Masuk atau Jam Pulang wajib diisi jika status Hadir.");
+    return;
+  }
+
+  // KUNCI TOMBOL
+  isSubmittingImport = true;
+  const btn = document.getElementById("btnProsesImport");
+  const textAwal = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "⏳ Memproses...";
+
+  tampilkanLoading("Memproses import absensi offline...");
+
+  callbackCounter++;
+  const callbackName = "importOfflineCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
+
+  const timeout = setTimeout(function() {
+    cleanup();
+    alert("Server terlalu lama merespons.");
+  }, 15000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    btn.disabled = false;
+    btn.innerText = textAwal;
+    isSubmittingImport = false;
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function(hasil) {
+    cleanup();
+    if (hasil && hasil.sukses) {
+      tutupModalAdmin('modalImportOffline');
+      tampilkanHasilUtama("sukses", "✅ Import Berhasil", hasil.pesan);
+      alert(hasil.pesan);
+      document.getElementById("importIdKaryawan").value = "";
+      document.getElementById("importJamMasuk").value = "";
+      document.getElementById("importJamPulang").value = "";
+      document.getElementById("importKeterangan").value = "";
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Import Gagal", hasil.pesan || "Terjadi kesalahan.");
+      alert("Gagal: " + (hasil.pesan || "Kesalahan sistem."));
+    }
+  };
+
+  const url = WEB_APP_URL + 
+    "?action=import_offline" +
+    "&tanggal=" + encodeURIComponent(tanggal) +
+    "&id=" + encodeURIComponent(id) +
+    "&jam_masuk=" + encodeURIComponent(jamMasuk) +
+    "&jam_pulang=" + encodeURIComponent(jamPulang) +
+    "&status_kehadiran=" + encodeURIComponent(statusKehadiran) +
+    "&keterangan=" + encodeURIComponent(keterangan) +
+    "&callback=" + encodeURIComponent(callbackName);
+
+  script.src = url;
+  script.onerror = function() {
+    cleanup();
+    alert("Gagal menghubungi server Apps Script.");
+  };
+
+  document.body.appendChild(script);
+}
+
+/* =========================
+   1. GENERATE ID CARD BY ID
+========================= */
+let isSubmittingIdCardById = false;
+
+function kirimIdCardById() {
+  if (isSubmittingIdCardById) return;
+
+  if (!operatorLogin || operatorLogin.role !== "Admin") {
+    alert("Akses ditolak. Fitur ini khusus untuk Admin.");
+    return;
+  }
+
+  const daftarId = document.getElementById("idCardInputDaftar").value.trim();
+
+  if (!daftarId) {
+    alert("Masukkan minimal 1 ID karyawan!");
+    return;
+  }
+
+  isSubmittingIdCardById = true;
+  const btn = document.getElementById("btnProsesIdCardById");
+  const textAwal = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "⏳ Memproses PDF...";
+
+  tampilkanLoading("Sedang menyusun layout PDF ID Card...");
+
+  callbackCounter++;
+  const callbackName = "idCardByIdCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
+
+  const timeout = setTimeout(function() {
+    cleanup();
+    alert("Proses pembuatan PDF membutuhkan waktu. Silakan periksa Google Drive Anda.");
+  }, 45000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    btn.disabled = false;
+    btn.innerText = textAwal;
+    isSubmittingIdCardById = false;
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function(hasil) {
+    cleanup();
+    if (hasil && hasil.sukses) {
+      tutupModalAdmin('modalIdCardById');
+      var pesanDetail = hasil.pesan + (hasil.pdfUrl ? "<br><br><a href='" + hasil.pdfUrl + "' target='_blank'><b>👉 Buka File PDF</b></a>" : "");
+      tampilkanHasilUtama("sukses", "✅ PDF Berhasil Dibuat", pesanDetail);
+      alert(hasil.pesan);
+      document.getElementById("idCardInputDaftar").value = "";
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Generate Gagal", hasil.pesan || "Terjadi kesalahan.");
+      alert("Gagal: " + (hasil.pesan || "Kesalahan sistem."));
+    }
+  };
+
+  const url = WEB_APP_URL + "?action=idcard_by_id&daftar_id=" + encodeURIComponent(daftarId) + "&callback=" + encodeURIComponent(callbackName);
+  script.src = url;
+  script.onerror = function() { cleanup(); alert("Gagal menghubungi server Apps Script."); };
+  document.body.appendChild(script);
+}
+
+/* =========================
+   2. GENERATE ID CARD MASSAL
+========================= */
+let isSubmittingIdCardMassal = false;
+
+function kirimIdCardMassal() {
+  if (isSubmittingIdCardMassal) return;
+
+  if (!confirm("Apakah Anda yakin ingin membuat PDF ID Card secara massal untuk semua karyawan aktif?")) return;
+
+  isSubmittingIdCardMassal = true;
+  const btn = document.getElementById("btnProsesIdCardMassal");
+  const textAwal = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "⏳ Memproses Massal...";
+
+  tampilkanLoading("Sedang memproses seluruh ID Card...");
+
+  callbackCounter++;
+  const callbackName = "idCardMassalCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
+
+  const timeout = setTimeout(function() {
+    cleanup();
+    alert("Proses massal masih berjalan di latar belakang server.");
+  }, 60000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    btn.disabled = false;
+    btn.innerText = textAwal;
+    isSubmittingIdCardMassal = false;
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function(hasil) {
+    cleanup();
+    if (hasil && hasil.sukses) {
+      tutupModalAdmin('modalIdCardMassal');
+      var pesanDetail = hasil.pesan + (hasil.pdfUrl ? "<br><br><a href='" + hasil.pdfUrl + "' target='_blank'><b>👉 Buka File PDF Massal</b></a>" : "");
+      tampilkanHasilUtama("sukses", "✅ ID Card Massal Berhasil", pesanDetail);
+      alert(hasil.pesan);
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Generate Massal Gagal", hasil.pesan || "Terjadi kesalahan.");
+      alert("Gagal: " + (hasil.pesan || "Kesalahan sistem."));
+    }
+  };
+
+  const url = WEB_APP_URL + "?action=idcard_massal&callback=" + encodeURIComponent(callbackName);
+  script.src = url;
+  script.onerror = function() { cleanup(); alert("Gagal menghubungi server Apps Script."); };
+  document.body.appendChild(script);
+}
+
+/* =========================
+   3. EXPORT QR CODE PNG KE DRIVE
+========================= */
+let isSubmittingExportQr = false;
+
+function kirimExportQrPng() {
+  if (isSubmittingExportQr) return;
+
+  if (!confirm("Mulai proses export seluruh QR Code PNG ke Google Drive?")) return;
+
+  isSubmittingExportQr = true;
+  const btn = document.getElementById("btnProsesExportQr");
+  const textAwal = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "⏳ Mengexport PNG...";
+
+  tampilkanLoading("Mengunduh & menyimpan QR Code ke Google Drive...");
+
+  callbackCounter++;
+  const callbackName = "exportQrCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
+
+  const timeout = setTimeout(function() {
+    cleanup();
+    alert("Proses export memerlukan waktu. Silakan periksa folder Google Drive Anda.");
+  }, 60000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    btn.disabled = false;
+    btn.innerText = textAwal;
+    isSubmittingExportQr = false;
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function(hasil) {
+    cleanup();
+    if (hasil && hasil.sukses) {
+      tutupModalAdmin('modalExportQr');
+      tampilkanHasilUtama("sukses", "✅ Export QR PNG Berhasil", hasil.pesan);
+      alert(hasil.pesan);
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Export Gagal", hasil.pesan || "Terjadi kesalahan.");
+      alert("Gagal: " + (hasil.pesan || "Kesalahan sistem."));
+    }
+  };
+
+  const url = WEB_APP_URL + "?action=export_qr_png&callback=" + encodeURIComponent(callbackName);
+  script.src = url;
+  script.onerror = function() { cleanup(); alert("Gagal menghubungi server Apps Script."); };
+  document.body.appendChild(script);
 }
 
 function escapeHtml(text){
-
-
-
   return String(text)
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-
-
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
-document.addEventListener(
-"DOMContentLoaded",
-function(){
 
-
+document.addEventListener("DOMContentLoaded", function(){
   cekLoginOperatorLokal();
-
-
-
   updateScannerClock();
-
-
-
-  setInterval(
-
-    updateScannerClock,
-
-    1000
-
-  );
-
-
-
-
-  setInterval(
-
-    cekExpirySession,
-
-    60000
-
-  );
-  
-  setInterval(
-
-  cekAutoLogoutTengahMalam,
-
-  60000
-
-);
-
-
-
-}
-);
+  setInterval(updateScannerClock, 1000);
+  setInterval(cekExpirySession, 60000);
+  setInterval(cekAutoLogoutTengahMalam, 60000);
+});
 
 </script>
 
