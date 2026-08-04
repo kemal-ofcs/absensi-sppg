@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+  index.html - FINAL
+  Revisi login dan hak akses operator: 4 Agustus 2026
+  Role aktif: Admin, Scanner, dan Operator
+-->
 <html lang="id">
 
 <head>
@@ -1116,6 +1121,95 @@ button.danger {
 
 }
 
+/* =========================
+   DATA KARYAWAN & TABLE STYLE
+========================= */
+.table-karyawan-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: white;
+  margin-top: 12px;
+}
+
+.table-karyawan {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+
+.table-karyawan th {
+  background: #f1f5f9;
+  color: var(--dark);
+  font-weight: 800;
+  padding: 12px 10px;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.table-karyawan td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.table-karyawan tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.btn-detail {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 10px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 0;
+  box-shadow: none;
+  transition: 0.2s;
+}
+
+.btn-detail:hover {
+  background: var(--primary-dark);
+}
+
+/* Detail Modal Grid */
+.detail-karyawan-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+
+.detail-label {
+  font-weight: 700;
+  color: var(--muted);
+  width: 45%;
+}
+
+.detail-val {
+  font-weight: 800;
+  color: var(--dark);
+  width: 55%;
+  text-align: right;
+  word-break: break-word;
+}
 
 </style>
 
@@ -1259,6 +1353,7 @@ Scanner kamera & fitur admin hanya dapat digunakan setelah login.
 ========================= -->
 <div id="navTabs" class="nav-tabs">
   <button id="tabScanner" class="tab-btn active" onclick="gantiTab('scanner')">📷 Scanner Mode</button>
+  <button id="tabKaryawan" class="tab-btn" onclick="gantiTab('karyawan')" style="display:none;">👥 Data Karyawan</button>
   <button id="tabAdmin" class="tab-btn" onclick="gantiTab('admin')" style="display:none;">⚡ Admin Hub</button>
 </div>
 
@@ -1575,14 +1670,39 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
 
 </div>
 
+<!-- =========================
+     ADMIN DASHBOARD AREA (TAB 2)
+========================= -->
 
+<div id="karyawanArea" class="scanner-area">
+  <div class="section-title">👥 Daftar Data Karyawan</div>
+  
+  <input type="text" id="searchKaryawan" placeholder="🔍 Cari Nama, ID, atau Shift..." onkeyup="filterDataKaryawan()" autocomplete="off" />
+  <button class="secondary" onclick="muatDataKaryawan()" style="margin-bottom:12px;">🔄 Muat / Refresh Data</button>
 
-
+  <div class="table-karyawan-container">
+    <table class="table-karyawan">
+      <thead>
+        <tr>
+          <th>ID Unik</th>
+          <th>Nama</th>
+          <th>Shift</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="tbodyKaryawan">
+        <tr>
+          <td colspan="4" style="text-align:center; color: var(--muted);">Klik tombol di atas untuk memuat data.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
 
 
 <!-- =========================
-     ADMIN DASHBOARD AREA (TAB 2)
+     ADMIN DASHBOARD AREA (TAB 3)
 ========================= -->
 <div id="adminDashboardArea" class="scanner-area">
 
@@ -1791,7 +1911,7 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
   </div>
 </div>
 
-<!-- MODAL: ID CARD BY ID -->
+<!-- MODAL 5: ID CARD BY ID -->
 <div id="modalIdCardById" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-header">
@@ -1808,7 +1928,7 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
   </div>
 </div>
 
-<!-- MODAL: ID CARD MASSAL -->
+<!-- MODAL 6: ID CARD MASSAL -->
 <div id="modalIdCardMassal" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-header">
@@ -1824,7 +1944,7 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
   </div>
 </div>
 
-<!-- MODAL: EXPORT QR CODE PNG -->
+<!-- MODAL 7: EXPORT QR CODE PNG -->
 <div id="modalExportQr" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-header">
@@ -1840,7 +1960,7 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
   </div>
 </div>
 
-<!-- 5 Modal Arsip Import Offline -->
+<!-- Modal 8 Arsip Import Offline -->
 
 <div id="modalArsipImportOffline" class="modal-overlay">
 
@@ -1879,6 +1999,19 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
 
   </div>
 
+</div>
+
+<!-- Modal 9 Detail Karyawan -->
+
+<div id="modalDetailKaryawan" class="modal-overlay">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="modal-title">📋 Detail Karyawan</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalDetailKaryawan')">✕</button>
+    </div>
+    <div id="contentDetailKaryawan" class="detail-karyawan-container">
+      </div>
+  </div>
 </div>
 
 <!-- =========================
@@ -1920,22 +2053,78 @@ const SESSION_EXPIRE_MS = 8 * 60 * 60 * 1000;
    SYSTEM TABS & MODALS
 ========================= */
 
-function gantiTab(tabName) {
-  const tabScanner = document.getElementById("tabScanner");
-  const tabAdmin = document.getElementById("tabAdmin");
-  const scannerArea = document.getElementById("scannerArea");
-  const adminArea = document.getElementById("adminDashboardArea");
+function normalisasiRole(role) {
+  return String(role || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ");
+}
 
-  if (tabName === "scanner") {
-    tabScanner.classList.add("active");
-    tabAdmin.classList.remove("active");
-    scannerArea.style.display = "block";
-    adminArea.style.display = "none";
-  } else {
-    tabAdmin.classList.add("active");
-    tabScanner.classList.remove("active");
-    adminArea.style.display = "block";
-    scannerArea.style.display = "none";
+
+function apakahRoleAdmin(role) {
+  const roleNorm = normalisasiRole(role);
+
+  return (
+    roleNorm === "admin" ||
+    roleNorm === "super admin" ||
+    roleNorm === "superadmin"
+  );
+}
+
+
+function aturAksesNavigasiOperator(operator) {
+  const sudahLogin = !!operator;
+  const isAdmin = sudahLogin && apakahRoleAdmin(operator.role);
+  const navTabs = document.getElementById("navTabs");
+  const tabAdmin = document.getElementById("tabAdmin");
+  const tabKaryawan = document.getElementById("tabKaryawan");
+
+  if (navTabs) {
+    navTabs.style.display = sudahLogin ? "flex" : "none";
+  }
+
+  if (tabAdmin) {
+    tabAdmin.style.display = isAdmin ? "block" : "none";
+  }
+
+  if (tabKaryawan) {
+    tabKaryawan.style.display = isAdmin ? "block" : "none";
+  }
+}
+
+
+function setStatusTombolLogin(sedangMemproses) {
+  const btnLogin = document.getElementById("btnLoginOperator");
+  if (!btnLogin) return;
+
+  btnLogin.disabled = !!sedangMemproses;
+  btnLogin.innerText = sedangMemproses
+    ? "Memproses Login..."
+    : "Login Operator";
+}
+
+function gantiTab(tab) {
+  const isAdmin = operatorLogin && apakahRoleAdmin(operatorLogin.role);
+
+  // Proteksi Akses: Jika mencoba buka tab karyawan atau admin tapi bukan Admin
+  if ((tab === 'karyawan' || tab === 'admin') && !isAdmin) {
+    alert("Akses ditolak! Fitur ini hanya dapat diakses oleh Admin.");
+    return;
+  }
+
+  // Sembunyikan / Tampilkan area sesuai tab yang dipilih (DIBETULKAN DI SINI)
+  document.getElementById('scannerArea').style.display = (tab === 'scanner') ? 'block' : 'none';
+  document.getElementById('adminDashboardArea').style.display = (tab === 'admin') ? 'block' : 'none';
+  document.getElementById('karyawanArea').style.display = (tab === 'karyawan') ? 'block' : 'none';
+
+  // Toggle class active pada tombol tab
+  document.getElementById('tabScanner').classList.toggle('active', tab === 'scanner');
+  if (document.getElementById('tabAdmin')) document.getElementById('tabAdmin').classList.toggle('active', tab === 'admin');
+  if (document.getElementById('tabKaryawan')) document.getElementById('tabKaryawan').classList.toggle('active', tab === 'karyawan');
+
+  // Jika membuka tab karyawan dan data belum dimuat, muat otomatis
+  if (tab === 'karyawan' && listDataKaryawan.length === 0) {
+    muatDataKaryawan();
   }
 }
 
@@ -2050,15 +2239,13 @@ function tampilkanHasilUtama(tipe, judul, detail) {
 function loginOperator() {
   const username = document.getElementById("usernameOperator").value.trim();
   const password = document.getElementById("passwordOperator").value.trim();
-  const btnLogin = document.getElementById("btnLoginOperator");
 
   if (!username || !password) {
     tampilkanHasilUtama("gagal", "❌ Login Gagal", "Username dan password wajib diisi.");
     return;
   }
 
-  btnLogin.disabled = true;
-  btnLogin.innerText = "Memproses Login...";
+  setStatusTombolLogin(true);
 
   tampilkanHasilUtama("proses", "🔐 Memproses Login", "Sedang memeriksa data operator...");
 
@@ -2066,8 +2253,7 @@ function loginOperator() {
   .then(function(hasil) {
     if (!hasil || hasil.sukses !== true) {
       tampilkanHasilUtama("gagal", "❌ Login Gagal", hasil && hasil.pesan ? hasil.pesan : "Login gagal.");
-      btnLogin.disabled = false;
-      btnLogin.innerText = "Login Operator";
+      setStatusTombolLogin(false);
       return;
     }
 
@@ -2079,7 +2265,7 @@ function loginOperator() {
         operator_id: hasil.operator_id,
         username: hasil.username,
         nama_operator: hasil.nama_operator,
-        role: hasil.role,
+        role: String(hasil.role || "").trim(),
         login_time: new Date().toISOString()
       })
     );
@@ -2095,26 +2281,21 @@ function loginOperator() {
       escapeHtml(hasil.role) +
       "<br><b>Status:</b> Aktif";
 
-    // Buka akses tab navigasi
-    document.getElementById("navTabs").style.display = "flex";
-
-    if (hasil.role === "Admin") {
-      document.getElementById("tabAdmin").style.display = "block";
-    }
+    aturAksesNavigasiOperator(operatorLogin);
 
     gantiTab('scanner');
     document.getElementById("btnLogoutOperator").style.display = "block";
+    setStatusTombolLogin(false);
 
     tampilkanHasilUtama(
       "sukses",
       "✅ Login Berhasil",
-      "Selamat datang, " + hasil.nama_operator + ". Sistem siap digunakan."
+      "Selamat datang, " + escapeHtml(hasil.nama_operator) + ". Sistem siap digunakan."
     );
   })
   .catch(function(error) {
     tampilkanHasilUtama("gagal", "❌ Login Error", error.message || String(error));
-    btnLogin.disabled = false;
-    btnLogin.innerText = "Login Operator";
+    setStatusTombolLogin(false);
   });
 }
 
@@ -2380,19 +2561,16 @@ function cekLoginOperatorLokal(){
       escapeHtml(operator.role) +
       "<br><b>Status:</b> Aktif";
 
-    document.getElementById("navTabs").style.display = "flex";
-
-    if (operator.role === "Admin") {
-      document.getElementById("tabAdmin").style.display = "block";
-    }
+    aturAksesNavigasiOperator(operatorLogin);
 
     gantiTab('scanner');
     document.getElementById("btnLogoutOperator").style.display = "block";
+    setStatusTombolLogin(false);
 
     tampilkanHasilUtama(
       "sukses",
       "👋 Selamat Datang Kembali",
-      "Operator " + operator.nama_operator + " masih aktif."
+      "Operator " + escapeHtml(operator.nama_operator) + " masih aktif."
     );
   }
   catch(error){
@@ -2418,21 +2596,28 @@ function updateScannerClock(){
 }
 
 
-function logoutOperator(){
-  const konfirmasi = confirm("Yakin ingin logout operator?");
-  if(!konfirmasi) return;
-
+function bersihkanSesiOperator(){
   localStorage.removeItem("scanner_operator_login");
   operatorLogin = null;
 
   document.getElementById("loginBox").style.display = "block";
   document.getElementById("loginInfo").style.display = "none";
-  document.getElementById("navTabs").style.display = "none";
+  aturAksesNavigasiOperator(null);
   document.getElementById("scannerArea").style.display = "none";
   document.getElementById("adminDashboardArea").style.display = "none";
   document.getElementById("btnLogoutOperator").style.display = "none";
   document.getElementById("usernameOperator").value = "";
   document.getElementById("passwordOperator").value = "";
+  document.getElementById("karyawanArea").style.display = "none";
+  setStatusTombolLogin(false);
+}
+
+
+function logoutOperator(){
+  const konfirmasi = confirm("Yakin ingin logout operator?");
+  if(!konfirmasi) return;
+
+  bersihkanSesiOperator();
 
   tampilkanHasilUtama("peringatan", "🔒 Operator Logout", "Silakan login operator baru.");
 }
@@ -2444,14 +2629,22 @@ function cekExpirySession(){
 
   try {
     const operator = JSON.parse(data);
-    if(!operator.login_time) return false;
+    if(!operator.login_time) {
+      localStorage.removeItem("scanner_operator_login");
+      return false;
+    }
 
     const waktuLogin = new Date(operator.login_time).getTime();
+    if(!Number.isFinite(waktuLogin)) {
+      localStorage.removeItem("scanner_operator_login");
+      return false;
+    }
+
     const sekarang = Date.now();
     const selisih = sekarang - waktuLogin;
 
     if(selisih >= SESSION_EXPIRE_MS){
-      logoutOperator();
+      bersihkanSesiOperator();
       tampilkanHasilUtama("peringatan", "⏰ Session Berakhir", "Silakan login kembali.");
       return false;
     }
@@ -2477,15 +2670,7 @@ function cekAutoLogoutTengahMalam(){
     const sekarang = new Date();
 
     if(waktuLogin.toDateString() !== sekarang.toDateString()){
-      localStorage.removeItem("scanner_operator_login");
-      operatorLogin = null;
-
-      document.getElementById("loginBox").style.display = "block";
-      document.getElementById("loginInfo").style.display = "none";
-      document.getElementById("navTabs").style.display = "none";
-      document.getElementById("scannerArea").style.display = "none";
-      document.getElementById("adminDashboardArea").style.display = "none";
-      document.getElementById("btnLogoutOperator").style.display = "none";
+      bersihkanSesiOperator();
 
       tampilkanHasilUtama("peringatan", "🌙 Session Harian Berakhir", "Silakan login kembali untuk hari ini.");
     }
@@ -2560,7 +2745,7 @@ let isSubmittingBatalBackup = false;
 function kirimKoreksiAdmin() {
   if (isSubmittingKoreksi) return;
 
-  if (!operatorLogin || operatorLogin.role !== "Admin") {
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
     alert("Akses ditolak. Fitur ini khusus untuk Admin.");
     return;
   }
@@ -2644,7 +2829,7 @@ function kirimKoreksiAdmin() {
 function kirimPenugasanBackup() {
   if (isSubmittingBackup) return;
 
-  if (!operatorLogin || operatorLogin.role !== "Admin") {
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
     alert("Akses ditolak. Fitur ini khusus untuk Admin.");
     return;
   }
@@ -2729,7 +2914,7 @@ function kirimPenugasanBackup() {
 function kirimPembatalanBackup() {
   if (isSubmittingBatalBackup) return;
 
-  if (!operatorLogin || operatorLogin.role !== "Admin") {
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
     alert("Akses ditolak. Fitur ini khusus untuk Admin.");
     return;
   }
@@ -2809,7 +2994,7 @@ let isSubmittingImport = false;
 function kirimImportOffline() {
   if (isSubmittingImport) return;
 
-  if (!operatorLogin || operatorLogin.role !== "Admin") {
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
     alert("Akses ditolak. Fitur ini khusus untuk Admin.");
     return;
   }
@@ -2896,7 +3081,7 @@ function kirimImportOffline() {
 
 function kirimArsipImportOffline(){
 
-  if(!operatorLogin || operatorLogin.role !== "Admin"){
+  if(!operatorLogin || !apakahRoleAdmin(operatorLogin.role)){
     alert("Akses ditolak. Fitur khusus Admin.");
     return;
   }
@@ -2983,7 +3168,7 @@ let isSubmittingIdCardById = false;
 function kirimIdCardById() {
   if (isSubmittingIdCardById) return;
 
-  if (!operatorLogin || operatorLogin.role !== "Admin") {
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
     alert("Akses ditolak. Fitur ini khusus untuk Admin.");
     return;
   }
@@ -3050,6 +3235,11 @@ let isSubmittingIdCardMassal = false;
 function kirimIdCardMassal() {
   if (isSubmittingIdCardMassal) return;
 
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
+    alert("Akses ditolak. Fitur ini khusus untuk Admin.");
+    return;
+  }
+
   if (!confirm("Apakah Anda yakin ingin membuat PDF ID Card secara massal untuk semua karyawan aktif?")) return;
 
   isSubmittingIdCardMassal = true;
@@ -3106,6 +3296,11 @@ let isSubmittingExportQr = false;
 function kirimExportQrPng() {
   if (isSubmittingExportQr) return;
 
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
+    alert("Akses ditolak. Fitur ini khusus untuk Admin.");
+    return;
+  }
+
   if (!confirm("Mulai proses export seluruh QR Code PNG ke Google Drive?")) return;
 
   isSubmittingExportQr = true;
@@ -3151,6 +3346,150 @@ function kirimExportQrPng() {
   script.src = url;
   script.onerror = function() { cleanup(); alert("Gagal menghubungi server Apps Script."); };
   document.body.appendChild(script);
+}
+
+/* =========================
+   DATA KARYAWAN OPERATIONS
+========================= */
+let listDataKaryawan = [];
+
+// Header 20 kolom sesuai config COL_MASTER_DATA
+const HEADER_MASTER_DATA = [
+  "ID Unik",               // 1
+  "Kode Karyawan",        // 2
+  "Nama",                 // 3
+  "Divisi",               // 4
+  "Jabatan / Status",     // 5
+  "No. HP",               // 6
+  "Status Aktif",         // 7
+  "Tanggal Daftar",       // 8
+  "Catatan",              // 9
+  "Token Absensi",        // 10
+  "ID Card Status",       // 11
+  "ID Card PDF URL",      // 12
+  "ID Card Last Generate",// 13
+  "ID Card Catatan",      // 14
+  "L / P",                // 15
+  "Shift",                // 16
+  "Jenis Personil",       // 17
+  "Tgl Mulai Aktif",      // 18
+  "Tgl Selesai Aktif",    // 19
+  "Status Backup"         // 20
+];
+
+function muatDataKaryawan() {
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
+    tampilkanHasilUtama("gagal", "❌ Akses Ditolak", "Fitur Data Karyawan hanya dapat diakses oleh Admin.");
+    return;
+  }
+
+  tampilkanLoading("Mengambil data karyawan dari server...");
+  callbackCounter++;
+  const callbackName = "getKaryawanCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
+
+  const timeout = setTimeout(function () {
+    cleanup();
+    alert("Server terlalu lama merespons saat mengambil data karyawan.");
+  }, 15000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function (hasil) {
+    cleanup();
+    if (hasil && hasil.sukses && Array.isArray(hasil.data)) {
+      listDataKaryawan = hasil.data;
+      renderTableKaryawan(listDataKaryawan);
+      tampilkanHasilUtama("sukses", "✅ Data Karyawan Dimuat", "Berhasil menampilkan " + listDataKaryawan.length + " data karyawan.");
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Gagal Memuat Data", hasil.pesan || "Terjadi kesalahan.");
+    }
+  };
+
+  const url = WEB_APP_URL + "?action=get_data_karyawan&callback=" + encodeURIComponent(callbackName);
+  script.src = url;
+  script.onerror = function () {
+    cleanup();
+    alert("Gagal menghubungi server Apps Script.");
+  };
+  document.body.appendChild(script);
+}
+
+function renderTableKaryawan(data) {
+  const tbody = document.getElementById("tbodyKaryawan");
+  if (!data || data.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Data karyawan tidak ditemukan.</td></tr>";
+    return;
+  }
+
+  let html = "";
+  data.forEach((row) => {
+    // Index array (0-based) sesuai config 1-based COL_MASTER_DATA:
+    const idUnik = row[0] || row[1] || "-"; // ID (1) atau Kode Karyawan (2)
+    const nama = row[2] || "-";            // Nama (3)
+    const shift = row[15] || "-";          // Shift (16)
+    const rawId = encodeURIComponent(String(row[0] || ""));
+
+    html += `<tr>
+      <td><b>${escapeHtml(String(idUnik))}</b></td>
+      <td>${escapeHtml(String(nama))}</td>
+      <td><span class="badge" style="margin:0; padding:2px 8px; font-size:11px;">${escapeHtml(String(shift))}</span></td>
+      <td>
+        <button class="btn-detail" onclick="lihatDetailKaryawan('${rawId}')">👁️ Detail</button>
+      </td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+function filterDataKaryawan() {
+  const q = document.getElementById("searchKaryawan").value.toLowerCase();
+  const filtered = listDataKaryawan.filter((row) => {
+    const id = String(row[0] || "").toLowerCase();
+    const kode = String(row[1] || "").toLowerCase();
+    const nama = String(row[2] || "").toLowerCase();
+    const shift = String(row[15] || "").toLowerCase();
+    return id.includes(q) || kode.includes(q) || nama.includes(q) || shift.includes(q);
+  });
+  renderTableKaryawan(filtered);
+}
+
+function lihatDetailKaryawan(rawIdEncoded) {
+  const targetId = decodeURIComponent(rawIdEncoded);
+  const item = listDataKaryawan.find((row) => String(row[0] || "") === targetId);
+
+  if (!item) {
+    alert("Data detail tidak ditemukan!");
+    return;
+  }
+
+  let html = "";
+  HEADER_MASTER_DATA.forEach((headerName, colIdx) => {
+    let val = item[colIdx] !== undefined && item[colIdx] !== null ? String(item[colIdx]) : "-";
+    if (val.trim() === "") val = "-";
+
+    // Format tautan jika kolom PDF URL (Index 11)
+    if (colIdx === 11 && val !== "-" && val.startsWith("http")) {
+      val = `<a href="${escapeHtml(val)}" target="_blank" style="color:var(--primary); font-weight:bold;">📄 Buka Document PDF</a>`;
+    } else {
+      val = escapeHtml(val);
+    }
+
+    html += `
+      <div class="detail-row">
+        <div class="detail-label">${headerName}</div>
+        <div class="detail-val">${val}</div>
+      </div>
+    `;
+  });
+
+  document.getElementById("contentDetailKaryawan").innerHTML = html;
+  bukaModalAdmin("modalDetailKaryawan");
 }
 
 function escapeHtml(text){
