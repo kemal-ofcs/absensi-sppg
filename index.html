@@ -2141,9 +2141,9 @@ function kirimAuditKualitas() {
   const btn = document.getElementById("btnJalankanAudit");
   const textAwal = btn.innerText;
   btn.disabled = true;
-  btn.innerText = "⏳ Sedang Menganalisis & Mengaudit...";
+  btn.innerText = "⏳ Sedang Memeriksa Kualitas Absensi...";
 
-  tampilkanLoading("Menganalisis data absensi dan log audit...");
+  tampilkanLoading("Menganalisis data absensi harian dan mengecek potensi ketidaksesuaian...");
 
   callbackCounter++;
   const callbackName = "auditKualitasCallback_" + Date.now() + "_" + callbackCounter;
@@ -2169,21 +2169,16 @@ function kirimAuditKualitas() {
     if (hasil && hasil.sukses) {
       tampilkanHasilUtama("sukses", "✅ Audit Kualitas Selesai", hasil.pesan || "Audit berhasil dijalankan.");
       
-      // Render Ringkasan Hasil
-      if (hasil.ringkasan) {
-        const ringkasanBox = document.getElementById("ringkasanAuditContainer");
-        const ringkasanContent = document.getElementById("ringkasanAuditContent");
-        ringkasanBox.style.display = "block";
-        ringkasanContent.innerHTML = `
-          • <b>Alfa Dibuat:</b> ${hasil.ringkasan.jumlahAlfaDibuat || 0}<br>
-          • <b>Sudah Absen:</b> ${hasil.ringkasan.jumlahSudahAda || 0}<br>
-          • <b>Koreksi Prioritas (Sakit/Izin/Dispen):</b> ${hasil.ringkasan.jumlahKoreksiPrioritas || 0}<br>
-          • <b>Belum Waktunya:</b> ${hasil.ringkasan.jumlahBelumWaktunya || 0}<br>
-          • <b>Shift Fleksibel (Diabaikan):</b> ${hasil.ringkasan.jumlahFleksibel || 0}<br>
-          • <b>Karyawan Nonaktif:</b> ${hasil.ringkasan.jumlahNonaktif || 0}<br>
-          • <b>Shift Tidak Valid:</b> ${hasil.ringkasan.jumlahShiftTidakValid || 0}
-        `;
-      }
+      // Render Ringkasan Hasil Audit
+      const ringkasanBox = document.getElementById("ringkasanAuditContainer");
+      const ringkasanContent = document.getElementById("ringkasanAuditContent");
+      ringkasanBox.style.display = "block";
+      
+      const totalTemuan = (hasil.logs && hasil.logs.length) ? hasil.logs.length : 0;
+      ringkasanContent.innerHTML = `
+        • <b>Status Selesai:</b> Pemeriksaan data absensi berhasil.<br>
+        • <b>Total Catatan Log Audit:</b> ${totalTemuan} data terdeteksi.
+      `;
 
       // Render Tabel Log Temuan Audit
       renderTableAuditLog(hasil.logs || []);
@@ -2203,19 +2198,26 @@ function kirimAuditKualitas() {
 function renderTableAuditLog(logs) {
   const tbody = document.getElementById("tbodyAuditLog");
   if (!logs || logs.length === 0) {
-    tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Tidak ada log temuan audit.</td></tr>";
+    tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Tidak ada temuan ketidaksesuaian data absensi.</td></tr>";
     return;
   }
 
   let html = "";
   logs.forEach((item) => {
-    const statusClass = item.status === "Selesai" ? "color:#166534; font-weight:bold;" : "color:#991b1b; font-weight:bold;";
+    const isPerluCek = item.status === "Perlu Dicek";
+    const statusStyle = isPerluCek 
+      ? "color:#d97706; background:#fffbeb; padding:2px 8px; border-radius:8px; font-weight:bold; display:inline-block;" 
+      : "color:#166534; font-weight:bold;";
+
     html += `<tr>
       <td>${escapeHtml(item.waktu)}</td>
       <td><b>${escapeHtml(item.jenis)}</b></td>
-      <td>${escapeHtml(item.id)} - ${escapeHtml(item.nama)}</td>
-      <td style="white-space:normal; min-width:180px;">${escapeHtml(item.detail)}</td>
-      <td style="${statusClass}">${escapeHtml(item.status)}</td>
+      <td><b>${escapeHtml(item.id || "-")}</b><br>${escapeHtml(item.nama || "-")}</td>
+      <td style="white-space:normal; min-width:180px;">
+        <span style="color:var(--muted); font-size:10px;">Baris ${escapeHtml(item.baris)}</span><br>
+        ${escapeHtml(item.detail)}
+      </td>
+      <td><span style="${statusStyle}">${escapeHtml(item.status)}</span></td>
     </tr>`;
   });
   tbody.innerHTML = html;
