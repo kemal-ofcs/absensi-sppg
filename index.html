@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
-  index.html - FINAL
-  Revisi login dan hak akses operator: 4 Agustus 2026
+  index.html - FINAL (Updated Fitur Audit Kualitas Absensi)
+  Revisi login dan hak akses operator: 5 Agustus 2026
   Role aktif: Admin, Scanner, dan Operator
 -->
 <html lang="id">
@@ -9,645 +9,339 @@
 <head>
 
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
 <title>
 Secure Scanner & Admin Hub | Attendance System
 </title>
 
-
-
 <style>
-
 
 /* =========================
    GLOBAL & VARS
 ========================= */
 
-
 :root {
-
   --primary:#2563eb;
   --primary-dark:#1d4ed8;
-
   --success:#16a34a;
   --danger:#dc2626;
   --warning:#d97706;
-
   --dark:#0f172a;
-
   --text:#334155;
-
   --muted:#64748b;
-
   --card:#ffffff;
-
   --border:#e2e8f0;
-
 }
-
-
 
 * {
-
   box-sizing:border-box;
-
 }
 
-
-
 body {
-
   margin:0;
-
   min-height:100vh;
-
   padding:18px;
-
   font-family:
-
   "Inter",
   "Segoe UI",
   Arial,
   sans-serif;
-
   background:
-
   linear-gradient(
     135deg,
     #0f172a,
     #1e40af,
     #2563eb
   );
-
 }
-
-
-
 
 /* =========================
    MAIN CONTAINER
 ========================= */
 
-
 .container {
-
   width:100%;
-
   max-width:540px;
-
   margin:auto;
-
   background:
-
   rgba(255,255,255,.96);
-
   border-radius:30px;
-
   padding:24px;
-
   box-shadow:
-
   0 30px 80px
-
   rgba(0,0,0,.30);
-
   animation:
-
   muncul .4s ease;
-
 }
-
-
 
 @keyframes muncul {
-
 from {
-
  opacity:0;
-
  transform:translateY(20px);
-
 }
-
 to {
-
  opacity:1;
-
  transform:translateY(0);
-
 }
-
 }
-
-
-
-
 
 /* =========================
    HEADER
 ========================= */
 
-
 h1 {
-
   margin:0;
-
   text-align:center;
-
   font-size:26px;
-
   font-weight:900;
-
   color:var(--dark);
-
 }
-
-
 
 .subtitle {
-
   text-align:center;
-
   margin-top:6px;
-
   color:var(--muted);
-
   font-size:13px;
-
 }
-
-
-
-
 
 .badge {
-
   display:flex;
-
   justify-content:center;
-
   align-items:center;
-
   gap:8px;
-
   width:max-content;
-
   margin:14px auto;
-
   padding:6px 16px;
-
   border-radius:999px;
-
   background:#dcfce7;
-
   color:#166534;
-
   font-size:12px;
-
   font-weight:800;
-
 }
-
-
-
-
-
-
 
 /* =========================
    SECTION TITLE & CATEGORY
 ========================= */
 
-
 .section-title {
-
   margin:
-
   20px 0 10px;
-
   font-size:15px;
-
   font-weight:900;
-
   color:var(--dark);
-
 }
-
-
 
 .category-title {
-
   font-size:12px;
-
   font-weight:800;
-
   text-transform:uppercase;
-
   letter-spacing:1px;
-
   color:var(--muted);
-
   margin:18px 0 10px;
-
   display:flex;
-
   align-items:center;
-
   gap:6px;
-
 }
-
-
-
-
-
-
 
 /* =========================
    NAV TABS SWITCHER
 ========================= */
 
 .nav-tabs {
-
   display:none;
-
   gap:8px;
-
   margin-top:16px;
-
   margin-bottom:20px;
-
   background:#e2e8f0;
-
   padding:5px;
-
   border-radius:18px;
-
 }
 
 .tab-btn {
-
   flex:1;
-
   padding:12px;
-
   border:none;
-
   border-radius:14px;
-
   font-size:13px;
-
   font-weight:800;
-
   cursor:pointer;
-
   background:transparent;
-
   color:var(--muted);
-
   margin-bottom:0;
-
   box-shadow:none;
-
   transition:.2s;
-
 }
 
 .tab-btn.active {
-
   background:white;
-
   color:var(--primary);
-
   box-shadow:0 4px 12px rgba(0,0,0,0.08);
-
 }
-
-
-
-
-
-
 
 /* =========================
    LOGIN CARD
 ========================= */
 
-
 .login-box {
-
   padding:20px;
-
   border-radius:22px;
-
   background:#f8fafc;
-
   border:
-
   1px solid var(--border);
-
 }
-
-
 
 .login-info {
-
   display:none;
-
   margin-bottom:16px;
-
   padding:14px;
-
   border-radius:18px;
-
   background:#ecfdf5;
-
   border:
-
   1px solid #86efac;
-
   color:#166534;
-
   font-size:13px;
-
   line-height:1.5;
-
 }
-
-
-
-
-
-
 
 /* =========================
    FORM & INPUTS
 ========================= */
 
-
 label {
-
   display:block;
-
   margin-bottom:6px;
-
   font-size:13px;
-
   font-weight:800;
-
   color:var(--text);
-
 }
-
-
-
 
 input, select {
-
   width:100%;
-
   padding:13px 15px;
-
   margin-bottom:12px;
-
   border-radius:14px;
-
   border:
-
   1px solid #cbd5e1;
-
   font-size:14px;
-
   outline:none;
-
   transition:.2s;
-
   background:white;
-
 }
-
-
 
 input:focus, select:focus {
-
  border-color:var(--primary);
-
  box-shadow:
-
  0 0 0 4px
-
  rgba(37,99,235,.15);
-
 }
-
-
-
-
-
-
 
 /* =========================
    BUTTONS
 ========================= */
 
-
 button {
-
  width:100%;
-
  padding:14px;
-
  border:none;
-
  border-radius:16px;
-
  font-size:14px;
-
  font-weight:900;
-
  cursor:pointer;
-
  color:white;
-
  background:
  linear-gradient(135deg, #2563eb, #1d4ed8);
-
  box-shadow:
  0 10px 25px rgba(37,99,235,.35);
-
  transition:.2s;
-
  margin-bottom:12px;
-
 }
-
-
 
 button:hover {
-
  transform:translateY(-2px);
-
 }
-
-
-
 
 button:disabled {
-
  opacity:.6;
-
  transform:none;
-
 }
-
-
-
 
 button.secondary {
-
  background:
-
  linear-gradient(
-
  135deg,
-
  #64748b,
-
  #475569
-
  );
-
 }
-
-
 
 button.danger {
-
  background:
-
  linear-gradient(
-
  135deg,
-
  #ef4444,
-
  #b91c1c
-
  );
-
 }
-
-
-
-
-
-
 
 /* =========================
    ADMIN DASHBOARD GRID
 ========================= */
 
 .grid-dashboard {
-
   display:grid;
-
   grid-template-columns:repeat(2, 1fr);
-
   gap:12px;
-
   margin-top:10px;
-
 }
 
 .admin-card {
-
   background:#f8fafc;
-
   border:1px solid var(--border);
-
   padding:16px 12px;
-
   border-radius:20px;
-
   text-align:center;
-
   cursor:pointer;
-
   transition:all .2s ease;
-
   display:flex;
-
   flex-direction:column;
-
   align-items:center;
-
   justify-content:center;
-
   gap:8px;
-
 }
 
 .admin-card:hover {
-
   background:#eff6ff;
-
   border-color:#93c5fd;
-
   transform:translateY(-3px);
-
   box-shadow:0 10px 20px rgba(37,99,235,0.1);
-
 }
 
 .admin-card .card-icon {
-
   font-size:26px;
-
 }
 
 .admin-card .card-title {
-
   font-size:12px;
-
   font-weight:800;
-
   color:var(--dark);
-
   line-height:1.3;
-
 }
 
 .admin-card.disabled {
-
   opacity:0.5;
-
   cursor:not-allowed;
-
   background:#f1f5f9;
-
 }
 
 .admin-card.disabled:hover {
-
   transform:none;
-
   border-color:var(--border);
-
   box-shadow:none;
-
 }
 
-
-
-
-
-
-
 /* =========================
-   MODAL DRAWER / POPUP (FIXED)
+   MODAL DRAWER / POPUP
 ========================= */
 
 .modal-overlay {
@@ -670,455 +364,238 @@ button.danger {
   width:100%;
   max-width:520px;
   border-radius:28px 28px 0 0;
-  padding:20px 18px 24px 18px; /* Padding dipresisikan */
+  padding:20px 18px 24px 18px;
   max-height:85vh;
   overflow-y:auto;
   box-shadow:0 -10px 40px rgba(0,0,0,0.2);
   animation:slideUp .3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-sizing:border-box; /* Mencegah overflow komponen */
+  box-sizing:border-box;
 }
 
 .modal-content input,
 .modal-content select {
   width:100%;
-  box-sizing:border-box; /* Memastikan input tidak keluar batas modal */
+  box-sizing:border-box;
   margin-left:0;
   margin-right:0;
 }
 
 .modal-header {
-
   display:flex;
-
   justify-content:space-between;
-
   align-items:center;
-
   margin-bottom:18px;
-
 }
 
 .modal-title {
-
   font-size:17px;
-
   font-weight:900;
-
   color:var(--dark);
-
 }
 
 .btn-close-modal {
-
   background:#f1f5f9;
-
   color:var(--muted);
-
   width:34px;
-
   height:34px;
-
   border-radius:50%;
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
   font-size:16px;
-
   font-weight:bold;
-
   cursor:pointer;
-
   border:none;
-
   margin-bottom:0;
-
   box-shadow:none;
-
   padding:0;
-
 }
 
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
 @keyframes slideUp { from { transform:translateY(100%); } to { transform:translateY(0); } }
-
-
-
-
-
-
 
 /* =========================
    STATUS UTAMA
 ========================= */
 
-
 .hasil-utama {
-
  margin:18px 0;
-
  padding:20px;
-
  border-radius:22px;
-
  text-align:center;
-
  background:#f8fafc;
-
  border:
-
  2px solid var(--border);
-
  transition:.3s;
-
 }
-
-
 
 .hasil-label {
-
  font-size:11px;
-
  letter-spacing:2px;
-
  font-weight:900;
-
  color:var(--muted);
-
 }
-
-
 
 .hasil-judul {
-
  margin-top:8px;
-
  font-size:22px;
-
  font-weight:900;
-
 }
-
-
 
 .hasil-detail {
-
  margin-top:8px;
-
  font-size:14px;
-
  line-height:1.5;
-
 }
-
-
 
 .hasil-waktu {
-
  margin-top:10px;
-
  color:var(--muted);
-
  font-size:11px;
-
 }
 
-
-
-
-
-
-
 .hasil-utama.sukses { background:#ecfdf5; border-color:#22c55e; }
-
 .hasil-utama.sukses .hasil-judul { color:#15803d; }
-
-
-
 .hasil-utama.gagal { background:#fef2f2; border-color:#ef4444; }
-
 .hasil-utama.gagal .hasil-judul { color:#b91c1c; }
-
-
-
 .hasil-utama.peringatan { background:#fffbeb; border-color:#f59e0b; }
-
 .hasil-utama.proses { background:#eff6ff; border-color:#3b82f6; }
-
-
-
-
-
-
 
 /* =========================
    SCANNER & READER
 ========================= */
 
 .scanner-area {
-
   display:none;
-
   animation:
-
   muncul .4s ease;
-
   margin-top:16px;
-
 }
-
 
 #reader {
-
   width:100%;
-
   min-height:260px;
-
   overflow:hidden;
-
   border-radius:24px;
-
   background:#020617;
-
   border:4px solid var(--primary);
-
   box-shadow:
-
   0 15px 40px rgba(37,99,235,.35);
-
   margin-bottom:16px;
-
 }
-
-
 
 .camera-actions {
-
   display:flex;
-
   flex-direction:column;
-
   gap:12px;
-
   margin-bottom:16px;
-
 }
-
-
 
 .camera-actions button {
-
   margin-bottom:0;
-
 }
-
-
 
 #btnStartCamera, #btnStopCamera {
-
   min-height:52px;
-
 }
-
-
 
 .camera-info {
-
   margin-top:8px;
-
   padding:12px;
-
   border-radius:16px;
-
   background:#f8fafc;
-
   border:1px solid #e2e8f0;
-
   font-size:12px;
-
   color:#64748b;
-
   line-height:1.5;
-
 }
 
-
-
 .scanner-clock {
-
   margin-top:12px;
-
   text-align:center;
-
   font-size:13px;
-
   font-weight:700;
-
   color:#475569;
-
   line-height:1.5;
-
   padding:8px;
-
   border-radius:14px;
-
   background:#f8fafc;
-
   border:1px solid #e2e8f0;
-
 }
 
 .logout-btn {
-
   margin-top:10px;
-
   background:
-
   linear-gradient(
-
     135deg,
-
     #ef4444,
-
     #b91c1c
-
   );
-
 }
-
-
-
-
-
-
 
 /* =========================
    RESULT BOX & OTHER
 ========================= */
 
-
 .result {
-
  margin-top:16px;
-
  padding:16px;
-
  border-radius:18px;
-
  background:#f8fafc;
-
  border:
-
  1px solid var(--border);
-
  line-height:1.6;
-
  font-size:13px;
-
 }
 
-
-
 .success { background:#ecfdf5; color:#166534; }
-
 .failed { background:#fef2f2; color:#991b1b; }
-
 .warning { background:#fffbeb; color:#92400e; }
-
 .loading { background:#eff6ff; color:#1d4ed8; }
 
-
-
 .divider { height:1px; background:#e2e8f0; margin:24px 0; }
-
 .small { margin-top:8px; font-size:12px; line-height:1.5; color:var(--muted); }
-
 .note { margin-top:18px; padding:12px; border-radius:16px; background:#f8fafc; color:var(--muted); font-size:12px; line-height:1.5; }
-
 .footer { text-align:center; margin-top:20px; color:#94a3b8; font-size:12px; }
-
-
-
-
-
-
 
 /* =========================
    3D QR SCAN ANIMATION
 ========================= */
 
-
 .reader-wrapper {
-
   position:relative;
-
   width:100%;
-
   overflow:hidden;
-
   border-radius:24px;
-
 }
 
-
-
 .scan-line {
-
   position:absolute;
-
   left:10%;
-
   right:10%;
-
   height:3px;
-
   background:#22c55e;
-
   box-shadow:0 0 12px #22c55e;
-
   top:15%;
-
   opacity:.8;
-
   display:none;
-
   animation: scanMove 2.5s infinite ease-in-out;
-
 }
 
 .reader-wrapper.active .scan-line { display:block; }
 
-
-
 @keyframes scanMove {
-
 0% { top:15%; }
-
 50% { top:80%; }
-
 100% { top:15%; }
-
 }
 
-
-
-
 @media(max-width:420px){
-
  body { padding:8px; }
-
  .container { padding:16px; border-radius:22px; }
-
  h1 { font-size:22px; }
-
  .hasil-judul { font-size:19px; }
-
  .grid-dashboard { grid-template-columns:repeat(2, 1fr); gap:10px; }
-
 }
 
 /* =========================
@@ -1215,141 +692,43 @@ button.danger {
 
 </head>
 
-
 <body>
 
-
 <div class="container">
-
-
 
 <!-- =========================
      HEADER
 ========================= -->
 
-
 <div class="app-header">
-
-
-<h1>
-📷 Secure Scanner
-</h1>
-
-
-<div class="subtitle">
-Sistem Absensi QR Code Karyawan
+  <h1>📷 Secure Scanner</h1>
+  <div class="subtitle">Sistem Absensi QR Code Karyawan</div>
+  <span class="badge">🟢 External Scanner</span>
+  <div id="scannerClock" class="scanner-clock">-</div>
 </div>
-
-
-<span class="badge">
-🟢 External Scanner
-</span>
-
-
-<div id="scannerClock" class="scanner-clock">
-
--
-
-</div>
-
-
-</div>
-
-
-
-
 
 <!-- =========================
      LOGIN OPERATOR
 ========================= -->
 
-
 <div id="loginBox" class="login-box">
+  <div class="section-title">🔐 Login Operator Scanner</div>
 
+  <label for="usernameOperator">Username Operator</label>
+  <input type="text" id="usernameOperator" placeholder="Masukkan username operator" autocomplete="username" />
 
-<div class="section-title">
+  <label for="passwordOperator">Password</label>
+  <input type="password" id="passwordOperator" placeholder="Masukkan password operator" autocomplete="current-password" />
 
-🔐 Login Operator Scanner
+  <button id="btnLoginOperator" onclick="loginOperator()">Login Operator</button>
 
+  <div class="small">
+    Scanner kamera & fitur admin hanya dapat digunakan setelah login.
+  </div>
 </div>
-
-
-
-<label for="usernameOperator">
-
-Username Operator
-
-</label>
-
-
-<input
-
-type="text"
-
-id="usernameOperator"
-
-placeholder="Masukkan username operator"
-
-autocomplete="username"
-
-/>
-
-
-
-
-
-<label for="passwordOperator">
-
-Password
-
-</label>
-
-
-<input
-
-type="password"
-
-id="passwordOperator"
-
-placeholder="Masukkan password operator"
-
-autocomplete="current-password"
-
-/>
-
-
-
-
-<button
-
-id="btnLoginOperator"
-
-onclick="loginOperator()"
-
->
-
-Login Operator
-
-</button>
-
-
-
-<div class="small">
-
-Scanner kamera & fitur admin hanya dapat digunakan setelah login.
-
-</div>
-
-
-
-</div>
-
-
-
-
 
 <!-- =========================
-     NAV TABS SWITCHER (MUNCUL SETELAH LOGIN)
+     NAV TABS SWITCHER
 ========================= -->
 <div id="navTabs" class="nav-tabs">
   <button id="tabScanner" class="tab-btn active" onclick="gantiTab('scanner')">📷 Scanner Mode</button>
@@ -1357,321 +736,73 @@ Scanner kamera & fitur admin hanya dapat digunakan setelah login.
   <button id="tabAdmin" class="tab-btn" onclick="gantiTab('admin')" style="display:none;">⚡ Admin Hub</button>
 </div>
 
-
-
-
-
 <!-- =========================
      OPERATOR INFO
 ========================= -->
 
+<div id="loginInfo" class="login-info"></div>
 
-<div id="loginInfo" class="login-info">
-
-</div>
-
-
-<button
-
-id="btnLogoutOperator"
-
-class="danger logout-btn"
-
-onclick="logoutOperator()"
-
-style="display:none;"
-
->
-
-🚪 Logout Operator
-
+<button id="btnLogoutOperator" class="danger logout-btn" onclick="logoutOperator()" style="display:none;">
+  🚪 Logout Operator
 </button>
-
-
-
-
-
-
 
 <!-- =========================
      HASIL UTAMA
 ========================= -->
 
-
 <div id="hasilUtama" class="hasil-utama">
-
-
-<div class="hasil-label">
-
-STATUS SISTEM
-
+  <div class="hasil-label">STATUS SISTEM</div>
+  <div id="hasilJudul" class="hasil-judul">Silakan login operator</div>
+  <div id="hasilDetail" class="hasil-detail">Masukkan username dan password untuk membuka scanner.</div>
+  <div id="hasilWaktu" class="hasil-waktu">-</div>
 </div>
-
-
-
-<div
-
-id="hasilJudul"
-
-class="hasil-judul"
-
->
-
-Silakan login operator
-
-</div>
-
-
-
-<div
-
-id="hasilDetail"
-
-class="hasil-detail"
-
->
-
-Masukkan username dan password untuk membuka scanner.
-
-</div>
-
-
-
-
-<div
-
-id="hasilWaktu"
-
-class="hasil-waktu"
-
->
-
--
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
 
 <!-- =========================
      SCANNER AREA (TAB 1)
 ========================= -->
 
-
 <div id="scannerArea" class="scanner-area">
-
-
-
-
-
-<div class="section-title">
-
-📷 Scan QR dengan Kamera
-
-</div>
-
-
-
-
-<div class="reader-wrapper">
-
-
-    <div id="reader">
-    </div>
-
-
-    <div class="scan-line">
-    </div>
-
-
-</div>
-
-
-<div class="camera-actions">
-
-
-<button
-
-id="btnStartCamera"
-
-onclick="mulaiKamera()"
-
->
-
-▶ Mulai Kamera
-
-</button>
-
-
-
-<button
-
-id="btnStopCamera"
-
-class="danger"
-
-onclick="hentikanKamera()"
-
-disabled
-
->
-
-■ Hentikan Kamera
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-<div class="camera-info">
-
-📷 Kamera Scanner
-
-<br>
-
-Izinkan akses kamera saat browser meminta izin.
-
-<br>
-
-Gunakan Chrome/Edge terbaru untuk hasil terbaik.
-
-</div>
-
-
-
-
-
-
-
-<div class="divider"></div>
-
-
-
-
-
-
-
-<!-- =========================
-     MANUAL INPUT
-========================= -->
-
-
-<div class="section-title">
-
-⌨️ Input Manual QR Text
-
-</div>
-
-
-
-
-<label for="qrText">
-
-QR Text
-
-</label>
-
-
-
-
-<input
-
-
-type="text"
-
-
-id="qrText"
-
-
-placeholder="Contoh: ID_Karyawan|token_absensi"
-
-
-autocomplete="off"
-
-
-/>
-
-
-
-
-
-<button
-
-class="secondary"
-
-onclick="prosesScanManual()"
-
->
-
-Proses Scan Manual
-
-</button>
-
-
-
-
-
-
-
-<!-- =========================
-     DETAIL HASIL SCAN
-========================= -->
-
-
-<div id="hasilScan" class="result">
-
-
-Hasil scan akan muncul di sini.
-
-
-</div>
-
-
-
-
-
-
-
-<div class="note">
-
-
-<b>Format QR:</b>
-
-<br>
-
-
-ID_Unik | Token_Absensi
-
-
-<br><br>
-
-
-Validasi keamanan tetap dilakukan oleh Google Apps Script.
-
-
-
-</div>
-
-
-
-
-
+  <div class="section-title">📷 Scan QR dengan Kamera</div>
+
+  <div class="reader-wrapper">
+    <div id="reader"></div>
+    <div class="scan-line"></div>
+  </div>
+
+  <div class="camera-actions">
+    <button id="btnStartCamera" onclick="mulaiKamera()">▶ Mulai Kamera</button>
+    <button id="btnStopCamera" class="danger" onclick="hentikanKamera()" disabled>■ Hentikan Kamera</button>
+  </div>
+
+  <div class="camera-info">
+    📷 Kamera Scanner<br>
+    Izinkan akses kamera saat browser meminta izin.<br>
+    Gunakan Chrome/Edge terbaru untuk hasil terbaik.
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- MANUAL INPUT -->
+  <div class="section-title">⌨️ Input Manual QR Text</div>
+
+  <label for="qrText">QR Text</label>
+  <input type="text" id="qrText" placeholder="Contoh: ID_Karyawan|token_absensi" autocomplete="off" />
+  <button class="secondary" onclick="prosesScanManual()">Proses Scan Manual</button>
+
+  <!-- DETAIL HASIL SCAN -->
+  <div id="hasilScan" class="result">
+    Hasil scan akan muncul di sini.
+  </div>
+
+  <div class="note">
+    <b>Format QR:</b><br>
+    ID_Unik | Token_Absensi<br><br>
+    Validasi keamanan tetap dilakukan oleh Google Apps Script.
+  </div>
 </div>
 
 <!-- =========================
-     ADMIN DASHBOARD AREA (TAB 2)
+     DATA KARYAWAN AREA (TAB 2)
 ========================= -->
 
 <div id="karyawanArea" class="scanner-area">
@@ -1699,11 +830,10 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
   </div>
 </div>
 
-
-
 <!-- =========================
      ADMIN DASHBOARD AREA (TAB 3)
 ========================= -->
+
 <div id="adminDashboardArea" class="scanner-area">
 
   <div class="section-title">⚡ Panel Kontrol Admin</div>
@@ -1723,7 +853,7 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
       <div class="card-icon">❌</div>
       <div class="card-title">Pembatalan Baris Backup</div>
     </div>
-    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+    <div class="admin-card" onclick="bukaModalAdmin('modalAuditKualitas')">
       <div class="card-icon">🔍</div>
       <div class="card-title">Audit Kualitas Absensi</div>
     </div>
@@ -1778,12 +908,6 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
 
 </div>
 
-
-
-
-
-
-
 <!-- =========================
      MODALS FOR ADMIN FEATURES
 ========================= -->
@@ -1800,28 +924,31 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
     <input type="date" id="adminTanggal" />
 
     <label for="adminIdKaryawan">ID Karyawan</label>
-    <input type="text" id="adminIdKaryawan" placeholder="Contoh: K001" autocomplete="off" />
+    <input type="text" id="adminIdKaryawan" placeholder="Contoh: USR001" autocomplete="off" />
 
     <label for="adminJenisKoreksi">Jenis Koreksi</label>
-    <select id="adminJenisKoreksi">
+    <select id="adminJenisKoreksi" onchange="cekKebutuhanJamKoreksi()">
       <option value="Lupa Absen Masuk">Lupa Absen Masuk</option>
       <option value="Lupa Absen Pulang">Lupa Absen Pulang</option>
+      <option value="Kendala Sistem - Jam Masuk">Kendala Sistem - Jam Masuk</option>
+      <option value="Kendala Sistem - Jam Pulang">Kendala Sistem - Jam Pulang</option>
+      <option value="Koreksi Multi Scan Masuk">Koreksi Multi Scan Masuk (Reset Jam Pulang)</option>
       <option value="Terlambat">Terlambat</option>
       <option value="Sakit">Sakit</option>
       <option value="Izin">Izin</option>
+      <option value="Dispen">Dispen</option>
       <option value="Alfa">Alfa</option>
     </select>
 
-    <label for="adminJamKoreksi">Jam Koreksi (Format HH:MM, opsional jika Sakit/Izin/Alfa)</label>
+    <label for="adminJamKoreksi" id="labelJamKoreksi">Jam Koreksi (Format HH:MM, contoh: 07:30)</label>
     <input type="text" id="adminJamKoreksi" placeholder="Contoh: 08:30" autocomplete="off" />
 
     <label for="adminKeterangan">Keterangan / Alasan</label>
     <input type="text" id="adminKeterangan" placeholder="Alasan koreksi data..." autocomplete="off" />
 
-    <!-- Tombol Modal Koreksi Admin -->
-	<button id="btnProsesKoreksi" class="secondary" onclick="kirimKoreksiAdmin()">
-	  Kirim & Proses Koreksi
-	</button>
+    <button id="btnProsesKoreksi" class="secondary" onclick="kirimKoreksiAdmin()">
+      Kirim & Proses Koreksi
+    </button>
   </div>
 </div>
 
@@ -1848,7 +975,6 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
     <label for="backupAlasan">Alasan Backup</label>
     <input type="text" id="backupAlasan" placeholder="Alasan penugasan backup..." autocomplete="off" />
 
-	<!-- Tombol Modal Penugasan Backup -->
 	<button id="btnProsesBackup" class="secondary" onclick="kirimPenugasanBackup()">
 	  Kirim & Aktifkan Backup
 	</button>
@@ -1866,7 +992,6 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
     <label for="batalIdBackup">ID Backup (Kode BKP-xxxx)</label>
     <input type="text" id="batalIdBackup" placeholder="Contoh: BKP-20260730-214636-A1B2" autocomplete="off" />
 
-	<!-- Tombol Modal Pembatalan Backup -->
 	<button id="btnProsesBatalBackup" class="danger" onclick="kirimPembatalanBackup()">
 	  Proses Pembatalan Backup
 	</button>
@@ -1960,57 +1085,76 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
   </div>
 </div>
 
-<!-- Modal 8 Arsip Import Offline -->
-
+<!-- MODAL 8: ARSIP IMPORT OFFLINE -->
 <div id="modalArsipImportOffline" class="modal-overlay">
-
   <div class="modal-content">
-
     <div class="modal-header">
-
-      <div class="modal-title">
-        📂 Arsip Import Offline
-      </div>
-
-      <button 
-      class="btn-close-modal"
-      onclick="tutupModalAdmin('modalArsipImportOffline')">
-      ✕
-      </button>
-
+      <div class="modal-title">📂 Arsip Import Offline</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalArsipImportOffline')">✕</button>
     </div>
 
-
     <p class="small">
-      Sistem akan memindahkan data IMPORT_OFFLINE
-      dengan status <b>Sudah Diproses</b>
-      ke ARSIP_IMPORT_OFFLINE.
+      Sistem akan memindahkan data IMPORT_OFFLINE dengan status <b>Sudah Diproses</b> ke ARSIP_IMPORT_OFFLINE.
     </p>
 
-
-    <button 
-    class="secondary"
-    onclick="kirimArsipImportOffline()">
-
+    <button class="secondary" onclick="kirimArsipImportOffline()">
       📂 Proses Arsip
-
     </button>
-
-
   </div>
-
 </div>
 
-<!-- Modal 9 Detail Karyawan -->
-
+<!-- MODAL 9: DETAIL KARYAWAN -->
 <div id="modalDetailKaryawan" class="modal-overlay">
   <div class="modal-content">
     <div class="modal-header">
       <div class="modal-title">📋 Detail Karyawan</div>
       <button class="btn-close-modal" onclick="tutupModalAdmin('modalDetailKaryawan')">✕</button>
     </div>
-    <div id="contentDetailKaryawan" class="detail-karyawan-container">
+    <div id="contentDetailKaryawan" class="detail-karyawan-container"></div>
+  </div>
+</div>
+
+<!-- MODAL 10: AUDIT KUALITAS ABSENSI -->
+<div id="modalAuditKualitas" class="modal-overlay">
+  <div class="modal-content" style="max-width: 680px;">
+    <div class="modal-header">
+      <div class="modal-title">🔍 Audit Kualitas Absensi</div>
+      <button class="btn-close-modal" onclick="tutupModalAdmin('modalAuditKualitas')">✕</button>
+    </div>
+
+    <p class="small">Sistem akan menganalisis data absensi, mengecek kepatuhan shift, serta memperbarui/mencatat log audit dan status Alfa secara otomatis.</p>
+
+    <button id="btnJalankanAudit" class="secondary" onclick="kirimAuditKualitas()">
+      🚀 Jalankan Audit Kualitas Absensi
+    </button>
+
+    <div id="ringkasanAuditContainer" style="display:none; margin-top:14px; padding:12px; border-radius:14px; background:#f8fafc; border:1px solid var(--border);">
+      <div style="font-weight:800; font-size:13px; margin-bottom:8px; color:var(--dark);">📊 Ringkasan Hasil Audit:</div>
+      <div id="ringkasanAuditContent" style="font-size:12px; line-height:1.6; color:var(--text);"></div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <div style="font-weight:800; font-size:13px; margin-bottom:8px; color:var(--dark);">📋 Log Temuan Audit Terakhir:</div>
+      <div class="table-karyawan-container" style="max-height: 280px; overflow-y: auto;">
+        <table class="table-karyawan" style="font-size: 11px;">
+          <thead>
+            <tr>
+              <th>Waktu Audit</th>
+              <th>Jenis</th>
+              <th>ID & Nama</th>
+              <th>Detail Catatan / Temuan</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyAuditLog">
+            <tr>
+              <td colspan="5" style="text-align:center; color: var(--muted);">Klik tombol di atas untuk menjalankan audit.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
+    </div>
+
   </div>
 </div>
 
@@ -2018,15 +1162,9 @@ Validasi keamanan tetap dilakukan oleh Google Apps Script.
      FOOTER
 ========================= -->
 
-
 <div class="footer">
-
 SPPG Kubu Raya · Secure Scanner & Admin Hub
-
 </div>
-
-
-
 
 </div>
 
@@ -2035,7 +1173,6 @@ SPPG Kubu Raya · Secure Scanner & Admin Hub
 <script>
 
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxs2Qtf5CHoVeoKc9CoJF2tviGzRRygW3e1EoKetxr0fsEyFHghCRUuD6wkpB30l3qX/exec";
-
 
 let html5QrCode = null;
 let sedangProsesScan = false;
@@ -2048,7 +1185,6 @@ let audioContextScanner = null;
 
 const SESSION_EXPIRE_MS = 8 * 60 * 60 * 1000;
 
-
 /* =========================
    SYSTEM TABS & MODALS
 ========================= */
@@ -2060,17 +1196,14 @@ function normalisasiRole(role) {
     .replace(/\s+/g, " ");
 }
 
-
 function apakahRoleAdmin(role) {
   const roleNorm = normalisasiRole(role);
-
   return (
     roleNorm === "admin" ||
     roleNorm === "super admin" ||
     roleNorm === "superadmin"
   );
 }
-
 
 function aturAksesNavigasiOperator(operator) {
   const sudahLogin = !!operator;
@@ -2092,7 +1225,6 @@ function aturAksesNavigasiOperator(operator) {
   }
 }
 
-
 function setStatusTombolLogin(sedangMemproses) {
   const btnLogin = document.getElementById("btnLoginOperator");
   if (!btnLogin) return;
@@ -2106,23 +1238,19 @@ function setStatusTombolLogin(sedangMemproses) {
 function gantiTab(tab) {
   const isAdmin = operatorLogin && apakahRoleAdmin(operatorLogin.role);
 
-  // Proteksi Akses: Jika mencoba buka tab karyawan atau admin tapi bukan Admin
   if ((tab === 'karyawan' || tab === 'admin') && !isAdmin) {
     alert("Akses ditolak! Fitur ini hanya dapat diakses oleh Admin.");
     return;
   }
 
-  // Sembunyikan / Tampilkan area sesuai tab yang dipilih (DIBETULKAN DI SINI)
   document.getElementById('scannerArea').style.display = (tab === 'scanner') ? 'block' : 'none';
   document.getElementById('adminDashboardArea').style.display = (tab === 'admin') ? 'block' : 'none';
   document.getElementById('karyawanArea').style.display = (tab === 'karyawan') ? 'block' : 'none';
 
-  // Toggle class active pada tombol tab
   document.getElementById('tabScanner').classList.toggle('active', tab === 'scanner');
   if (document.getElementById('tabAdmin')) document.getElementById('tabAdmin').classList.toggle('active', tab === 'admin');
   if (document.getElementById('tabKaryawan')) document.getElementById('tabKaryawan').classList.toggle('active', tab === 'karyawan');
 
-  // Jika membuka tab karyawan dan data belum dimuat, muat otomatis
   if (tab === 'karyawan' && listDataKaryawan.length === 0) {
     muatDataKaryawan();
   }
@@ -2142,7 +1270,6 @@ function tutupModalAdmin(modalId) {
   }
 }
 
-
 /* =========================
    UI HELPERS & NOTIFICATIONS
 ========================= */
@@ -2153,14 +1280,12 @@ function tampilkanLoading(pesan) {
   hasilBox.innerHTML = escapeHtml(pesan || "Sedang memproses...");
 }
 
-
 function tampilkanError(pesan) {
   const hasilBox = document.getElementById("hasilScan");
   hasilBox.className = "result failed";
   hasilBox.innerHTML = "<b>Error:</b><br>" + escapeHtml(String(pesan || ""));
   tampilkanHasilUtama("gagal", "❌ Terjadi Error", String(pesan || "Terjadi error."));
 }
-
 
 function tampilkanHasil(hasil) {
   const hasilBox = document.getElementById("hasilScan");
@@ -2210,7 +1335,6 @@ function tampilkanHasil(hasil) {
   tampilkanHasilUtama(tipeUtama, judulUtama, "ID: " + id + " | " + pesan);
 }
 
-
 function tampilkanHasilUtama(tipe, judul, detail) {
   const box = document.getElementById("hasilUtama");
   const hasilJudul = document.getElementById("hasilJudul");
@@ -2219,10 +1343,7 @@ function tampilkanHasilUtama(tipe, judul, detail) {
 
   box.className = "hasil-utama " + tipe;
   hasilJudul.textContent = judul;
-  
-  // Ganti textContent menjadi innerHTML agar link HTML dapat dirender dengan benar
   hasilDetail.innerHTML = detail; 
-  
   hasilWaktu.textContent = "Waktu: " + new Date().toLocaleString("id-ID");
 
   box.scrollIntoView({
@@ -2230,7 +1351,6 @@ function tampilkanHasilUtama(tipe, judul, detail) {
     block: "start"
   });
 }
-
 
 /* =========================
    LOGIN & AUTH
@@ -2246,7 +1366,6 @@ function loginOperator() {
   }
 
   setStatusTombolLogin(true);
-
   tampilkanHasilUtama("proses", "🔐 Memproses Login", "Sedang memeriksa data operator...");
 
   panggilApiLoginScanner(username, password)
@@ -2299,7 +1418,6 @@ function loginOperator() {
   });
 }
 
-
 /* =========================
    SCANNER OPERATIONS
 ========================= */
@@ -2313,7 +1431,6 @@ function prosesScanManual() {
   const qrText = document.getElementById("qrText").value.trim();
   prosesQrText(qrText, "manual");
 }
-
 
 function prosesQrText(qrText, sumberInput) {
   if (!operatorLogin) {
@@ -2362,7 +1479,6 @@ function prosesQrText(qrText, sumberInput) {
   });
 }
 
-
 function panggilApiScanner(qrText) {
   return new Promise(function(resolve, reject) {
     if (!WEB_APP_URL || WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1) {
@@ -2378,7 +1494,7 @@ function panggilApiScanner(qrText) {
     const timeout = setTimeout(function(){
       cleanup();
       reject(new Error("Server terlalu lama merespons. Coba ulangi scan."));
-    }, 15000);
+    }, 25000);
 
     function cleanup(){
       clearTimeout(timeout);
@@ -2403,7 +1519,6 @@ function panggilApiScanner(qrText) {
   });
 }
 
-
 function panggilApiLoginScanner(username, password) {
   return new Promise(function(resolve, reject) {
     if (!WEB_APP_URL || WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1) {
@@ -2419,7 +1534,7 @@ function panggilApiLoginScanner(username, password) {
     const timeout = setTimeout(function(){
       cleanup();
       reject(new Error("Server terlalu lama merespons saat login."));
-    }, 15000);
+    }, 20000);
 
     function cleanup(){
       clearTimeout(timeout);
@@ -2443,7 +1558,6 @@ function panggilApiLoginScanner(username, password) {
     document.body.appendChild(script);
   });
 }
-
 
 function mulaiKamera(){
   if(!audioContextScanner){
@@ -2501,7 +1615,6 @@ function mulaiKamera(){
   });
 }
 
-
 function hentikanKamera(){
   const btnStart = document.getElementById("btnStartCamera");
   const btnStop = document.getElementById("btnStopCamera");
@@ -2528,7 +1641,6 @@ function hentikanKamera(){
     tampilkanError("Gagal menghentikan kamera: " + (error && error.message ? error.message : error));
   });
 }
-
 
 function cekLoginOperatorLokal(){
   const data = localStorage.getItem("scanner_operator_login");
@@ -2578,7 +1690,6 @@ function cekLoginOperatorLokal(){
   }
 }
 
-
 function updateScannerClock(){
   const clock = document.getElementById("scannerClock");
   if(!clock) return;
@@ -2594,7 +1705,6 @@ function updateScannerClock(){
 
   clock.innerHTML = tanggal + "<br>" + waktu;
 }
-
 
 function bersihkanSesiOperator(){
   localStorage.removeItem("scanner_operator_login");
@@ -2612,7 +1722,6 @@ function bersihkanSesiOperator(){
   setStatusTombolLogin(false);
 }
 
-
 function logoutOperator(){
   const konfirmasi = confirm("Yakin ingin logout operator?");
   if(!konfirmasi) return;
@@ -2621,7 +1730,6 @@ function logoutOperator(){
 
   tampilkanHasilUtama("peringatan", "🔒 Operator Logout", "Silakan login operator baru.");
 }
-
 
 function cekExpirySession(){
   const data = localStorage.getItem("scanner_operator_login");
@@ -2657,7 +1765,6 @@ function cekExpirySession(){
   }
 }
 
-
 function cekAutoLogoutTengahMalam(){
   const data = localStorage.getItem("scanner_operator_login");
   if(!data) return;
@@ -2671,7 +1778,6 @@ function cekAutoLogoutTengahMalam(){
 
     if(waktuLogin.toDateString() !== sekarang.toDateString()){
       bersihkanSesiOperator();
-
       tampilkanHasilUtama("peringatan", "🌙 Session Harian Berakhir", "Silakan login kembali untuk hari ini.");
     }
   }
@@ -2679,7 +1785,6 @@ function cekAutoLogoutTengahMalam(){
     localStorage.removeItem("scanner_operator_login");
   }
 }
-
 
 function bunyiScan(tipe){
   try {
@@ -2717,7 +1822,6 @@ function bunyiScan(tipe){
   }
 }
 
-
 function getarScan(tipe){
   if(!navigator.vibrate) return;
   navigator.vibrate(0);
@@ -2731,7 +1835,6 @@ function getarScan(tipe){
   }
 }
 
-
 /* =========================
    STATUS LOCKS GLOBAL
 ========================= */
@@ -2740,7 +1843,32 @@ let isSubmittingBackup = false;
 let isSubmittingBatalBackup = false;
 
 /* =========================
-   1. KIRIM KOREKSI ADMIN (ANTI KLIK 2X)
+   HELPER FORM KOREKSI
+========================= */
+function cekKebutuhanJamKoreksi() {
+  const jenis = document.getElementById("adminJenisKoreksi").value;
+  const label = document.getElementById("labelJamKoreksi");
+  const inputJam = document.getElementById("adminJamKoreksi");
+
+  const butuhJam = [
+    "Lupa Absen Masuk",
+    "Lupa Absen Pulang",
+    "Kendala Sistem - Jam Masuk",
+    "Kendala Sistem - Jam Pulang",
+    "Terlambat"
+  ].includes(jenis);
+
+  if (butuhJam) {
+    label.innerHTML = "Jam Koreksi <span style='color:red;'>*Wajib (HH:MM)</span>";
+    inputJam.placeholder = "Contoh: 07:30";
+  } else {
+    label.innerHTML = "Jam Koreksi (Opsional / Tidak Perlu)";
+    inputJam.placeholder = "Tidak perlu diisi untuk jenis ini";
+  }
+}
+
+/* =========================
+   1. KIRIM KOREKSI ADMIN
 ========================= */
 function kirimKoreksiAdmin() {
   if (isSubmittingKoreksi) return;
@@ -2761,7 +1889,19 @@ function kirimKoreksiAdmin() {
     return;
   }
 
-  // KUNCI TOMBOL
+  const butuhJam = [
+    "Lupa Absen Masuk",
+    "Lupa Absen Pulang",
+    "Kendala Sistem - Jam Masuk",
+    "Kendala Sistem - Jam Pulang",
+    "Terlambat"
+  ].includes(jenisKoreksi);
+
+  if (butuhJam && !jamKoreksi) {
+    alert("Jam Koreksi wajib diisi (format HH:MM) untuk jenis koreksi: " + jenisKoreksi);
+    return;
+  }
+
   isSubmittingKoreksi = true;
   const btn = document.getElementById("btnProsesKoreksi");
   const textAwal = btn.innerText;
@@ -2824,7 +1964,7 @@ function kirimKoreksiAdmin() {
 }
 
 /* =========================
-   2. KIRIM PENUGASAN BACKUP (ANTI KLIK 2X)
+   2. KIRIM PENUGASAN BACKUP
 ========================= */
 function kirimPenugasanBackup() {
   if (isSubmittingBackup) return;
@@ -2845,7 +1985,6 @@ function kirimPenugasanBackup() {
     return;
   }
 
-  // KUNCI TOMBOL
   isSubmittingBackup = true;
   const btn = document.getElementById("btnProsesBackup");
   const textAwal = btn.innerText;
@@ -2909,7 +2048,7 @@ function kirimPenugasanBackup() {
 }
 
 /* =========================
-   3. KIRIM PEMBATALAN BACKUP (ANTI KLIK 2X)
+   3. KIRIM PEMBATALAN BACKUP
 ========================= */
 function kirimPembatalanBackup() {
   if (isSubmittingBatalBackup) return;
@@ -2930,7 +2069,6 @@ function kirimPembatalanBackup() {
     return;
   }
 
-  // KUNCI TOMBOL
   isSubmittingBatalBackup = true;
   const btn = document.getElementById("btnProsesBatalBackup");
   const textAwal = btn.innerText;
@@ -2987,7 +2125,104 @@ function kirimPembatalanBackup() {
 }
 
 /* =========================
-   KIRIM IMPORT OFFLINE (ANTI KLIK 2X)
+   4. KIRIM AUDIT KUALITAS ABSENSI
+========================= */
+let isSubmittingAudit = false;
+
+function kirimAuditKualitas() {
+  if (isSubmittingAudit) return;
+
+  if (!operatorLogin || !apakahRoleAdmin(operatorLogin.role)) {
+    alert("Akses ditolak. Fitur ini khusus untuk Admin.");
+    return;
+  }
+
+  isSubmittingAudit = true;
+  const btn = document.getElementById("btnJalankanAudit");
+  const textAwal = btn.innerText;
+  btn.disabled = true;
+  btn.innerText = "⏳ Sedang Menganalisis & Mengaudit...";
+
+  tampilkanLoading("Menganalisis data absensi dan log audit...");
+
+  callbackCounter++;
+  const callbackName = "auditKualitasCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
+  script.id = callbackName;
+
+  const timeout = setTimeout(function() {
+    cleanup();
+    alert("Proses audit membutuhkan waktu lebih lama. Silakan periksa hasilnya.");
+  }, 30000);
+
+  function cleanup() {
+    clearTimeout(timeout);
+    btn.disabled = false;
+    btn.innerText = textAwal;
+    isSubmittingAudit = false;
+    if (window[callbackName]) delete window[callbackName];
+    if (script && script.parentNode) script.parentNode.removeChild(script);
+  }
+
+  window[callbackName] = function(hasil) {
+    cleanup();
+    if (hasil && hasil.sukses) {
+      tampilkanHasilUtama("sukses", "✅ Audit Kualitas Selesai", hasil.pesan || "Audit berhasil dijalankan.");
+      
+      // Render Ringkasan Hasil
+      if (hasil.ringkasan) {
+        const ringkasanBox = document.getElementById("ringkasanAuditContainer");
+        const ringkasanContent = document.getElementById("ringkasanAuditContent");
+        ringkasanBox.style.display = "block";
+        ringkasanContent.innerHTML = `
+          • <b>Alfa Dibuat:</b> ${hasil.ringkasan.jumlahAlfaDibuat || 0}<br>
+          • <b>Sudah Absen:</b> ${hasil.ringkasan.jumlahSudahAda || 0}<br>
+          • <b>Koreksi Prioritas (Sakit/Izin/Dispen):</b> ${hasil.ringkasan.jumlahKoreksiPrioritas || 0}<br>
+          • <b>Belum Waktunya:</b> ${hasil.ringkasan.jumlahBelumWaktunya || 0}<br>
+          • <b>Shift Fleksibel (Diabaikan):</b> ${hasil.ringkasan.jumlahFleksibel || 0}<br>
+          • <b>Karyawan Nonaktif:</b> ${hasil.ringkasan.jumlahNonaktif || 0}<br>
+          • <b>Shift Tidak Valid:</b> ${hasil.ringkasan.jumlahShiftTidakValid || 0}
+        `;
+      }
+
+      // Render Tabel Log Temuan Audit
+      renderTableAuditLog(hasil.logs || []);
+
+    } else {
+      tampilkanHasilUtama("gagal", "❌ Audit Gagal", hasil.pesan || "Terjadi kesalahan.");
+      alert("Gagal: " + (hasil.pesan || "Kesalahan sistem."));
+    }
+  };
+
+  const url = WEB_APP_URL + "?action=audit_kualitas&callback=" + encodeURIComponent(callbackName);
+  script.src = url;
+  script.onerror = function() { cleanup(); alert("Gagal menghubungi server Apps Script."); };
+  document.body.appendChild(script);
+}
+
+function renderTableAuditLog(logs) {
+  const tbody = document.getElementById("tbodyAuditLog");
+  if (!logs || logs.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>Tidak ada log temuan audit.</td></tr>";
+    return;
+  }
+
+  let html = "";
+  logs.forEach((item) => {
+    const statusClass = item.status === "Selesai" ? "color:#166534; font-weight:bold;" : "color:#991b1b; font-weight:bold;";
+    html += `<tr>
+      <td>${escapeHtml(item.waktu)}</td>
+      <td><b>${escapeHtml(item.jenis)}</b></td>
+      <td>${escapeHtml(item.id)} - ${escapeHtml(item.nama)}</td>
+      <td style="white-space:normal; min-width:180px;">${escapeHtml(item.detail)}</td>
+      <td style="${statusClass}">${escapeHtml(item.status)}</td>
+    </tr>`;
+  });
+  tbody.innerHTML = html;
+}
+
+/* =========================
+   5. KIRIM IMPORT OFFLINE
 ========================= */
 let isSubmittingImport = false;
 
@@ -3016,7 +2251,6 @@ function kirimImportOffline() {
     return;
   }
 
-  // KUNCI TOMBOL
   isSubmittingImport = true;
   const btn = document.getElementById("btnProsesImport");
   const textAwal = btn.innerText;
@@ -3080,88 +2314,38 @@ function kirimImportOffline() {
 }
 
 function kirimArsipImportOffline(){
-
   if(!operatorLogin || !apakahRoleAdmin(operatorLogin.role)){
     alert("Akses ditolak. Fitur khusus Admin.");
     return;
   }
 
-
   callbackCounter++;
+  const callbackName = "arsipImportOfflineCallback_" + Date.now() + "_" + callbackCounter;
+  const script = document.createElement("script");
 
-  const callbackName =
-    "arsipImportOfflineCallback_" 
-    + Date.now()
-    + "_"
-    + callbackCounter;
-
-
-  const script =
-    document.createElement("script");
-
-
-  window[callbackName] =
-  function(hasil){
-
+  window[callbackName] = function(hasil){
     if(hasil && hasil.sukses){
-
-      tutupModalAdmin(
-        "modalArsipImportOffline"
-      );
-
-
-      tampilkanHasilUtama(
-        "sukses",
-        "✅ Arsip Berhasil",
-        hasil.pesan
-      );
-
-
+      tutupModalAdmin("modalArsipImportOffline");
+      tampilkanHasilUtama("sukses", "✅ Arsip Berhasil", hasil.pesan);
     }else{
-
-      tampilkanHasilUtama(
-        "gagal",
-        "❌ Arsip Gagal",
-        hasil.pesan || "Terjadi error"
-      );
-
+      tampilkanHasilUtama("gagal", "❌ Arsip Gagal", hasil.pesan || "Terjadi error");
     }
 
-
     delete window[callbackName];
-
     script.remove();
-
   };
 
-
-  script.src =
-    WEB_APP_URL
-    +
-    "?action=arsip_import_offline"
-    +
-    "&callback="
-    +
-    encodeURIComponent(callbackName);
-
-
-  script.onerror=function(){
-
-    alert(
-      "Gagal menghubungi server"
-    );
-
+  script.src = WEB_APP_URL + "?action=arsip_import_offline" + "&callback=" + encodeURIComponent(callbackName);
+  script.onerror = function(){
+    alert("Gagal menghubungi server");
     script.remove();
-
   };
-
 
   document.body.appendChild(script);
-
 }
 
 /* =========================
-   1. GENERATE ID CARD BY ID
+   6. GENERATE ID CARD & QR TOOLS
 ========================= */
 let isSubmittingIdCardById = false;
 
@@ -3227,9 +2411,6 @@ function kirimIdCardById() {
   document.body.appendChild(script);
 }
 
-/* =========================
-   2. GENERATE ID CARD MASSAL
-========================= */
 let isSubmittingIdCardMassal = false;
 
 function kirimIdCardMassal() {
@@ -3288,9 +2469,6 @@ function kirimIdCardMassal() {
   document.body.appendChild(script);
 }
 
-/* =========================
-   3. EXPORT QR CODE PNG KE DRIVE
-========================= */
 let isSubmittingExportQr = false;
 
 function kirimExportQrPng() {
@@ -3353,7 +2531,6 @@ function kirimExportQrPng() {
 ========================= */
 let listDataKaryawan = [];
 
-// Header 20 kolom sesuai config COL_MASTER_DATA
 const HEADER_MASTER_DATA = [
   "ID Unik",               // 1
   "Kode Karyawan",        // 2
@@ -3429,10 +2606,9 @@ function renderTableKaryawan(data) {
 
   let html = "";
   data.forEach((row) => {
-    // Index array (0-based) sesuai config 1-based COL_MASTER_DATA:
-    const idUnik = row[0] || row[1] || "-"; // ID (1) atau Kode Karyawan (2)
-    const nama = row[2] || "-";            // Nama (3)
-    const shift = row[15] || "-";          // Shift (16)
+    const idUnik = row[0] || row[1] || "-";
+    const nama = row[2] || "-";            
+    const shift = row[15] || "-";          
     const rawId = encodeURIComponent(String(row[0] || ""));
 
     html += `<tr>
@@ -3473,7 +2649,6 @@ function lihatDetailKaryawan(rawIdEncoded) {
     let val = item[colIdx] !== undefined && item[colIdx] !== null ? String(item[colIdx]) : "-";
     if (val.trim() === "") val = "-";
 
-    // Format tautan jika kolom PDF URL (Index 11)
     if (colIdx === 11 && val !== "-" && val.startsWith("http")) {
       val = `<a href="${escapeHtml(val)}" target="_blank" style="color:var(--primary); font-weight:bold;">📄 Buka Document PDF</a>`;
     } else {
@@ -3501,7 +2676,6 @@ function escapeHtml(text){
     .replace(/'/g, "&#039;");
 }
 
-
 document.addEventListener("DOMContentLoaded", function(){
   cekLoginOperatorLokal();
   updateScannerClock();
@@ -3511,7 +2685,6 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 
 </script>
-
 
 </body>
 
