@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-  index.html - FINAL (Updated Fitur Audit Kualitas Absensi)
+  index.html - FINAL (Updated Fitur Audit Kualitas Absensi & Operator Tracking)
   Revisi login dan hak akses operator: 5 Agustus 2026
   Role aktif: Admin, Scanner, dan Operator
 -->
@@ -875,15 +875,15 @@ button.danger {
   <!-- KATEGORI 3: OTOMATISASI SISTEM -->
   <div class="category-title">⚙️ Otomatisasi & Sistem</div>
   <div class="grid-dashboard">
-    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+    <div class="admin-card disabled" onclick="alert('Fitur ini dapat dijalankan langsung dari Sheet MASTER_DATA Cell S1.')">
       <div class="card-icon">🔑</div>
       <div class="card-title">Generate Token</div>
     </div>
-    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+    <div class="admin-card disabled" onclick="alert('Fitur ini dapat dijalankan langsung dari Sheet AUDIT_ABSENSI Cell K2.')">
       <div class="card-icon">⏰</div>
       <div class="card-title">Trigger Auto Alfa</div>
     </div>
-    <div class="admin-card disabled" onclick="alert('Fitur ini akan diaktifkan berikutnya.')">
+    <div class="admin-card disabled" onclick="alert('Fitur ini dapat dijalankan langsung dari Sheet DASHBOARD Cell C1.')">
       <div class="card-icon">🔄</div>
       <div class="card-title">Refresh Dashboard</div>
     </div>
@@ -1376,17 +1376,19 @@ function loginOperator() {
       return;
     }
 
-    operatorLogin = hasil;
+    const opData = hasil.operator || {};
+
+    operatorLogin = {
+      operator_id: opData.kodeOperator || hasil.operator_id || "",
+      username: opData.username || hasil.username || "",
+      nama_operator: opData.nama || hasil.nama_operator || "",
+      role: String(opData.role || hasil.role || "").trim(),
+      login_time: new Date().toISOString()
+    };
 
     localStorage.setItem(
       "scanner_operator_login",
-      JSON.stringify({
-        operator_id: hasil.operator_id,
-        username: hasil.username,
-        nama_operator: hasil.nama_operator,
-        role: String(hasil.role || "").trim(),
-        login_time: new Date().toISOString()
-      })
+      JSON.stringify(operatorLogin)
     );
 
     document.getElementById("loginBox").style.display = "none";
@@ -1395,9 +1397,9 @@ function loginOperator() {
     loginInfo.style.display = "block";
     loginInfo.innerHTML =
       "<b>👤 Operator Aktif</b><br>" +
-      escapeHtml(hasil.nama_operator) +
+      escapeHtml(operatorLogin.nama_operator) +
       "<br><b>Role:</b> " +
-      escapeHtml(hasil.role) +
+      escapeHtml(operatorLogin.role) +
       "<br><b>Status:</b> Aktif";
 
     aturAksesNavigasiOperator(operatorLogin);
@@ -1409,7 +1411,7 @@ function loginOperator() {
     tampilkanHasilUtama(
       "sukses",
       "✅ Login Berhasil",
-      "Selamat datang, " + escapeHtml(hasil.nama_operator) + ". Sistem siap digunakan."
+      "Selamat datang, " + escapeHtml(operatorLogin.nama_operator) + ". Sistem siap digunakan."
     );
   })
   .catch(function(error) {
@@ -1456,30 +1458,66 @@ function prosesQrText(qrText, sumberInput) {
     return;
   }
 
+  // Cek apakah browser mendukung Geolocation GPS
+  if (!navigator.geolocation) {
+    tampilkanHasilUtama("gagal", "❌ Perangkat Tidak Mendukung", "HP/Browser Anda tidak mendukung fitur lokasi GPS.");
+    return;
+  }
+
   sedangProsesScan = true;
   qrTerakhir = qrText;
   waktuScanTerakhir = sekarang;
 
   document.getElementById("qrText").value = qrText;
 
-  tampilkanLoading("QR terbaca. Sedang mengirim ke server...");
-  tampilkanHasilUtama("proses", "⏳ Memproses Scan", "QR terbaca. Sedang mengirim data ke sistem...");
+  tampilkanLoading("Mendapatkan posisi lokasi GPS HP Anda...");
+  tampilkanHasilUtama("proses", "📍 Mengambil Lokasi GPS", "Mohon izinkan akses lokasi pada HP Anda...");
 
-  panggilApiScanner(qrText)
-  .then(function(hasil) {
-    tampilkanHasil(hasil);
-  })
-  .catch(function(error) {
-    tampilkanError(error.message || error);
-  })
-  .finally(function(){
-    setTimeout(function(){
+  // Mengambil posisi GPS dari HP/Browser Karyawan
+  navigator.geolocation.getCurrentPosition(
+    function(position) {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      tampilkanLoading("GPS terdeteksi. Sedang memverifikasi ke server...");
+      tampilkanHasilUtama("proses", "⏳ Memproses Scan", "Lokasi GPS didapatkan. Memeriksa posisi ke kantor...");
+
+      panggilApiScanner(qrText, lat, lng)
+      .then(function(hasil) {
+        tampilkanHasil(hasil);
+      })
+      .catch(function(error) {
+        tampilkanError(error.message || error);
+      })
+      .finally(function(){
+        setTimeout(function(){
+          sedangProsesScan = false;
+        }, jedaScanMs);
+      });
+    },
+    function(errorGPS) {
       sedangProsesScan = false;
-    }, jedaScanMs);
-  });
+      let pesanGPS = "Gagal mengambil lokasi GPS HP Anda.";
+      if (errorGPS.code === errorGPS.PERMISSION_DENIED) {
+        pesanGPS = "Absensi ditolak: Anda menolak izin lokasi/GPS. Silakan izinkan akses lokasi di browser HP Anda.";
+      } else if (errorGPS.code === errorGPS.POSITION_UNAVAILABLE) {
+        pesanGPS = "Absensi ditolak: Sinyal GPS HP Anda tidak ditemukan/lemah.";
+      } else if (errorGPS.code === errorGPS.TIMEOUT) {
+        pesanGPS = "Absensi ditolak: Waktu pengambilan GPS habis. Pastikan GPS HP Anda aktif.";
+      }
+      
+      tampilkanError(pesanGPS);
+      tampilkanHasilUtama("gagal", "❌ GPS Tidak Terdeteksi", pesanGPS);
+    },
+    {
+      enableHighAccuracy: true, // Meminta tingkat presisi tinggi
+      timeout: 10000,
+      maximumAge: 0
+    }
+  );
 }
 
-function panggilApiScanner(qrText) {
+function panggilApiScanner(qrText, lat, lng) {
   return new Promise(function(resolve, reject) {
     if (!WEB_APP_URL || WEB_APP_URL.indexOf("ISI_WEB_APP_URL") !== -1) {
       reject(new Error("WEB_APP_URL belum diisi."));
@@ -1507,7 +1545,18 @@ function panggilApiScanner(qrText) {
       resolve(hasil);
     };
 
-    const url = WEB_APP_URL + "?action=scanner_api&qr=" + encodeURIComponent(qrText) + "&callback=" + encodeURIComponent(callbackName);
+    let url = WEB_APP_URL + "?action=scanner_api&qr=" + encodeURIComponent(qrText) + 
+              "&lat=" + encodeURIComponent(lat || "") + 
+              "&lng=" + encodeURIComponent(lng || "") + 
+              "&callback=" + encodeURIComponent(callbackName);
+
+    // Kirim identitas operator jika sedang login agar tercatat di LOG_SCAN
+    if (operatorLogin) {
+      url += "&operator_id=" + encodeURIComponent(operatorLogin.operator_id || "") +
+             "&kodeOperator=" + encodeURIComponent(operatorLogin.operator_id || "") +
+             "&username=" + encodeURIComponent(operatorLogin.username || "");
+    }
+
     script.src = url;
 
     script.onerror = function(){
@@ -2169,7 +2218,6 @@ function kirimAuditKualitas() {
     if (hasil && hasil.sukses) {
       tampilkanHasilUtama("sukses", "✅ Audit Kualitas Selesai", hasil.pesan || "Audit berhasil dijalankan.");
       
-      // Render Ringkasan Hasil Audit
       const ringkasanBox = document.getElementById("ringkasanAuditContainer");
       const ringkasanContent = document.getElementById("ringkasanAuditContent");
       ringkasanBox.style.display = "block";
@@ -2180,7 +2228,6 @@ function kirimAuditKualitas() {
         • <b>Total Catatan Log Audit:</b> ${totalTemuan} data terdeteksi.
       `;
 
-      // Render Tabel Log Temuan Audit
       renderTableAuditLog(hasil.logs || []);
 
     } else {
